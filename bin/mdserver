@@ -20,7 +20,14 @@ Types:
 HELP
 begin
   MDServer.run!
-rescue Exception
+rescue LoadError
   HelpParser::REDTTY["#{$!.class}: #{$!.message}"]
-  # :-??  exit 72, exit 65
+  exit 72
+rescue RuntimeError
+  HelpParser::REDTTY["#{$!.class}: #{$!.message}"]
+  exit 65
+rescue Exception
+  $stderr.puts $!.backtrace
+  HelpParser::REDTTY["#{$!.class}: #{$!.message}"]
+  exit 70
 end
