@@ -35,12 +35,35 @@ Types:
 ```
 ## FEATURES
 
+* ONLY SUPPORTS /**/MARKDOWNs
+* ONLY SUPPORTS /img/PNGs
+
 Optionally:
 
 * Place your custom `/favicon.ico`
 * Place `/.cert.crt` and `/.pkey.pem` for SSL(https)
 * Place `sha256sum` of site's password in `/.valid-id`
 
+## SYNOPSIS
+
+To set site password:
+```shell
+$ # Assuming ~/vimwiki is your site's root...
+$ echo -n '<YourPasswordHere>' | sha256sum | grep -o '^\w*' > ~/vimwiki/.valid-id
+```
+To set site custom favicon:
+```shell
+$ # Assuming ~/vimwiki is your site's root...
+$ cp /path-to/custom/favicon.ico ~/vimwiki/favicon.ico
+```
+To run site in https:
+```
+$ # Assuming ~/vimwiki is your site's root...
+$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout pkey.pem -out cert.crt
+$ # Stuff happens... Answer all the dumb questions... then:
+$ mv cert.crt ~/vimwiki/.cert.crt
+$ mv pkey.pem ~/vimwiki/.pkey.pem
+```
 ## LICENSE
 
 Copyright 2021 CarlosJHR64
