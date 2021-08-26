@@ -3,12 +3,15 @@ module MDServer
   # Verify options
   ROOT = File.expand_path OPTIONS&.root || '~/vimwiki'
   raise "Missing site root directory: "+ROOT  unless File.directory? ROOT
-  ['favicon.ico', '.cert.crt', '.pkey.pem', '.valid-id'].each do |basename|
+  ['.cert.crt', '.pkey.pem'].each do |basename|
     filename = File.join ROOT, basename
     raise "Missing #{filename}" unless File.file? filename
   end
-  VALID_ID = File.read(File.join ROOT, '.valid-id').strip
-  FAVICON = File.read(File.join ROOT, 'favicon.ico')
+  VALID_ID = File.exist?(_=File.join(ROOT, '.valid-id')) ?
+    File.read(_).strip : nil
+  appdir = File.dirname File.dirname __dir__
+  FAVICON = File.exist?(_=File.join(ROOT, 'favicon.ico')) ?
+    File.read(_) : File.read(File.join(appdir, 'data/favicon.ico'))
   theme = OPTIONS&.theme || 'base16.light'
   HIGHLIGHT = Rouge::Theme.find(theme)&.render(scope: '.highlight')
   raise "Can't find Rouge Theme "+theme unless HIGHLIGHT
