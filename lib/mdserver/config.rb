@@ -3,10 +3,6 @@ module MDServer
   # Verify options
   ROOT = File.expand_path OPTIONS&.root || '~/vimwiki'
   raise "Missing site root directory: "+ROOT  unless File.directory? ROOT
-  ['.cert.crt', '.pkey.pem'].each do |basename|
-    filename = File.join ROOT, basename
-    raise "Missing #{filename}" unless File.file? filename
-  end
   VALID_ID = File.exist?(_=File.join(ROOT, '.valid-id')) ?
     File.read(_).strip : nil
   appdir = File.dirname File.dirname __dir__

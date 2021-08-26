@@ -8,12 +8,14 @@ class Base < Sinatra::Base
   def Base.run!
     puts "#{$0}-#{VERSION}"
     super do |server|
-      server.ssl = true
-      server.ssl_options = {
-        :cert_chain_file  => File.join(ROOT, '.cert.crt'),
-        :private_key_file => File.join(ROOT, '.pkey.pem'),
-        :verify_peer      => false,
-      }
+      if ['.cert.crt', '.pkey.pem'].all?{ File.exist? File.join(ROOT, _1)}
+        server.ssl = true
+        server.ssl_options = {
+          :cert_chain_file  => File.join(ROOT, '.cert.crt'),
+          :private_key_file => File.join(ROOT, '.pkey.pem'),
+          :verify_peer      => false,
+        }
+      end
     end
   end
 
@@ -105,8 +107,8 @@ class Base < Sinatra::Base
       else
         redirect '/login.html' unless request.path_info == '/login.html'
       end
-      puts "#{request.ip} #{request.path_info}"
     end
+    puts "#{request.ip} #{request.path_info}"
   end
 
   get '/' do
