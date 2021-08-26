@@ -1,0 +1,11 @@
+^(
+ (\.)|
+ (\w+\.gemspec)|
+ (cucumber\.)|
+ (examples\/)|
+ (features\/)|
+ (History\.)|
+ (img\/)|
+ (test\/)|
+ (TODO\.)
+)

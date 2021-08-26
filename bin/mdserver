@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+require 'help_parser'
+require 'mdserver'
+
+OPTIONS = HelpParser[MDServer::VERSION, <<HELP]
+Usage:
+  mdserver [:options+]
+Options:
+  --root=DIRECTORY \t ~/vimwiki
+  --bind=BIND      \t 0.0.0.0
+  --port=PORT      \t 8080
+  --theme=THEME    \t base16.light
+  --allowed=IPS    \t 127.0.0.1
+Types:
+  DIRECTORY /^~?[\\/\\w\\.]+$/
+  BIND      /^[\\w\\.]+$/
+  PORT      /^\\d+$/
+  THEME     /^[\\w\\.]+$/
+  IPS       /^[\\d\\.\\,]+$/
+HELP
+begin
+  MDServer.run!
+rescue Exception
+  HelpParser::REDTTY["#{$!.class}: #{$!.message}"]
+  # :-??  exit 72, exit 65
+end
