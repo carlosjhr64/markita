@@ -33,6 +33,14 @@ Types:
   THEME     /^[\w\.]+$/
   IPS       /^[\d\.\,]+$/
 ```
+## FEATURES
+
+Optionally:
+
+* Place your custom `/favicon.ico`
+* Place `/.cert.crt` and `/.pkey.pem` for SSL(https)
+* Place `sha256sum` of site's password in `/.valid-id`
+
 ## LICENSE
 
 Copyright 2021 CarlosJHR64
