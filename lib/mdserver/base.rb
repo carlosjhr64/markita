@@ -98,7 +98,7 @@ class Base < Sinatra::Base
   end
 
   before do
-    unless VALID_ID.nil? or ALLOWED_IPS.include?(request.ip)
+    unless VALID_ID.nil? or ALLOWED_IPS&.include?(request.ip)
       if id = params[:id]
         session[:id] = Digest::SHA256.hexdigest id
       end

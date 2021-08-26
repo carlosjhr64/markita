@@ -11,6 +11,9 @@ module MDServer
   theme = OPTIONS&.theme || 'base16.light'
   HIGHLIGHT = Rouge::Theme.find(theme)&.render(scope: '.highlight')
   raise "Can't find Rouge Theme "+theme unless HIGHLIGHT
-  ALLOWED_IPS = (OPTIONS&.allowed || '127.0.0.1').split(',')
+  ALLOWED_IPS = (_=OPTIONS&.allowed)? _.split(',') : nil
+  if ALLOWED_IPS and not VALID_ID
+    raise "Allowed ips without site password does not make sense."
+  end
   START_TIME = Time.now
 end

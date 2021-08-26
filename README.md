@@ -49,7 +49,7 @@ Optionally:
 To set site password:
 ```shell
 $ # Assuming ~/vimwiki is your site's root...
-$ echo -n '<YourPasswordHere>' | sha256sum | grep -o '^\w*' > ~/vimwiki/.valid-id
+$ echo -n '<SitePasswordHere>' | sha256sum | grep -o '^\w*' > ~/vimwiki/.valid-id
 ```
 To set site custom favicon:
 ```shell
@@ -63,6 +63,13 @@ $ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout pkey.pem -out cert
 $ # Stuff happens... Answer all the dumb questions... then:
 $ mv cert.crt ~/vimwiki/.cert.crt
 $ mv pkey.pem ~/vimwiki/.pkey.pem
+```
+Example run allowing localhost to bypass site password:
+```shell
+$ # Assuming ~/vimwiki with a site password set...
+$ mdserver --allowed=127.0.0.1
+./bin/mdserver-1.0.210826
+== Sinatra (v2.1.0) has taken the stage on 8080 for development with backup from Thin
 ```
 ## LICENSE
 
