@@ -3,7 +3,7 @@ class Base
   module About
     def self.page
       text = <<~TEXT
-        # MDServer
+        # [MDServer](https://github.com/carlosjhr64/mdserver)
 
         * VERSION: #{VERSION}
         * ROOT: #{ROOT.sub(%r{^/home/\w+/},'~/')}
