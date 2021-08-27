@@ -35,6 +35,10 @@ Types:
 ```
 ## FEATURES
 
+* Check(Ballot) boxes for task lists
+* Image placement hints
+* One line forms
+* Template substitutions
 * ONLY SUPPORTS /**/MARKDOWNs
 * ONLY SUPPORTS /img/PNGs
 
@@ -44,19 +48,19 @@ Optionally:
 * Place `/.cert.crt` and `/.pkey.pem` for SSL(https)
 * Place `sha256sum` of site's password in `/.valid-id`
 
-## SYNOPSIS
+## HOW-TOs
 
-To set site password:
+Set site password:
 ```shell
 $ # Assuming ~/vimwiki is your site's root...
 $ echo -n '<SitePasswordHere>' | sha256sum | grep -o '^\w*' > ~/vimwiki/.valid-id
 ```
-To set site custom favicon:
+Set site custom favicon:
 ```shell
 $ # Assuming ~/vimwiki is your site's root...
 $ cp /path-to/custom/favicon.ico ~/vimwiki/favicon.ico
 ```
-To run site in https:
+Run site in https:
 ```
 $ # Assuming ~/vimwiki is your site's root...
 $ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout pkey.pem -out cert.crt
@@ -64,7 +68,7 @@ $ # Stuff happens... Answer all the dumb questions... then:
 $ mv cert.crt ~/vimwiki/.cert.crt
 $ mv pkey.pem ~/vimwiki/.pkey.pem
 ```
-Example run allowing localhost to bypass site password:
+Run allowing localhost to bypass site password:
 ```shell
 $ # Assuming ~/vimwiki with a site password set...
 $ mdserver --allowed=127.0.0.1
