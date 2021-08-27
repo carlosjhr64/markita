@@ -91,6 +91,12 @@ class Base < Sinatra::Base
         end
         form << %Q(  <input type="submit">\n</form>)
         line = form
+      when %r(^<p><img (src="[^"]*" alt=" [^"]* ") /></p>$)
+        line = %Q(<img style="display: block; margin-left: auto; margin-right: auto;" #{$1} />)
+      when %r(^<p><img (src="[^"]*" alt=" [^"]*") />$)
+        line = %Q(<p><img style="float: left;" #{$1} />)
+      when %r(^<p><img (src="[^"]*" alt="[^"]* ") />$)
+        line = %Q(<p><img style="float: right;" #{$1} />)
       end
       string << line << "\n"
     end
