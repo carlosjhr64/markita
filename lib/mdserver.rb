@@ -12,6 +12,8 @@ module MDServer
     # Local
     require_relative 'mdserver/config.rb'
     require_relative 'mdserver/base.rb'
+    # Plugs
+    require_relative 'mdserver/plug/login.rb'
     Base.run!
   end
 end

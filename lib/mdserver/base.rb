@@ -110,20 +110,6 @@ class Base < Sinatra::Base
     Base.header(key) + yield + Base.footer
   end
 
-  before do
-    unless VALID_ID.nil? or ALLOWED_IPS&.include?(request.ip)
-      if id = params[:id]
-        session[:id] = Digest::SHA256.hexdigest id
-      end
-      if session[:id] == VALID_ID
-        redirect '/' if request.path_info == '/login.html'
-      else
-        redirect '/login.html' unless request.path_info == '/login.html'
-      end
-    end
-    puts "#{request.ip} #{request.path_info}"
-  end
-
   get %r{/(\w[\w\/\-]*\w)} do |key|
     filepath = File.join ROOT, key+'.md'
     raise Sinatra::NotFound  unless File.exist? filepath
@@ -147,14 +133,6 @@ class Base < Sinatra::Base
   get '/highlight.css' do
     headers 'Content-Type' => 'text/css'
     HIGHLIGHT
-  end
-
-  get '/login.html' do
-    LOGIN_FORM
-  end
-
-  post '/login.html' do
-    LOGIN_FAILED
   end
 
   get '/restart.html' do
