@@ -6,6 +6,7 @@ module MDServer
   VALID_ID = File.exist?(_=File.join(ROOT, '.valid-id')) ?
     File.read(_).strip : nil
   appdir = File.dirname File.dirname __dir__
+  NOT_FOUND = File.read File.join(appdir, 'data/not_found.html')
   FAVICON = File.exist?(_=File.join(ROOT, 'favicon.ico')) ?
     File.read(_) : File.read(File.join(appdir, 'data/favicon.ico'))
   theme = OPTIONS&.theme || 'base16.light'

@@ -5,20 +5,6 @@ class Base < Sinatra::Base
   set port: OPTIONS&.port || '8080'
   set sessions: true
 
-  before do
-    unless VALID_ID.nil? or ALLOWED_IPS&.include?(request.ip)
-      if id = params[:id]
-        session[:id] = Digest::SHA256.hexdigest id
-      end
-      if session[:id] == VALID_ID
-        redirect '/' if request.path_info == '/login.html'
-      else
-        redirect '/login.html' unless request.path_info == '/login.html'
-      end
-    end
-    puts "#{request.ip} #{request.path_info}"
-  end
-
   def Base.run!
     puts "#{$0}-#{VERSION}"
     super do |server|
@@ -124,6 +110,20 @@ class Base < Sinatra::Base
     Base.header(key) + yield + Base.footer
   end
 
+  before do
+    unless VALID_ID.nil? or ALLOWED_IPS&.include?(request.ip)
+      if id = params[:id]
+        session[:id] = Digest::SHA256.hexdigest id
+      end
+      if session[:id] == VALID_ID
+        redirect '/' if request.path_info == '/login.html'
+      else
+        redirect '/login.html' unless request.path_info == '/login.html'
+      end
+    end
+    puts "#{request.ip} #{request.path_info}"
+  end
+
   get %r{/(\w[\w\/\-]*\w)} do |key|
     filepath = File.join ROOT, key+'.md'
     raise Sinatra::NotFound  unless File.exist? filepath
@@ -197,15 +197,7 @@ RESTART
   end
 
   not_found do
-<<NOT_FOUND
-<!DOCTYPE html>
-<html>
-<head><title>error</title></head>
-<body>
-<h1>Not Found (404)</h1>
-</body>
-</html>
-NOT_FOUND
+    NOT_FOUND
   end
 end
 end
