@@ -37,7 +37,7 @@ lib/mdserver/plug/about.rb
 lib/mdserver/plug/favicon.rb
 lib/mdserver/plug/highlight.rb
 lib/mdserver/plug/login.rb
-lib/mdserver/plug/restart.rb
+lib/mdserver/plug/plugs.rb
   )
   s.executables << 'mdserver'
   s.add_runtime_dependency 'help_parser', '~> 7.0', '>= 7.0.200907'
