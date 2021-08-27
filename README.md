@@ -21,17 +21,23 @@ $ mdserver --help
 Usage:
   mdserver [:options+]
 Options:
-  --root=DIRECTORY       ~/vimwiki
-  --bind=BIND            0.0.0.0
-  --port=PORT            8080
-  --theme=THEME          base16.light
-  --allowed=IPS          127.0.0.1
+  --root=DIRECTORY 	 ~/vimwiki
+  --bind=BIND      	 0.0.0.0
+  --port=PORT      	 8080
+  --theme=THEME    	 base16.light
+  --allowed=IPS
 Types:
   DIRECTORY /^~?[\/\w\.]+$/
   BIND      /^[\w\.]+$/
   PORT      /^\d+$/
   THEME     /^[\w\.]+$/
   IPS       /^[\d\.\,]+$/
+# NOTE:
+# Assuming site is in ~/vimwiki,
+# when ~/vimwiki/.valid-id is set with a sha256sum of a password,
+# that password will restrict the site.
+# Allowed IPs bypass the need for site password
+# when the site is accessed from those locations.
 ```
 ## FEATURES
 
