@@ -8,6 +8,8 @@ module MDServer
     # Gems
     require 'sinatra/base'
     require 'rouge'
+    require 'kramdown'
+    require 'thin'
     Tilt.register Tilt::KramdownTemplate, 'md'
     # Local
     require_relative 'mdserver/config.rb'
