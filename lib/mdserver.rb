@@ -14,6 +14,7 @@ module MDServer
     require_relative 'mdserver/base.rb'
     # Plugs
     require_relative 'mdserver/plug/favicon.rb'
+    require_relative 'mdserver/plug/highlight.rb'
     require_relative 'mdserver/plug/login.rb'
     require_relative 'mdserver/plug/restart.rb'
     Base.run!

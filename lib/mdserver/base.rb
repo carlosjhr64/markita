@@ -125,11 +125,6 @@ class Base < Sinatra::Base
     redirect '/index'
   end
 
-  get '/highlight.css' do
-    headers 'Content-Type' => 'text/css'
-    HIGHLIGHT
-  end
-
   not_found do
     NOT_FOUND
   end
