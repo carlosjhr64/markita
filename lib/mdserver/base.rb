@@ -150,30 +150,11 @@ class Base < Sinatra::Base
   end
 
   get '/login.html' do
-<<LOGIN_FORM
-<!DOCTYPE html>
-<html>
-<head><title>login</title></head>
-<body>
-<h1>MDServer</h1>
-<form method="post">
-Password:<input type="password" name="id">
-</form>
-</body>
-</html>
-LOGIN_FORM
+    LOGIN_FORM
   end
 
   post '/login.html' do
-<<LOGIN_REJECTION
-<!DOCTYPE html>
-<html>
-<head><title>login</title></head>
-<body>
-<h1>Bad Password</h1>
-</body>
-</html>
-LOGIN_REJECTION
+    LOGIN_FAILED
   end
 
   get '/restart.html' do

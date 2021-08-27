@@ -6,6 +6,8 @@ module MDServer
   VALID_ID = File.exist?(_=File.join(ROOT, '.valid-id')) ?
     File.read(_).strip : nil
   appdir = File.dirname File.dirname __dir__
+  LOGIN_FORM = File.read File.join(appdir, 'data/login_form.html')
+  LOGIN_FAILED = File.read File.join(appdir, 'data/login_failed.html')
   NOT_FOUND = File.read File.join(appdir, 'data/not_found.html')
   FAVICON = File.exist?(_=File.join(ROOT, 'favicon.ico')) ?
     File.read(_) : File.read(File.join(appdir, 'data/favicon.ico'))
