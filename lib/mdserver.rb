@@ -17,6 +17,7 @@ module MDServer
     require_relative 'mdserver/plug/highlight.rb'
     require_relative 'mdserver/plug/login.rb'
     require_relative 'mdserver/plug/restart.rb'
+    require_relative 'mdserver/plug/about.rb'
     Base.run!
   end
 end

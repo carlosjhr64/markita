@@ -9,4 +9,6 @@ module MDServer
 
   PAGE_KEY   = %r{/(\w[\w\/\-]*\w)}
   IMAGE_PATH = %r{/(\w[\w\/\-]*\w\.((png)|(gif)))}
+
+  START_TIME = Time.now
 end
