@@ -1,5 +1,6 @@
 _
 _1
+About
 action
 all
 allowed
@@ -7,6 +8,7 @@ APPDIR
 ARGV
 backtrace
 Base
+basename
 before
 bind
 cert_chain_file
@@ -41,6 +43,7 @@ FORM
 get
 gsub
 header
+HEADER_LINKS
 headers
 HelpParser
 hexdigest
@@ -62,6 +65,7 @@ line
 LoadError
 Login
 markdown
+match
 MDServer
 message
 method
@@ -72,6 +76,7 @@ nil
 not_found
 NotFound
 NOT_FOUND
+now
 options
 OPTIONS
 page
@@ -100,6 +105,8 @@ require_relative
 root
 ROOT
 Rouge
+route
+routes
 Ruby30
 run
 RuntimeError
@@ -117,14 +124,18 @@ sleep
 split
 ssl
 ssl_options
+START_TIME
 string
 strip
+sub
 template
 text
 theme
 Theme
 Thread
 Tilt
+Time
+to_s
 to_sym
 type
 upcase

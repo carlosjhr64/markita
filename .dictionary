@@ -1,6 +1,7 @@
 APPDIR
 ARGV
 backtrace
+basename
 carlosjhr
 CarlosJHR
 cgi
