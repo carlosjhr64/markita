@@ -10,7 +10,7 @@ class Base
       <html>
       <head><title>restart</title></head>
       <body>
-      <h1>MDSever restart</h1>
+      <h1>MDServer restart</h1>
       <pre>#{$0} #{ARGV.join(' ')}</pre>
       </body>
       </html>
