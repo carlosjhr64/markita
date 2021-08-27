@@ -84,13 +84,13 @@ class Base < Sinatra::Base
         line = s+li+item+"</li>"
       when %r(^<p>(\w+:\[\*?\w+\] )+\((\S+)\)</p>$)
         # One Line Forms
-        form = %Q(<form action="#{$2}">\n)
+        action,method,form = $2,'get',''
         line.scan(/(\w+):\[(\*)?(\w+)\] /).each do |field, pwd, name|
           type = (pwd)? 'password' : 'text'
+          method = 'post' if pwd
           form << %Q{  #{field}:<input type="#{type}" name="#{name}">\n}
         end
-        form << %Q(  <input type="submit">\n</form>)
-        line = form
+        line = %Q(<form action="#{action}" method="#{method}">\n)+form+%Q(  <input type="submit">\n</form>)
       when %r(^<p><img (src="[^"]*" alt=" [^"]* ") /></p>$)
         line = %Q(<img style="display: block; margin-left: auto; margin-right: auto;" #{$1} />)
       when %r(^<p><img (src="[^"]*" alt=" [^"]*") />$)
