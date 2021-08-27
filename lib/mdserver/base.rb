@@ -110,15 +110,15 @@ class Base < Sinatra::Base
     Base.header(key) + yield + Base.footer
   end
 
-  get %r{/(\w[\w\/\-]*\w)} do |key|
+  get PAGE_KEY do |key|
     filepath = File.join ROOT, key+'.md'
     raise Sinatra::NotFound  unless File.exist? filepath
     text = File.read(filepath).force_encoding('utf-8')
     Base.page(key){ Base.post_process markdown Base.pre_process text}
   end
 
-  get %r{/img/(\w+).png} do |key|
-    send_file File.join ROOT, 'img', key + '.png'
+  get IMAGE_PATH do |path, *_|
+    send_file File.join(ROOT, path)
   end
 
   get '/' do

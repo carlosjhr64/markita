@@ -39,8 +39,9 @@ Types:
 * Image placement hints
 * One line forms
 * Template substitutions
-* ONLY SUPPORTS /**/MARKDOWNs
-* ONLY SUPPORTS /img/PNGs
+* ONLY SERVES MARKDOWN PAGES:`/**/*.md`(omit extension `.md` in the url)
+* ONLY SERVES PNG and GIF IMAGES: `/**/*.png`, and `/**/*.gif`
+* See [`lib/mdserver/plug`](lib/mdserver/plug) for examples of plugins
 
 Optionally:
 
