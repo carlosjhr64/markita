@@ -1,5 +1,5 @@
 module MDServer
-  VERSION = '1.0.210826'
+  VERSION = '1.0.210827'
 
   def self.run!
     # Standard libraries

@@ -1,6 +1,6 @@
 # MDServer
 
-* [VERSION 1.0.210826](https://github.com/carlosjhr64/mdserver/releases)
+* [VERSION 1.0.210827](https://github.com/carlosjhr64/mdserver/releases)
 * [github](https://www.github.com/carlosjhr64/mdserver)
 * [rubygems](https://rubygems.org/gems/mdserver)
 
@@ -50,17 +50,17 @@ Optionally:
 
 ## HOW-TOs
 
-Set site password:
+### Set site password:
 ```shell
 $ # Assuming ~/vimwiki is your site's root...
 $ echo -n '<SitePasswordHere>' | sha256sum | grep -o '^\w*' > ~/vimwiki/.valid-id
 ```
-Set site custom favicon:
+### Set site custom favicon:
 ```shell
 $ # Assuming ~/vimwiki is your site's root...
 $ cp /path-to/custom/favicon.ico ~/vimwiki/favicon.ico
 ```
-Run site in https:
+### Run site in https:
 ```
 $ # Assuming ~/vimwiki is your site's root...
 $ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout pkey.pem -out cert.crt
@@ -68,12 +68,52 @@ $ # Stuff happens... Answer all the dumb questions... then:
 $ mv cert.crt ~/vimwiki/.cert.crt
 $ mv pkey.pem ~/vimwiki/.pkey.pem
 ```
-Run allowing localhost to bypass site password:
+### Allow localhost to bypass password:
 ```shell
 $ # Assuming ~/vimwiki with a site password set...
 $ mdserver --allowed=127.0.0.1
 ./bin/mdserver-1.0.210826
 == Sinatra (v2.1.0) has taken the stage on 8080 for development with backup from Thin
+```
+### Ballot boxes
+```txt
+- [ ] This is an emty ballot box
+- [x] This is a checked ballot box
+```
+### Image placement hints:
+```txt
+Left and right spaces of the alternate text of an image hints placement.
+The following image will be placed centered.
+
+![ Centered Image ](/img/image.png)
+
+![Left Floating ](/img/image.png)
+The above specified image will float left.
+
+![ Right Floating](/img/image.png)
+The above specified image will float right.
+```
+### One line forms
+```txt
+This will do a get method form:
+
+Google:[q](https://www.google.com/search)
+
+Due to the passowrd field, this will do a post method form:
+
+Username:[user] Password:[*pwd](/login.html)
+```
+### Template substitutions
+```txt
+In the template string, uppercase keys are CGI escaped:
+
+<!-- template: "* [&query;](https://www.google.com/search?q=&QUERY;)" -->
+<!-- regx: /^\* (<?query>.*)$/ -->
+* Grumpy Cat
+* It's over 9000!
+
+The substitutions are active until the end of the block.
+If template is not provided, the line itself will be the template.
 ```
 ## LICENSE
 

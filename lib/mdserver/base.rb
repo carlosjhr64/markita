@@ -171,7 +171,7 @@ LOGIN_REJECTION
     if File.mtime(__FILE__) > START_TIME
       version = 'Restarting...'
       Thread.new do
-        sleep(2)
+        sleep 1
         Kernel.exec(__FILE__)
       end
     end
