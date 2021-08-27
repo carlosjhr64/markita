@@ -125,11 +125,6 @@ class Base < Sinatra::Base
     redirect '/index'
   end
 
-  get '/favicon.ico' do
-    headers 'Content-Type' => 'image/x-icon'
-    FAVICON
-  end
-
   get '/highlight.css' do
     headers 'Content-Type' => 'text/css'
     HIGHLIGHT
