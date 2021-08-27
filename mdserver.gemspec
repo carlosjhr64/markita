@@ -43,5 +43,7 @@ lib/mdserver/plug/restart.rb
   s.add_runtime_dependency 'help_parser', '~> 7.0', '>= 7.0.200907'
   s.add_runtime_dependency 'sinatra', '~> 2.1', '>= 2.1.0'
   s.add_runtime_dependency 'rouge', '~> 3.26', '>= 3.26.0'
+  s.add_runtime_dependency 'kramdown', '~> 2.3', '>= 2.3.1'
+  s.add_runtime_dependency 'thin', '~> 1.8', '>= 1.8.1'
 
 end
