@@ -5,6 +5,20 @@ class Base < Sinatra::Base
   set port: OPTIONS&.port || '8080'
   set sessions: true
 
+  before do
+    unless VALID_ID.nil? or ALLOWED_IPS&.include?(request.ip)
+      if id = params[:id]
+        session[:id] = Digest::SHA256.hexdigest id
+      end
+      if session[:id] == VALID_ID
+        redirect '/' if request.path_info == '/login.html'
+      else
+        redirect '/login.html' unless request.path_info == '/login.html'
+      end
+    end
+    puts "#{request.ip} #{request.path_info}"
+  end
+
   def Base.run!
     puts "#{$0}-#{VERSION}"
     super do |server|
@@ -39,20 +53,6 @@ class Base < Sinatra::Base
 </body>
 </html>
     FOOTER
-  end
-
-  before do
-    unless VALID_ID.nil? or ALLOWED_IPS&.include?(request.ip)
-      if id = params[:id]
-        session[:id] = Digest::SHA256.hexdigest id
-      end
-      if session[:id] == VALID_ID
-        redirect '/' if request.path_info == '/login.html'
-      else
-        redirect '/login.html' unless request.path_info == '/login.html'
-      end
-    end
-    puts "#{request.ip} #{request.path_info}"
   end
 
   def Base.pre_process(text)
@@ -124,15 +124,19 @@ class Base < Sinatra::Base
     Base.header(key) + yield + Base.footer
   end
 
-  get '/' do
-    redirect '/index'
-  end
-
   get %r{/(\w[\w\/\-]*\w)} do |key|
     filepath = File.join ROOT, key+'.md'
     raise Sinatra::NotFound  unless File.exist? filepath
     text = File.read(filepath).force_encoding('utf-8')
     Base.page(key){ Base.post_process markdown Base.pre_process text}
+  end
+
+  get %r{/img/(\w+).png} do |key|
+    send_file File.join ROOT, 'img', key + '.png'
+  end
+
+  get '/' do
+    redirect '/index'
   end
 
   get '/favicon.ico' do
@@ -143,10 +147,6 @@ class Base < Sinatra::Base
   get '/highlight.css' do
     headers 'Content-Type' => 'text/css'
     HIGHLIGHT
-  end
-
-  get %r{/img/(\w+).png} do |key|
-    send_file File.join ROOT, 'img', key + '.png'
   end
 
   get '/login.html' do
