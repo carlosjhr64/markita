@@ -19,6 +19,7 @@ clear
 CSS
 Digest
 __dir__
+Dir
 directive
 directory
 dirname
@@ -26,7 +27,6 @@ each
 each_line
 escape
 Exception
-exec
 exist
 exit
 expand_path
@@ -41,6 +41,7 @@ force_encoding
 form
 FORM
 get
+glob
 gsub
 header
 HEADER_LINKS
@@ -57,7 +58,6 @@ ip
 IPS
 item
 join
-Kernel
 key
 KramdownTemplate
 li
@@ -120,7 +120,6 @@ sessions
 set
 SHA256
 Sinatra
-sleep
 split
 ssl
 ssl_options
@@ -132,7 +131,6 @@ template
 text
 theme
 Theme
-Thread
 Tilt
 Time
 to_s
