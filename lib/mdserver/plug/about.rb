@@ -28,4 +28,3 @@ class Base
   end
 end
 end
-

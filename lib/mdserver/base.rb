@@ -25,9 +25,7 @@ class Base < Sinatra::Base
 <html>
 <head>
   <title>#{key}</title>
-  <link rel="stylesheet" href="/highlight.css" type="text/css">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-</head>
+#{HEADER_LINKS}</head>
 <body>
 
     HEADER

@@ -1,5 +1,6 @@
 module MDServer
 class Base < Sinatra::Base
+  HEADER_LINKS << %Q(  <link rel="icon" type="image/x-icon" href="/favicon.ico">\n)
   module Favicon
     ICO = File.exist?(_=File.join(ROOT, 'favicon.ico')) ?
           File.read(_) :
@@ -12,4 +13,3 @@ class Base < Sinatra::Base
   end
 end
 end
-

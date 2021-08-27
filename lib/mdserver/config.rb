@@ -1,6 +1,8 @@
 module MDServer
   OPTIONS ||= nil
 
+  HEADER_LINKS = ''
+
   ROOT = File.expand_path OPTIONS&.root || '~/vimwiki'
   raise "Missing site root directory: "+ROOT  unless File.directory? ROOT
 
