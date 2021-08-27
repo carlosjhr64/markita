@@ -108,7 +108,7 @@ Username:[user] Password:[*pwd](/login.html)
 In the template string, uppercase keys are CGI escaped:
 
 <!-- template: "* [&query;](https://www.google.com/search?q=&QUERY;)" -->
-<!-- regx: /^\* (<?query>.*)$/ -->
+<!-- regx: /^\* (?<query>.*)$/ -->
 * Grumpy Cat
 * It's over 9000!
 

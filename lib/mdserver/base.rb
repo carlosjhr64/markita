@@ -41,21 +41,26 @@ class Base < Sinatra::Base
     FOOTER
   end
 
-  def Base.page(key)
-    begin
-      Base.header(key) + yield + Base.footer
-    rescue
-      $stderr.puts $!
-      raise Sinatra::NotFound
+  before do
+    unless VALID_ID.nil? or ALLOWED_IPS&.include?(request.ip)
+      if id = params[:id]
+        session[:id] = Digest::SHA256.hexdigest id
+      end
+      if session[:id] == VALID_ID
+        redirect '/' if request.path_info == '/login.html'
+      else
+        redirect '/login.html' unless request.path_info == '/login.html'
+      end
     end
+    puts "#{request.ip} #{request.path_info}"
   end
 
-  def Base.post_process(text)
+  def Base.pre_process(text)
     val,string,_ = {},'',nil
     text.each_line do |line|
-      line.force_encoding('utf-8').chomp!
+      line.chomp!
       case line
-      when val[:reset]
+      when ''
         val.clear
       when val[:regx]
         # Template/Substitutions
@@ -75,6 +80,17 @@ class Base < Sinatra::Base
           $stderr.puts "Unrecognized directive: "+directive
         end
         next
+      end
+      string << line << "\n"
+    end
+    return string
+  end
+
+  def Base.post_process(text)
+    string,_ = '',nil
+    text.each_line do |line|
+      line.chomp!
+      case line
       when %r(^(\s*)<li>\[(x| )\] (.*)</li>$)
         # Task Lists
         s,x,item = $1,$2,$3
@@ -90,7 +106,8 @@ class Base < Sinatra::Base
           method = 'post' if pwd
           form << %Q{  #{field}:<input type="#{type}" name="#{name}">\n}
         end
-        line = %Q(<form action="#{action}" method="#{method}">\n)+form+%Q(  <input type="submit">\n</form>)
+        line = %Q(<form action="#{action}" method="#{method}">\n) +
+          form + %Q(  <input type="submit">\n</form>)
       when %r(^<p><img (src="[^"]*" alt=" [^"]* ") /></p>$)
         line = %Q(<img style="display: block; margin-left: auto; margin-right: auto;" #{$1} />)
       when %r(^<p><img (src="[^"]*" alt=" [^"]*") />$)
@@ -103,22 +120,19 @@ class Base < Sinatra::Base
     return string
   end
 
-  before do
-    unless VALID_ID.nil? or ALLOWED_IPS&.include?(request.ip)
-      if id = params[:id]
-        session[:id] = Digest::SHA256.hexdigest id
-      end
-      if session[:id] == VALID_ID
-        redirect '/' if request.path_info == '/login.html'
-      else
-        redirect '/login.html' unless request.path_info == '/login.html'
-      end
-    end
-    puts "#{request.ip} #{request.path_info}"
+  def Base.page(key)
+    Base.header(key) + yield + Base.footer
   end
 
   get '/' do
-    Base.page(:index){ markdown :index}
+    redirect '/index'
+  end
+
+  get %r{/(\w[\w\/\-]*\w)} do |key|
+    filepath = File.join ROOT, key+'.md'
+    raise Sinatra::NotFound  unless File.exist? filepath
+    text = File.read(filepath).force_encoding('utf-8')
+    Base.page(key){ Base.post_process markdown Base.pre_process text}
   end
 
   get '/favicon.ico' do
@@ -129,10 +143,6 @@ class Base < Sinatra::Base
   get '/highlight.css' do
     headers 'Content-Type' => 'text/css'
     HIGHLIGHT
-  end
-
-  get %r{/(\w[\w\/\-]*\w)} do |key|
-    Base.page(key){ Base.post_process markdown key.to_sym}
   end
 
   get %r{/img/(\w+).png} do |key|
