@@ -17,6 +17,7 @@ chomp
 class
 clear
 CSS
+detect
 Digest
 __dir__
 Dir
@@ -59,10 +60,12 @@ item
 join
 key
 KramdownTemplate
+lambda
 li
 line
 LoadError
 Login
+map
 markdown
 match
 MDServer
@@ -87,6 +90,7 @@ page
 PAGE_KEY
 params
 path
+PATH
 path_info
 port
 post
