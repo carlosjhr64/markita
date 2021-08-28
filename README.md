@@ -6,7 +6,7 @@
 
 ## DESCRIPTION
 
-A [Sinatra](http://sinatrarb.com) Markdown view server.
+A [Sinatra](http://sinatrarb.com) Markdown server.
 
 Uses [Kramdown](https://kramdown.gettalong.org/index.html) for the Markdown to
 HTML conversion.
@@ -56,6 +56,7 @@ Types:
 Optionally:
 
 * Place your custom `/favicon.ico`
+* Place your custom `/highlight.css`
 * Place `/.cert.crt` and `/.pkey.pem` for SSL(https)
 * Place `sha256sum` of site's password in `/.valid-id`
 
@@ -66,10 +67,11 @@ Optionally:
 $ # Assuming ~/vimwiki is your site's root...
 $ echo -n '<SitePasswordHere>' | sha256sum | grep -o '^\w*' > ~/vimwiki/.valid-id
 ```
-### Set site custom favicon:
+### Set site custom favicon add css:
 ```shell
 $ # Assuming ~/vimwiki is your site's root...
 $ cp /path-to/custom/favicon.ico ~/vimwiki/favicon.ico
+$ cp /path-to/custom/highlight.css ~/vimwiki/highlight.css
 ```
 ### Run site in https:
 ```
@@ -110,7 +112,7 @@ This will do a get method form:
 
 Google:[q](https://www.google.com/search)
 
-Due to the passowrd field, this will do a post method form:
+Due to the password field, this will do a post method form:
 
 Username:[user] Password:[*pwd](/login.html)
 ```
