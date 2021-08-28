@@ -1,6 +1,5 @@
 module MDServer
 class Base < Sinatra::Base
-  set views: ROOT
   set bind: OPTIONS&.bind || '0.0.0.0'
   set port: OPTIONS&.port || '8080'
   set sessions: true
