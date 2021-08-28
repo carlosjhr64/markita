@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
 
-  s.name     = 'mdserver'
+  s.name     = 'markita'
   s.version  = '1.0.210828'
 
-  s.homepage = 'https://github.com/carlosjhr64/mdserver'
+  s.homepage = 'https://github.com/carlosjhr64/markita'
 
   s.author   = 'CarlosJHR64'
   s.email    = 'carlosjhr64@gmail.com'
@@ -25,22 +25,22 @@ SUMMARY
   s.require_paths = ['lib']
   s.files = %w(
 README.md
-bin/mdserver
+bin/markita
 data/favicon.ico
 data/highlight.css
 data/login_failed.html
 data/login_form.html
 data/not_found.html
-lib/mdserver.rb
-lib/mdserver/base.rb
-lib/mdserver/config.rb
-lib/mdserver/plug/about.rb
-lib/mdserver/plug/favicon.rb
-lib/mdserver/plug/highlight.rb
-lib/mdserver/plug/login.rb
-lib/mdserver/plug/plugs.rb
+lib/markita.rb
+lib/markita/base.rb
+lib/markita/config.rb
+lib/markita/plug/about.rb
+lib/markita/plug/favicon.rb
+lib/markita/plug/highlight.rb
+lib/markita/plug/login.rb
+lib/markita/plug/plugs.rb
   )
-  s.executables << 'mdserver'
+  s.executables << 'markita'
   s.add_runtime_dependency 'help_parser', '~> 7.0', '>= 7.0.200907'
   s.add_runtime_dependency 'sinatra', '~> 2.1', '>= 2.1.0'
   s.add_runtime_dependency 'kramdown', '~> 2.3', '>= 2.3.1'

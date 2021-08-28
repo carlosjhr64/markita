@@ -1,8 +1,8 @@
-# MDServer
+# Markita
 
-* [VERSION 1.0.210828](https://github.com/carlosjhr64/mdserver/releases)
-* [github](https://www.github.com/carlosjhr64/mdserver)
-* [rubygems](https://rubygems.org/gems/mdserver)
+* [VERSION 1.0.210828](https://github.com/carlosjhr64/markita/releases)
+* [github](https://www.github.com/carlosjhr64/markita)
+* [rubygems](https://rubygems.org/gems/markita)
 
 ## DESCRIPTION
 
@@ -13,13 +13,13 @@ HTML conversion.
 
 ## INSTALL
 ```shell
-$ gem install mdserver
+$ gem install markita
 ```
 ## HELP
 ```shell
-$ mdserver --help
+$ markita --help
 Usage:
-  mdserver [:options+]
+  markita [:options+]
 Options:
   --root=DIRECTORY 	 ~/vimwiki
   --bind=BIND      	 0.0.0.0
@@ -51,7 +51,7 @@ Types:
 * Template substitutions
 * ONLY SERVES MARKDOWN PAGES:`/**/*.md`(omit extension `.md` in the url)
 * ONLY SERVES PNG and GIF IMAGES: `/**/*.png`, and `/**/*.gif`
-* See [`lib/mdserver/plug`](lib/mdserver/plug) for examples of plugins
+* See [`lib/markita/plug`](lib/markita/plug) for examples of plugins
 
 Optionally:
 
@@ -88,8 +88,8 @@ $ mv pkey.pem ~/vimwiki/.pkey.pem
 ### Allow localhost to bypass password:
 ```shell
 $ # Assuming ~/vimwiki with a site password set...
-$ mdserver --allowed=127.0.0.1
-./bin/mdserver-1.0.210826
+$ markita --allowed=127.0.0.1
+./bin/markita-1.0.210826
 == Sinatra (v2.1.0) has taken the stage on 8080 for development with backup from Thin
 ```
 ### Ballot boxes

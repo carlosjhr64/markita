@@ -1,9 +1,9 @@
-module MDServer
+module Markita
 class Base
   module About
     def self.page
       text = <<~TEXT
-        # [MDServer](https://github.com/carlosjhr64/mdserver)
+        # [Markita](https://github.com/carlosjhr64/markita)
 
         * VERSION: #{VERSION}
         * ROOT: #{ROOT.sub(%r{^/home/\w+/},'~/')}

@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 require 'help_parser'
-require 'mdserver'
+require 'markita'
 
-OPTIONS = HelpParser[MDServer::VERSION, <<HELP]
+OPTIONS = HelpParser[Markita::VERSION, <<HELP]
 Usage:
-  mdserver [:options+]
+  markita [:options+]
 Options:
   --root=DIRECTORY \t ~/vimwiki
   --bind=BIND      \t 0.0.0.0
@@ -29,7 +29,7 @@ Types:
 # when the site is accessed from those locations.
 HELP
 begin
-  MDServer.run!
+  Markita.run!
 rescue LoadError
   HelpParser::REDTTY["#{$!.class}: #{$!.message}"]
   exit 72

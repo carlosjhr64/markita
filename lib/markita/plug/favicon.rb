@@ -1,4 +1,4 @@
-module MDServer
+module Markita
 class Base < Sinatra::Base
   HEADER_LINKS << %Q(  <link rel="icon" type="image/x-icon" href="/favicon.ico">\n)
   module Favicon

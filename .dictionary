@@ -41,9 +41,9 @@ KramdownTemplate
 li
 LoadError
 localhost
+markita
+Markita
 md
-mdserver
-MDServer
 MERCHANTABILITY
 mv
 newkey

@@ -1,4 +1,4 @@
-module MDServer
+module Markita
 class Base
   module Login
     ID = File.exist?(_=File.join(ROOT, '.valid-id')) ?

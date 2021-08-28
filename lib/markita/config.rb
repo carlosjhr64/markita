@@ -1,4 +1,4 @@
-module MDServer
+module Markita
   OPTIONS ||= nil
 
   HEADER_LINKS = ''

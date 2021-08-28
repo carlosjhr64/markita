@@ -1,4 +1,4 @@
-module MDServer
+module Markita
 class Base < Sinatra::Base
   set bind: OPTIONS&.bind || '0.0.0.0'
   set port: OPTIONS&.port || '8080'
