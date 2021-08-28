@@ -26,6 +26,11 @@ Options:
   --port=PORT      	 8080
   --theme=THEME    	 base16.light
   --allowed=IPS
+  --no_about
+  --no_favicon
+  --no_highlight
+  --no_login
+  --no_plugs
 Types:
   DIRECTORY /^~?[\/\w\.]+$/
   BIND      /^[\w\.]+$/
