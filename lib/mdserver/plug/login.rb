@@ -8,8 +8,8 @@ class Base
     if IPS and not ID
       raise "Allowed ips without site password does not make sense."
     end
-    FORM   = File.read File.join(APPDIR, 'data/login_form.html')
-    FAILED = File.read File.join(APPDIR, 'data/login_failed.html')
+    FORM   = File.read File.join(APPDATA, 'login_form.html')
+    FAILED = File.read File.join(APPDATA, 'login_failed.html')
   end
 
   before do

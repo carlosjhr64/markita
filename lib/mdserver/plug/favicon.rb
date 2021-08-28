@@ -4,7 +4,7 @@ class Base < Sinatra::Base
   module Favicon
     ICO = File.exist?(_=File.join(ROOT, 'favicon.ico')) ?
           File.read(_) :
-          File.read(File.join(APPDIR, 'data/favicon.ico'))
+          File.read(File.join(APPDATA, 'favicon.ico'))
   end
 
   get '/favicon.ico' do
