@@ -2,9 +2,9 @@ module MDServer
 class Base < Sinatra::Base
   HEADER_LINKS << %Q(  <link rel="stylesheet" href="/highlight.css" type="text/css">\n)
   module Highlight
-    theme = OPTIONS&.theme || 'base16.light'
-    CSS = Rouge::Theme.find(theme)&.render(scope: '.highlight')
-    raise "Can't find Rouge Theme "+theme  unless CSS
+    CSS = File.exist?(_=File.join(ROOT, 'highlight.css')) ?
+          File.read(_) :
+          File.read(File.join(APPDIR, 'data/highlight.css'))
   end
 
   get '/highlight.css' do

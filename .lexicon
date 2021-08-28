@@ -35,7 +35,6 @@ Favicon
 field
 File
 filepath
-find
 footer
 force_encoding
 form
@@ -73,6 +72,11 @@ name
 named_captures
 new
 nil
+no_about
+no_favicon
+no_highlight
+no_login
+no_plugs
 not_found
 NotFound
 NOT_FOUND
@@ -98,13 +102,11 @@ REDTTY
 Regexp
 register
 regx
-render
 request
 require
 require_relative
 root
 ROOT
-Rouge
 route
 routes
 Ruby30
@@ -112,7 +114,6 @@ run
 RuntimeError
 s
 scan
-scope
 send_file
 server
 session
@@ -129,8 +130,6 @@ strip
 sub
 template
 text
-theme
-Theme
 Tilt
 Time
 to_s
@@ -141,5 +140,4 @@ val
 value
 verify_peer
 VERSION
-views
 x

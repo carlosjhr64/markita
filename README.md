@@ -1,6 +1,6 @@
 # MDServer
 
-* [VERSION 1.0.210827](https://github.com/carlosjhr64/mdserver/releases)
+* [VERSION 1.0.210828](https://github.com/carlosjhr64/mdserver/releases)
 * [github](https://www.github.com/carlosjhr64/mdserver)
 * [rubygems](https://rubygems.org/gems/mdserver)
 
@@ -9,7 +9,7 @@
 A [Sinatra](http://sinatrarb.com) Markdown view server.
 
 Uses [Kramdown](https://kramdown.gettalong.org/index.html) for the Markdown to
-HTML conversion, and [Rouge](http://rouge.jneen.net) for the CSS/highlight.
+HTML conversion.
 
 ## INSTALL
 ```shell

@@ -1,5 +1,5 @@
 module MDServer
-  VERSION = '1.0.210827'
+  VERSION = '1.0.210828'
 
   def self.run!
     # Standard libraries
@@ -7,7 +7,6 @@ module MDServer
     require 'cgi'
     # Gems
     require 'sinatra/base'
-    require 'rouge'
     require 'kramdown'
     require 'thin'
     Tilt.register Tilt::KramdownTemplate, 'md'
