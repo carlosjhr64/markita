@@ -112,13 +112,15 @@ The above specified image will float right.
 ```
 ### One line forms
 ```txt
+Note the strict use of space!
 This will do a get method form:
 
-Google:[q](https://www.google.com/search)
+Google:[q] (https://www.google.com/search)
 
 Due to the password field, this will do a post method form:
 
-Username:[user] Password:[*pwd](/login.html)
+Username:[user] Password:[*pwd] (/login.html)
+
 ```
 ### Template substitutions
 ```txt
