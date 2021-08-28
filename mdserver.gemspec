@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
 A [Sinatra](http://sinatrarb.com) Markdown view server.
 
 Uses [Kramdown](https://kramdown.gettalong.org/index.html) for the Markdown to
-HTML conversion, and [Rouge](http://rouge.jneen.net) for the CSS/highlight.
+HTML conversion.
 DESCRIPTION
 
   s.summary = <<SUMMARY
@@ -27,6 +27,7 @@ SUMMARY
 README.md
 bin/mdserver
 data/favicon.ico
+data/highlight.css
 data/login_failed.html
 data/login_form.html
 data/not_found.html
