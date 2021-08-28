@@ -19,7 +19,9 @@ class Base
         basename = File.basename(path, '.*')
         text << "* [#{basename}](#{path})\n"
       end
-      text << "\n![Favicon](/favicon.ico)\n"  if defined? Favicon
+      if defined? Favicon and Favicon::ICO
+        text << "\n![Favicon](/favicon.ico)\n"
+      end
       text
     end
   end
