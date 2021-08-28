@@ -12,14 +12,14 @@ Gem::Specification.new do |s|
   s.licenses = ['MIT']
 
   s.description = <<DESCRIPTION
-A [Sinatra](http://sinatrarb.com) Markdown view server.
+A [Sinatra](http://sinatrarb.com) Markdown server.
 
 Uses [Kramdown](https://kramdown.gettalong.org/index.html) for the Markdown to
 HTML conversion.
 DESCRIPTION
 
   s.summary = <<SUMMARY
-A [Sinatra](http://sinatrarb.com) Markdown view server.
+A [Sinatra](http://sinatrarb.com) Markdown server.
 SUMMARY
 
   s.require_paths = ['lib']
