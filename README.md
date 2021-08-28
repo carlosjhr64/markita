@@ -67,11 +67,15 @@ Optionally:
 $ # Assuming ~/vimwiki is your site's root...
 $ echo -n '<SitePasswordHere>' | sha256sum | grep -o '^\w*' > ~/vimwiki/.valid-id
 ```
-### Set site custom favicon add css:
+### Set site custom favicon, css, not found page, and login form and fail page:
 ```shell
 $ # Assuming ~/vimwiki is your site's root...
+$ # Note that you'll have to restart the server on any change to these:
 $ cp /path-to/custom/favicon.ico ~/vimwiki/favicon.ico
 $ cp /path-to/custom/highlight.css ~/vimwiki/highlight.css
+$ cp /path-to/custom/not_found.html ~/vimwiki/not_found.html
+$ cp /path-to/custom/login_form.html ~/vimwiki/login_form.html
+$ cp /path-to/custom/login_fail.html ~/vimwiki/login_fail.html
 ```
 ### Run site in https:
 ```
