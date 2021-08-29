@@ -25,6 +25,8 @@ module Markita
           template = template.gsub("&#{name.upcase};", CGI.escape(value))
         end
         template
+      when /^```\s*(\w+)?$/
+        $1 ? "~~~ #{$1}" : '~~~'
       else
         nil
       end
