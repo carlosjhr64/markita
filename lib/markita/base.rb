@@ -38,20 +38,13 @@ class Base < Sinatra::Base
     FOOTER
   end
 
-  def Base.pre_process(text)
+  def Base.process(text, procs=POSTPROCESS)
     val,string,_ = {},'',nil
     text.each_line do |line|
       line.chomp!
       case line
       when ''
         val.clear
-      when val[:regx]
-        # Template/Substitutions
-        line=_ if _=val[:template]
-        $~.named_captures.each do |name, value|
-          line = line.gsub("&#{name};", value)
-          line = line.gsub("&#{name.upcase};", CGI.escape(value))
-        end
       when %r(^<!-- (.*) -->$)
         directive = $1
         case directive
@@ -63,40 +56,9 @@ class Base < Sinatra::Base
           $stderr.puts "Unrecognized directive: "+directive
         end
         next
-      end
-      string << line << "\n"
-    end
-    return string
-  end
-
-  def Base.post_process(text)
-    string,_ = '',nil
-    text.each_line do |line|
-      line.chomp!
-      case line
-      when %r(^(\s*)<li>\[(x| )\] (.*)</li>$)
-        # Task Lists
-        s,x,item = $1,$2,$3
-        li = (x=='x')?
-          %q{<li style="list-style-type: '&#9745; '">} :
-          %q{<li style="list-style-type: '&#9744; '">}
-        line = s+li+item+"</li>"
-      when %r(^<p>(\w+:\[\*?\w+\] )+\((\S+)\)</p>$)
-        # One Line Forms
-        action,method,form = $2,'get',''
-        line.scan(/(\w+):\[(\*)?(\w+)\] /).each do |field, pwd, name|
-          type = (pwd)? 'password' : 'text'
-          method = 'post' if pwd
-          form << %Q{  #{field}:<input type="#{type}" name="#{name}">\n}
-        end
-        line = %Q(<form action="#{action}" method="#{method}">\n) +
-          form + %Q(  <input type="submit">\n</form>)
-      when %r(^<p><img (src="[^"]*" alt=" [^"]* ") /></p>$)
-        line = %Q(<img style="display: block; margin-left: auto; margin-right: auto;" #{$1} />)
-      when %r(^<p><img (src="[^"]*" alt=" [^"]*") />$)
-        line = %Q(<p><img style="float: left;" #{$1} />)
-      when %r(^<p><img (src="[^"]*" alt="[^"]* ") />$)
-        line = %Q(<p><img style="float: right;" #{$1} />)
+      else
+        # set line to IDontCare if IDontCare gets set
+        line=_ if procs.detect{_=_1[line, val]}
       end
       string << line << "\n"
     end
@@ -111,7 +73,7 @@ class Base < Sinatra::Base
     filepath = File.join ROOT, key+'.md'
     raise Sinatra::NotFound  unless File.exist? filepath
     text = File.read(filepath).force_encoding('utf-8')
-    Base.page(key){ Base.post_process markdown Base.pre_process text}
+    Base.page(key){ Base.process markdown Base.process(text, PREPROCESS)}
   end
 
   get IMAGE_PATH do |path, *_|

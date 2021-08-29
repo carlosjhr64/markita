@@ -29,6 +29,7 @@ http
 https
 ico
 ICO
+IDontCare
 img
 ip
 ips
@@ -55,7 +56,9 @@ pem
 pkey
 png
 PNG
-pre
+POSTPROCESS
+PREPROCESS
+procs
 pwd
 rb
 REDTTY
@@ -78,6 +81,7 @@ sublicense
 sym
 TOs
 txt
+unshift
 upcase
 url
 usr
