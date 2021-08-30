@@ -50,12 +50,13 @@ class Base < Sinatra::Base
         case directive
         when %r(^(\w+): "(.*)"$)
           val[$1.to_sym] = $2
+          next
         when %r(^(\w+): /(.*)/)
           val[$1.to_sym] = Regexp.new $2
+          next
         else
-          $stderr.puts "Unrecognized directive: "+directive
+          line = directive.gsub('&lt;', '<').gsub('&gt;', '>')
         end
-        next
       else
         # set line to IDontCare if IDontCare gets set
         line=_ if procs.detect{_=_1[line, val]}
