@@ -42,6 +42,7 @@ KramdownTemplate
 li
 LoadError
 localhost
+lt
 markita
 Markita
 md
@@ -79,6 +80,7 @@ stderr
 stylesheet
 sublicense
 sym
+td
 TOs
 txt
 unshift

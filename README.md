@@ -134,6 +134,26 @@ In the template string, uppercase keys are CGI escaped:
 The substitutions are active until the end of the block.
 If template is not provided, the line itself will be the template.
 ```
+### Escaping HTML until after markdown's conversion
+```
+
+!-- <table><tr><td> --
+
+# Left
+1. One
+2. Two
+3. Three
+
+!-- </td><td> --
+
+# Right
+* A
+* B
+* C
+
+!-- </td></tr></table> --
+
+```
 ## LICENSE
 
 Copyright 2021 CarlosJHR64
