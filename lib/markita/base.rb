@@ -45,8 +45,8 @@ class Base < Sinatra::Base
       case line
       when ''
         val.clear
-      when %r(^<!-- (.*) -->$)
-        directive = $1
+      when %r(^<(p>)?!\p{Pd}+ (.*) \p{Pd}+(</p)?>$)
+        directive = $2
         case directive
         when %r(^(\w+): "(.*)"$)
           val[$1.to_sym] = $2
