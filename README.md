@@ -51,7 +51,7 @@ Types:
 * Template substitutions
 * ONLY SERVES MARKDOWN PAGES:`/**/*.md`(omit extension `.md` in the url)
 * ONLY SERVES PNG and GIF IMAGES: `/**/*.png`, and `/**/*.gif`
-* See [`lib/markita/plug`](lib/markita/plug) and [`/plug`](https://github.com/carloshr64/markita/tree/main/plug) for examples of plugins
+* See [`lib/markita/plug`](lib/markita/plug) and [`/plug`](https://github.com/carlosjhr64/markita/tree/main/plug) for examples of plugins
 
 Optionally:
 
