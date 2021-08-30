@@ -5,7 +5,7 @@ class Base
   #   due:YYYY-MM-DD    Due date
   #   last:YYYY-MM-DD   Last done date
   #   every:N           Due date is N days after last done
-  #   every:Weekday     Due date is on the given Weekday
+  #   every:Weekday     Due date is on the given Weekday after last done
   get '/todotxt.html' do
     text = "# [Todo.txt](https://todotxt.org)\n"
     # Get tasks
@@ -23,15 +23,16 @@ class Base
       else
         contexts['* Unspecified *'].push task
       end
-      if / due:(?<d>\d\d\d\d-\d\d-\d\d)\b/=~task
-        due.push task if today >= Date.parse(d)
+      if / due:(?<date>\d\d\d\d-\d\d-\d\d)\b/=~task
+        due.push task if today >= Date.parse(date)
       end
-      if / every:(?<n>\d+)\b/=~task and / last:(?<d>\d\d\d\d-\d\d-\d\d)\b/=~task
-        due.push task if today >= Date.parse(d)+n.to_i
-      end
-      if / every:(?<w>[SMTWF]\w+)\b/=~task
-        if w==['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][today.wday]
-          due.push task
+      if / last:(?<date>\d\d\d\d-\d\d-\d\d)\b/=~task
+        if / every:(?<n>\d+)\b/=~task
+          due.push task if today >= Date.parse(date)+n.to_i
+        elsif / every:(?<w>[SMTWF]\w+)\b/=~task
+          if w==['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][today.wday]
+            due.push task if today > Date.parse(date)
+          end
         end
       end
       due.uniq!
