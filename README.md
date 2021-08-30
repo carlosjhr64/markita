@@ -51,7 +51,7 @@ Types:
 * Template substitutions
 * ONLY SERVES MARKDOWN PAGES:`/**/*.md`(omit extension `.md` in the url)
 * ONLY SERVES PNG and GIF IMAGES: `/**/*.png`, and `/**/*.gif`
-* See [`lib/markita/plug`](lib/markita/plug) for examples of plugins
+* See [`lib/markita/plug`](lib/markita/plug) and [`/plug`](https://github.com/carloshr64/plug) for examples of plugins
 
 Optionally:
 
@@ -153,6 +153,14 @@ If template is not provided, the line itself will be the template.
 
 !-- </td></tr></table> --
 
+```
+### Adding plugs
+```
+$ # Assuming ~/vimwiki
+$ mkdir ~/viwiki/plug
+$ # Then copy (or create) your plug there.
+$ # For example:
+$ GET https://raw.githubusercontent.com/carlosjhr64/markita/main/plug/todotxt.rb > ~/vimwiki/plug/todotxt.rb
 ```
 ## LICENSE
 
