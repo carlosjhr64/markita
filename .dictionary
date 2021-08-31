@@ -20,6 +20,7 @@ filepath
 gettalong
 gif
 github
+githubusercontent
 gsub
 HelpParser
 hexdigest
@@ -47,6 +48,7 @@ markita
 Markita
 md
 MERCHANTABILITY
+mkdir
 mv
 newkey
 NONINFRINGEMENT
@@ -81,6 +83,7 @@ stylesheet
 sublicense
 sym
 td
+todotxt
 TOs
 txt
 unshift
@@ -89,4 +92,5 @@ url
 usr
 utf
 vimwiki
+viwiki
 www
