@@ -4,6 +4,7 @@
  (cucumber\.)|
  (examples\/)|
  (features\/)|
+ (plug\/)|
  (History\.)|
  (img\/)|
  (test\/)|
