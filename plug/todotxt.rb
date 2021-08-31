@@ -6,10 +6,24 @@ class Base
   #   last:YYYY-MM-DD   Last done date
   #   every:N           Due date is N days after last done
   #   every:Weekday     Due date is on the given Weekday after last done
+  module TodoTXT
+    def TodoTXT.decorate(task, tag=nil)
+      task = task.dup
+      task.sub!  tag,           ''  if tag
+      task.sub!  /^\d+/,        ''
+      task.sub!  /\([A-Z]\)/,   ''
+      task.gsub! /([\@\+]\w+)/, '<small>\\1</small>'
+      task.gsub! /(\w+:\S+)/,   '<small>\\1</small>'
+      task.gsub! /\s+/,         ' '
+      task.strip!
+      task
+    end
+  end
+
   get '/todotxt.html' do
     text = "# [Todo.txt](https://todotxt.org)\n"
     # Get tasks
-    tasks = `todo.sh -p list`.lines.select{/^\d\d /.match?_1}.map{_1.strip}
+    tasks = `todo.sh -p list`.lines.select{/^\d+ /.match?_1}.map{_1.strip}
     # Get projects and contexts
     today,due,projects,contexts = Date.today,[],Hash.new{|h,k|h[k]=[]},Hash.new{|h,k|h[k]=[]}
     tasks.each do |task|
@@ -40,12 +54,7 @@ class Base
     unless due.empty?
       text << "\n## Due\n"
       due.each do |task|
-        task = task.dup
-        task.sub!(/^\d+\s*/, '')
-        task.sub!(/\s*\([A-Z]\)/, '')
-        task.gsub!(/([\@\+]\w+)/, '<small>\\1</small>')
-        task.gsub!(/(\w+:\S+)/, '<small>\\1</small>')
-        text << '* ' << task << "\n"
+        text << "* #{TodoTXT.decorate(task)}\n"
       end
     end
     text << %Q(\n!-- <table><tr><td style="vertical-align:top;padding:15px"> --\n)
@@ -53,14 +62,9 @@ class Base
     text << "\n## Projects\n"
     projects.each do |project, tasks|
       text << "\n### #{project}\n"
+      tag = Regexp.new '[+]'+project+'\b'
       tasks.each do |task|
-        task = task.dup
-        task.sub!(/^\d+\s*/, '')
-        task.sub!(/\s*\([A-Z]\)/, '')
-        task.gsub!(/\s*\+\w+/, '')
-        task.gsub!(/(\@\w+)/, '<small>\\1</small>')
-        task.gsub!(/(\w+:\S+)/, '<small>\\1</small>')
-        text << '* ' << task << "\n"
+        text << "* #{TodoTXT.decorate(task, tag)}\n"
       end
     end
     text << %Q(\n!-- </td><td style="vertical-align:top;padding:15px"> --\n)
@@ -68,15 +72,9 @@ class Base
     # Puts contexts
     contexts.each do |context, tasks|
       text << "\n### #{context}\n"
+      tag = Regexp.new '[@]'+context+'\b'
       tasks.each do |task|
-        task = task.dup
-        task.sub!(/^\d+\s*/, '')
-        task.strip!
-        task.sub!(/\s*\([A-Z]\)/, '')
-        task.gsub!(/\s*\@\w+/, '')
-        task.gsub!(/(\+\w+)/, '<small>\\1</small>')
-        task.gsub!(/(\w+:\S+)/, '<small>\\1</small>')
-        text << '* ' << task << "\n"
+        text << "* #{TodoTXT.decorate(task, tag)}\n"
       end
     end
     text << "\n!-- </td></tr></table> --\n"
