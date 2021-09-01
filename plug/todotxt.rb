@@ -44,47 +44,47 @@ class Base
         if / every:(?<n>\d+)\b/=~task
           due.push task if today >= Date.parse(date)+n.to_i
         elsif / every:(?<w>[SMTWF]\w+)\b/=~task
-          if w==['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][today.wday]
-            due.push task if today > Date.parse(date)
-          end
+          due.push task if today > Date.parse(date) and
+            w==['Sunday',
+                'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
+                'Saturday'][today.wday]
         end
       end
       due.uniq!
     end
     unless due.empty?
-      text << "\n## Due\n"
+      text << "## Due\n"
       due.each do |task|
         text << "* #{TodoTXT.decorate(task)}\n"
       end
     end
-    text << %Q(\n!-- <table><tr><td style="vertical-align:top;padding:15px"> --\n)
+    text << "|:\n"
     # Puts projects
-    text << "\n## Projects\n"
+    text << "## Projects\n"
     projects.each do |project, tasks|
-      text << "\n### #{project}\n"
+      text << "### #{project}\n"
       tag = Regexp.new '[+]'+project+'\b'
       tasks.each do |task|
         text << "* #{TodoTXT.decorate(task, tag)}\n"
       end
     end
-    text << %Q(\n!-- </td><td style="vertical-align:top;padding:15px"> --\n)
-    text << "\n## Contexts\n"
+    text << "|\n"
+    text << "## Contexts\n"
     # Puts contexts
     contexts.each do |context, tasks|
-      text << "\n### #{context}\n"
+      text << "### #{context}\n"
       tag = Regexp.new '[@]'+context+'\b'
       tasks.each do |task|
         text << "* #{TodoTXT.decorate(task, tag)}\n"
       end
     end
-    text << "\n!-- </td></tr></table> --\n"
-    text << "\n"
+    text << ":|\n"
     text << <<~VERSION
       ~~~
       #{`todo.sh -V`.strip}
-      ~~~ 
+      ~~~
     VERSION
-    Base.page('Todo.txt'){ Base.process markdown text }
+    Base.page 'Todo.txt', text
   end
 end
 end

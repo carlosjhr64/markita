@@ -1,5 +1,5 @@
 module Markita
-  VERSION = '1.1.210831'
+  VERSION = '2.0.210901'
 
   def self.run!
     # Standard libraries
@@ -7,11 +7,10 @@ module Markita
     require 'cgi'
     # Gems
     require 'sinatra/base'
-    require 'kramdown'
     require 'thin'
-    Tilt.register Tilt::KramdownTemplate, 'md'
     # Local
     require_relative 'markita/config.rb'
+    require_relative 'markita/markdown.rb'
     require_relative 'markita/base.rb'
     # Plugs
     require_relative 'markita/plug/favicon.rb'    unless OPTIONS&.no_favicon

@@ -27,7 +27,7 @@ class Base
   end
 
   get '/about.html' do
-    Base.page('about') { markdown About.page}
+    Base.page 'about', About.page
   end
 end
 end

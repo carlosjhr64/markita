@@ -1,4 +1,31 @@
 module Markita
+class Preprocess
+  def initialize(file)
+    @file = (file.is_a? String)? StringIO.new(file) : file
+    @regx = @template = nil
+  end
+
+  def gets
+    if line = @file.gets
+      case line
+      when @regx
+        line = @template if @template
+        $~.named_captures.each do |name, value|
+          line = line.gsub("&#{name.downcase};", value)
+          line = line.gsub("&#{name.upcase};", CGI.escape(value))
+        end
+      when %r(^<!-- regx: /(.*)/ -->$)
+        @regx = Regexp.new $1
+        line = gets
+      when %r(^<!-- template: "(.*)" -->$)
+        @template = $1
+        line = gets
+      end
+    end
+    line
+  end
+end
+
 class Base < Sinatra::Base
   set bind: OPTIONS&.bind || '0.0.0.0'
   set port: OPTIONS&.port || '8080'
@@ -19,62 +46,41 @@ class Base < Sinatra::Base
   end
 
   def Base.header(key)
-    <<-HEADER
-<!DOCTYPE html>
-<html>
-<head>
-  <title>#{key}</title>
-#{HEADER_LINKS}</head>
-<body>
-
+    <<~HEADER
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>#{key}</title>
+      #{HEADER_LINKS}</head>
+      <body>
     HEADER
   end
 
   def Base.footer
-    <<-FOOTER
-
-</body>
-</html>
+    <<~FOOTER
+      </body>
+      </html>
     FOOTER
   end
 
-  def Base.process(text, procs=POSTPROCESS)
-    val,string,_ = {},'',nil
-    text.each_line do |line|
-      line.chomp!
-      case line
-      when ''
-        val.clear
-      when %r(^<(p>)?!\p{Pd}+ (.*) \p{Pd}+(</p)?>$)
-        directive = $2
-        case directive
-        when %r(^(\w+): "(.*)"$)
-          val[$1.to_sym] = $2
-          next
-        when %r(^(\w+): /(.*)/)
-          val[$1.to_sym] = Regexp.new $2
-          next
-        else
-          line = directive.gsub('&lt;', '<').gsub('&gt;', '>')
-        end
-      else
-        # set line to IDontCare if IDontCare gets set
-        line=_ if procs.detect{_=_1[line, val]}
-      end
-      string << line << "\n"
+  def Base.page(key, f)
+    file = Preprocess.new(f)
+    html = ''
+    html << Base.header(key)
+    opt  = {}
+    line = file.gets
+    while line
+      f = MARKDOWN.detect{|r,_|r.match? line}&.last || DEFAULT
+      line = f[line, html, file, opt]
     end
-    return string
-  end
-
-  def Base.page(key)
-    Base.header(key) + yield + Base.footer
+    html << Base.footer
+    html
   end
 
   get PAGE_KEY do |key|
     filepath = File.join ROOT, key+'.md'
     raise Sinatra::NotFound  unless File.exist? filepath
-    text = File.read(filepath).force_encoding('utf-8')
-    Base.page(key){ Base.process markdown Base.process(text, PREPROCESS)}
+    File.open(filepath, 'r'){|f| Base.page key, f}
   end
 
   get IMAGE_PATH do |path, *_|
