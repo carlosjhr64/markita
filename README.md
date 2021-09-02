@@ -243,6 +243,17 @@ Markdown:
     {: style="color: blue;"}
     You can set the attributes for most blocks.
 
+### Embed text
+
+!> /img/markita.txt
+
+Markdown:
+
+    !> /img/markita.txt
+
+Must be a `*.txt` file.
+Useful for ASCII art.
+
 ## HOW-TOs
 
 ### Set site password:

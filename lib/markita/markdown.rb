@@ -249,6 +249,19 @@ module Markita
     file.gets
   end
 
+  # Embed text
+  MARKDOWN[/^!> #{PAGE_KEY}\.txt$/] = lambda do |line, html, file, opt|
+    if /^!> (#{PAGE_KEY}\.txt)$/.match(line) and
+        File.exist?(filename=File.join(ROOT, $1))
+      html << "<pre>\n"
+      html << File.read(filename)
+      html << "</pre>\n"
+    else
+      html << line
+    end
+    file.gets
+  end
+
   # Attributes
   MARKDOWN[/^\{: .+\}$/] = lambda do |line, html, file, opt|
     if line.match /^\{:( .*)\}$/
