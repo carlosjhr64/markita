@@ -199,6 +199,26 @@ module Markita
     file.gets
   end
 
+  # Single line form
+  MARKDOWN[/^! (\w+:\[\*?\w+\] )+\([^()]+\)$/] = lambda do |line, html, file, opt|
+    # One Line Forms
+    if /\((.*)\)$/.match line
+      action,method,form = $1,nil,[]
+      line.scan(/(\w+):\[(\*)?(\w+)\] /).each do |field, pwd, name|
+         type = (pwd)? 'password' : 'text'
+         method ||= ' method="post"' if pwd
+         form << %Q{  #{field}:<input type="#{type}" name="#{name}">}
+       end
+      form.push %Q(  <input type="submit">) if form.length>1
+      form.unshift %Q(<form action="#{action}"#{method}#{opt[:attributes]}>)
+      form.push %Q(</form>)
+      html << form.join("\n")
+      html << "\n"
+    end
+    opt.delete(:attributes)
+    file.gets
+  end
+
   # Attributes
   MARKDOWN[/^\{: .+\}$/] = lambda do |line, html, file, opt|
     if line.match /^\{:( .*)\}$/

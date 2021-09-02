@@ -14,10 +14,10 @@ class Preprocess
           line = line.gsub("&#{name.downcase};", value)
           line = line.gsub("&#{name.upcase};", CGI.escape(value))
         end
-      when %r(^<!-- regx: /(.*)/ -->$)
+      when %r(^! regx = /(.*)/$)
         @regx = Regexp.new $1
         line = gets
-      when %r(^<!-- template: "(.*)" -->$)
+      when %r(^! template = "(.*)"$)
         @template = $1
         line = gets
       end

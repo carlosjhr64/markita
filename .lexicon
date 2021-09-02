@@ -1,6 +1,7 @@
 _
 _1
 About
+action
 all
 allowed
 alt
@@ -35,10 +36,12 @@ expand_path
 f
 FAILED
 Favicon
+field
 file
 File
 filepath
 footer
+form
 FORM
 get
 gets
@@ -79,6 +82,7 @@ Markita
 match
 md
 message
+method
 name
 named_captures
 new
@@ -108,7 +112,9 @@ post_match
 pre_match
 Preprocess
 private_key_file
+push
 puts
+pwd
 r
 raise
 read
@@ -126,6 +132,7 @@ routes
 Ruby30
 run
 RuntimeError
+scan
 send_file
 server
 session
@@ -147,6 +154,8 @@ t
 text
 Time
 to_s
+type
+unshift
 upcase
 value
 verify_peer
