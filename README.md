@@ -50,29 +50,33 @@ Types:
 - [x] Marked ballot
 
 Markdown:
-```markdown
+
 - [ ] Empty ballot
 - [x] Marked ballot
-```
 
 ### Image placement
 
 ![ Centered Image ](/img/markita.png)
 ![Left Floating ](/img/markita.png)
 ![ Right Floating](/img/markita.png)
-Image  centered above.
 Image to the left.
-And image to the right.
+Image  centered above.
+Image to the right.
+And set a HR bar below.
+
+---
 
 Markdown:
-```markdown
-![ Centered Image ](/img/markita.png)
-![Left Floating ](/img/markita.png)
-![ Right Floating](/img/markita.png)
-Image  centered above.
-Image to the left.
-And image to the right.
-```
+
+    ![ Centered Image ](/img/markita.png)
+    ![Left Floating ](/img/markita.png)
+    ![ Right Floating](/img/markita.png)
+    Image  centered above.
+    Image to the left.
+    Image to the right.
+    And set a HR bar below.
+
+    ---
 
 ### One line forms
 
@@ -82,22 +86,20 @@ A post method form due to the password field and a submit button on multiple fie
 ! Username:[user] Password:[*pwd] (/login.html)
 
 Markdown:
-```markdown
-A get method form without submit button on single field:
-! Google:[q] (https://www.google.com/search)
-A post method form due to the password field and a submit button on multiple fields:
-! Username:[user] Password:[*pwd] (/login.html)
-```
+
+    A get method form without submit button on single field:
+    ! Google:[q] (https://www.google.com/search)
+    A post method form due to the password field and a submit button on multiple fields:
+    ! Username:[user] Password:[*pwd] (/login.html)
 
 ### Template substitutions
 
 Markdown:
-```markdown
-! template = "* [&query;](https://www.google.com/search?q=&QUERY;)"
-! regx = /^\* (?<query>.*)$/
-* Grumpy Cat
-* It's over 9000!
-```
+
+    ! template = "* [&query;](https://www.google.com/search?q=&QUERY;)"
+    ! regx = /^\* (?<query>.*)$/
+    * Grumpy Cat
+    * It's over 9000!
 
 ! template = "* [&query;](https://www.google.com/search?q=&QUERY;)"
 ! regx = /^\* (?<query>.*)$/
@@ -129,27 +131,116 @@ Bottom right
 :|
 
 Markdown:
-```markdown
-|:
-Top left
-|
-Top center
-|
-Top right
-:|:
-Middle left
-|
-Middle center
-|
-Middle left
-:|:
-Bottom left
-|
-Bottom center
-|
-Bottom right
-:|
+
+    |:
+    Top left
+    |
+    Top center
+    |
+    Top right
+    :|:
+    Middle left
+    |
+    Middle center
+    |
+    Middle left
+    :|:
+    Bottom left
+    |
+    Bottom center
+    |
+    Bottom right
+    :|
+
+### Inline bold, italic, code, and links
+
+The *bold* and "italics", a [link](to-no-where),
+the `code = "a*b*c"`, and another [nowhere](/link.html).
+
+Markdown:
+
+    The *bold* and "italics", a [link](to-no-where),
+    the `code = "a*b*c"`, and another [nowhere](/link.html).
+
+As the markdown parser is very simple,
+you'll need to place code lines separately
+from lines containing bold and italics.
+
+### Lists: ordered, un-ordered, definitions
+
+1. One
+2. Two
+
+* Point A
+* Point B
+
+: Word:
+: Definition of the word
+: Symbol:
+: Usage for the symbol
+
+Markdown:
+
+    1. One
+    2. Two
+
+    * Point A
+    * Point B
+
+    : Word:
+    : Definition of the word
+    : Symbol:
+    : Usage for the symbol
+
+### Block-quote
+
+As Hamlet says...
+> To be or not to be...
+> That is the question!
+
+Markdown:
+
+    As Hamlet says...
+    > To be or not to be...
+    > That is the question!
+
+### Code
+```ruby
+def wut
+  puts "Wut?"
+end
 ```
+Markdown:
+
+    ```ruby
+    def wut
+      puts "Wut?"
+    end
+    ```
+
+### Tables
+
+| Integer | Float | Symbol | Word          |
+| ------: | ----: | :----: | :------------ |
+|       1 |   1.0 |   $    | The word      |
+|    1234 |  12.3 |   $    | On the street |
+
+Markdown:
+
+    | Integer | Float | Symbol | Word          |
+    | ------: | ----: | :----: | :------------ |
+    |       1 |   1.0 |   $    | The word      |
+    |    1234 |  12.3 |   $    | On the street |
+
+### Attributes
+
+{: style="color: blue;"}
+You can set the attributes for most blocks.
+
+Markdown:
+
+    {: style="color: blue;"}
+    You can set the attributes for most blocks.
 
 ## HOW-TOs
 

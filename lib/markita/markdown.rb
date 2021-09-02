@@ -115,7 +115,7 @@ module Markita
     file.gets
   end
 
-  # Block-qoute
+  # Block-quote
   MARKDOWN[/^> /] = lambda do |line, html, file, opt|
     html << "<blockquote#{opt[:attributes]}>\n"
     opt.delete(:attributes)
