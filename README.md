@@ -107,6 +107,7 @@ Markdown:
 * It's over 9000!
 
 Template clears after first non-match.
+Note: on upcased keys, value is CGI escaped.
 
 ### Split table
 
@@ -223,14 +224,14 @@ Markdown:
 | Integer | Float | Symbol | Word          |
 | ------: | ----: | :----: | :------------ |
 |       1 |   1.0 |   $    | The word      |
-|    1234 |  12.3 |   $    | On the street |
+|    1234 |  12.3 |   &    | On the street |
 
 Markdown:
 
     | Integer | Float | Symbol | Word          |
     | ------: | ----: | :----: | :------------ |
     |       1 |   1.0 |   $    | The word      |
-    |    1234 |  12.3 |   $    | On the street |
+    |    1234 |  12.3 |   &    | On the street |
 
 ### Attributes
 

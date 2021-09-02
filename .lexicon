@@ -2,6 +2,7 @@ _
 _1
 About
 action
+align
 all
 allowed
 alt
@@ -13,6 +14,7 @@ Base
 basename
 before
 bind
+cell
 cert_chain_file
 CGI
 chomp
@@ -28,6 +30,7 @@ directory
 dirname
 downcase
 each
+each_with_index
 escape
 etag
 Exception

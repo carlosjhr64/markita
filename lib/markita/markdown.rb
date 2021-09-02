@@ -167,13 +167,28 @@ module Markita
   MARKDOWN[/^\|.+\|$/] = lambda do |line, html, file, opt|
     html << "<table#{opt[:attributes]}>\n"
     opt.delete(:attributes)
-    html << %Q(<thead><tr><th>\n)
-    html << line[1...-1].split('|').map{INLINE[_1]}.join('</th><th>')
-    html << "\n</th></tr></thead>\n"
+    html << '<thead><tr><th>'
+    html << line[1...-1].split('|').map{INLINE[_1.strip]}.join('</th><th>')
+    html << "</th></tr></thead>\n"
+    align = []
     while line = file.gets and line.match /^\|.+\|$/
-      html << '<tr><td>'
-      html << line[1...-1].split('|').map{INLINE[_1]}.join('</td><td>')
-      html << "</td></tr>\n"
+      html << '<tr>'
+      line[1...-1].split('|').each_with_index do |cell, i|
+        case cell
+        when /^\s*:-+:\s*$/
+          align[i] = ' align="center"'
+          html << '<td><hr></td>'
+        when /^\s*-+:\s*$/
+          align[i] = ' align="right"'
+          html << '<td><hr></td>'
+        when /^\s*:-+\s*$/
+          align[i] = ' align="left"'
+          html << '<td><hr></td>'
+        else
+          html << "<td#{align[i]}>#{INLINE[cell.strip]}</td>"
+        end
+      end
+      html << "</tr>\n"
     end
     html << "</table>\n"
     line
