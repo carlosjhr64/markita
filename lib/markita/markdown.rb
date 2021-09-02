@@ -1,9 +1,21 @@
 module Markita
   INLINE = lambda do |line|
-    while md = /\[([^\[\]]+)\]\(([^\(\)]+)\)/.match(line)
+    if /`/.match? line
+      while md = /`([^`]+)`/.match(line)
+        line = md.pre_match + %Q(<code>#{md[1]}</code>) + md.post_match
+      end
+    elsif not /[<>]/.match? line
+      while md = /\*([^*"]+)\*/.match(line)
+        line = md.pre_match + %Q(<b>#{md[1]}</b>) + md.post_match
+      end
+      while md = /\"([^*"]+)\"/.match(line)
+        line = md.pre_match + %Q(<i>#{md[1]}</i>) + md.post_match
+      end
+    end
+    while md = /\[([^\[\]<>]+)\]\(([^()<>]+)\)/.match(line)
       line = md.pre_match + %Q(<a href="#{md[2]}">#{md[1]}</a>) + md.post_match
     end
-    line
+    line.sub(/  $/,'<br>')
   end
 
   MARKDOWN = Hash.new
@@ -18,7 +30,7 @@ module Markita
     html << "<ol#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match /^\d+. (.*)$/
-      html << INLINE["  <li>#{$1}</li>\n"]
+      html << "  <li>#{INLINE[$1]}</li>\n"
       line = file.gets
     end
     html << "</ol>\n"
@@ -42,7 +54,7 @@ module Markita
     html << "<ul#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match /^[*] (.*)$/
-      html << INLINE["  <li>#{$1}</li>\n"]
+      html << "  <li>#{INLINE[$1]}</li>\n"
       line = file.gets
     end
     html << "</ul>\n"
@@ -58,7 +70,7 @@ module Markita
       li = (x=='x')?
         %q{<li style="list-style-type: '&#9745; '">} :
         %q{<li style="list-style-type: '&#9744; '">}
-      html << INLINE["  #{li}#{t}</li>\n"]
+      html << "  #{li}#{INLINE[t]}</li>\n"
       line = file.gets
     end
     html << "</ul>\n"
@@ -82,7 +94,7 @@ module Markita
   MARKDOWN[/^[#]{1,6} /] = lambda do |line, html, file, opt|
     if line.match /^([#]{1,6}) (.*)$/
       i,header = $1.length,$2
-      html << INLINE["<h#{i}#{opt[:attributes]}>#{header}</h#{i}>\n"]
+      html << "<h#{i}#{opt[:attributes]}>#{INLINE[header]}</h#{i}>\n"
     end
     opt.delete(:attributes)
     file.gets
@@ -141,11 +153,11 @@ module Markita
     html << "<table#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     html << %Q(<thead><tr><th>\n)
-    html << INLINE[line[1...-1].split('|').join('</th><th>')]
+    html << line[1...-1].split('|').map{INLINE[_1]}.join('</th><th>')
     html << "\n</th></tr></thead>\n"
     while line = file.gets and line.match /^\|.+\|$/
       html << '<tr><td>'
-      html << INLINE[line[1...-1].split('|').join('</td><td>')]
+      html << line[1...-1].split('|').map{INLINE[_1]}.join('</td><td>')
       html << "</td></tr>\n"
     end
     html << "</table>\n"
