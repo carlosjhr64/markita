@@ -18,8 +18,10 @@ class Preprocess
         @regx = Regexp.new $1
         line = gets
       when %r(^! template = "(.*)"$)
-        @template = $1
+        @template = $1+"\n"
         line = gets
+      else
+        @regx &&= (@template=nil)
       end
     end
     line

@@ -6,10 +6,9 @@
 
 ## DESCRIPTION
 
-A [Sinatra](http://sinatrarb.com) Markdown server.
+A Sinatra Markdown server.
 
-Uses [Kramdown](https://kramdown.gettalong.org/index.html) for the Markdown to
-HTML conversion.
+With many extra non-standard features.
 
 ## INSTALL
 ```shell
@@ -45,20 +44,112 @@ Types:
 ```
 ## FEATURES
 
-* Check(Ballot) boxes for task lists
-* Image placement hints
-* One line forms
-* Template substitutions
-* ONLY SERVES MARKDOWN PAGES:`/**/*.md`(omit extension `.md` in the url)
-* ONLY SERVES PNG and GIF IMAGES: `/**/*.png`, and `/**/*.gif`
-* See [`lib/markita/plug`](lib/markita/plug) and [`/plug`](https://github.com/carlosjhr64/markita/tree/main/plug) for examples of plugins
+### Ballot boxes
 
-Optionally:
+- [ ] Empty ballot
+- [x] Marked ballot
 
-* Place your custom `/favicon.ico`
-* Place your custom `/highlight.css`
-* Place `/.cert.crt` and `/.pkey.pem` for SSL(https)
-* Place `sha256sum` of site's password in `/.valid-id`
+Markdown:
+```markdown
+- [ ] Empty ballot
+- [x] Marked ballot
+```
+
+### Image placement
+
+![ Centered Image ](/img/markita.png)
+![Left Floating ](/img/markita.png)
+![ Right Floating](/img/markita.png)
+Image  centered above.
+Image to the left.
+And image to the right.
+
+Markdown:
+```markdown
+![ Centered Image ](/img/markita.png)
+![Left Floating ](/img/markita.png)
+![ Right Floating](/img/markita.png)
+Image  centered above.
+Image to the left.
+And image to the right.
+```
+
+### One line forms
+
+A get method form without submit button on single field:
+! Google:[q] (https://www.google.com/search)
+A post method form due to the password field and a submit button on multiple fields:
+! Username:[user] Password:[*pwd] (/login.html)
+
+Markdown:
+```markdown
+A get method form without submit button on single field:
+! Google:[q] (https://www.google.com/search)
+A post method form due to the password field and a submit button on multiple fields:
+! Username:[user] Password:[*pwd] (/login.html)
+```
+
+### Template substitutions
+
+Markdown:
+```markdown
+! template = "* [&query;](https://www.google.com/search?q=&QUERY;)"
+! regx = /^\* (?<query>.*)$/
+* Grumpy Cat
+* It's over 9000!
+```
+
+! template = "* [&query;](https://www.google.com/search?q=&QUERY;)"
+! regx = /^\* (?<query>.*)$/
+* Grumpy Cat
+* It's over 9000!
+
+Template clears after first non-match.
+
+### Split table
+
+|:
+Top left
+|
+Top center
+|
+Top right
+:|:
+Middle left
+|
+Middle center
+|
+Middle left
+:|:
+Bottom left
+|
+Bottom center
+|
+Bottom right
+:|
+
+Markdown:
+```markdown
+|:
+Top left
+|
+Top center
+|
+Top right
+:|:
+Middle left
+|
+Middle center
+|
+Middle left
+:|:
+Bottom left
+|
+Bottom center
+|
+Bottom right
+:|
+```
 
 ## HOW-TOs
 
@@ -91,68 +182,6 @@ $ # Assuming ~/vimwiki with a site password set...
 $ markita --allowed=127.0.0.1
 ./bin/markita-1.0.210826
 == Sinatra (v2.1.0) has taken the stage on 8080 for development with backup from Thin
-```
-### Ballot boxes
-```txt
-- [ ] This is an emty ballot box
-- [x] This is a checked ballot box
-```
-### Image placement hints:
-```txt
-Left and right spaces of the alternate text of an image hints placement.
-The following image will be placed centered.
-
-![ Centered Image ](/img/image.png)
-
-![Left Floating ](/img/image.png)
-The above specified image will float left.
-
-![ Right Floating](/img/image.png)
-The above specified image will float right.
-```
-### One line forms
-```txt
-Note the strict use of space!
-This will do a get method form:
-
-Google:[q] (https://www.google.com/search)
-
-Due to the password field, this will do a post method form:
-
-Username:[user] Password:[*pwd] (/login.html)
-
-```
-### Template substitutions
-```txt
-In the template string, uppercase keys are CGI escaped:
-
-<!-- template: "* [&query;](https://www.google.com/search?q=&QUERY;)" -->
-<!-- regx: /^\* (?<query>.*)$/ -->
-* Grumpy Cat
-* It's over 9000!
-
-The substitutions are active until the end of the block.
-If template is not provided, the line itself will be the template.
-```
-### Escaping HTML until after markdown's conversion
-```
-
-!-- <table><tr><td> --
-
-# Left
-1. One
-2. Two
-3. Three
-
-!-- </td><td> --
-
-# Right
-* A
-* B
-* C
-
-!-- </td></tr></table> --
-
 ```
 ### Adding plugs
 ```
