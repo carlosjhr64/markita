@@ -22,6 +22,7 @@ etag
 favicon
 Favicon
 filepath
+Formatters
 gif
 github
 githubusercontent
@@ -39,6 +40,9 @@ ips
 IPs
 IPS
 keyout
+klass
+lang
+lex
 li
 LoadError
 localhost
@@ -81,7 +85,6 @@ sublicense
 td
 th
 thead
-TODO
 todotxt
 TOs
 txt

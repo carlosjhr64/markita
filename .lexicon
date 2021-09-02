@@ -19,6 +19,7 @@ cert_chain_file
 CGI
 chomp
 class
+code
 CSS
 DEFAULT
 delete
@@ -45,9 +46,12 @@ file
 File
 filename
 filepath
+find
 footer
 form
 FORM
+format
+Formatters
 get
 gets
 glob
@@ -60,6 +64,7 @@ HelpParser
 hexdigest
 Highlight
 html
+HTML
 i
 ICO
 id
@@ -73,10 +78,14 @@ IPS
 is_a
 join
 key
+klass
 lambda
+lang
 last
 left
 length
+lex
+Lexer
 li
 line
 LoadError
@@ -134,6 +143,7 @@ require_relative
 right
 root
 ROOT
+Rouge
 route
 routes
 Ruby30

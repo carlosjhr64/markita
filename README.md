@@ -11,11 +11,11 @@ A Sinatra Markdown server.
 With many extra non-standard features.
 
 ## INSTALL
-```shell
+```console
 $ gem install markita
 ```
 ## HELP
-```shell
+```console
 $ markita --help
 Usage:
   markita [:options+]
@@ -257,12 +257,12 @@ Useful for ASCII art.
 ## HOW-TOs
 
 ### Set site password:
-```shell
+```console
 $ # Assuming ~/vimwiki is your site's root...
 $ echo -n '<SitePasswordHere>' | sha256sum | grep -o '^\w*' > ~/vimwiki/.valid-id
 ```
 ### Set site custom favicon, css, not found page, and login form and fail page:
-```shell
+```console
 $ # Assuming ~/vimwiki is your site's root...
 $ # Note that you'll have to restart the server on any change to these:
 $ cp /path-to/custom/favicon.ico ~/vimwiki/favicon.ico
@@ -280,14 +280,14 @@ $ mv cert.crt ~/vimwiki/.cert.crt
 $ mv pkey.pem ~/vimwiki/.pkey.pem
 ```
 ### Allow localhost to bypass password:
-```shell
+```console
 $ # Assuming ~/vimwiki with a site password set...
 $ markita --allowed=127.0.0.1
 ./bin/markita-1.0.210826
 == Sinatra (v2.1.0) has taken the stage on 8080 for development with backup from Thin
 ```
 ### Adding plugs
-```
+```console
 $ # Assuming ~/vimwiki
 $ mkdir ~/viwiki/plug
 $ # Then copy (or create) your plug there.

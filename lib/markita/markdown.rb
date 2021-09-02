@@ -128,16 +128,19 @@ module Markita
     line
   end
 
+  HTML = Rouge::Formatters::HTML.new
+
   # Code
-  MARKDOWN[/^[`~]{3}\s*(\w+)?$/] = lambda do |line, html, file, opt|
-    html << "<pre#{opt[:attributes]}><code>\n"
+  MARKDOWN[/^[`~]{3}\s*\w*$/] = lambda do |line, html, file, opt|
+    lang = (/(\w+)$/.match line)? Rouge::Lexer.find($1) : nil
+    klass = lang ? ' class="highlight"' : nil
+    html << "<pre#{klass}#{opt[:attributes]}><code>\n"
     opt.delete(:attributes)
-    # if line.match /^[`~]{3}\s*\w+?$/
-    #   TODO: Rogue syntax highlighting
-    # end
+    code = ''
     while line = file.gets and not line.match /^[`~]{3}$/
-      html << line
+      code << line
     end
+    html << (lang ? HTML.format(lang.new.lex(code)) : code)
     html << "</code></pre>\n"
     # line is either nil or the code close
     line and file.gets

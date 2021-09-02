@@ -6,6 +6,7 @@ module Markita
     require 'digest'
     require 'cgi'
     # Gems
+    require 'rouge'
     require 'sinatra/base'
     require 'thin'
     # Local
