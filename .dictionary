@@ -17,9 +17,9 @@ dl
 DOCTYPE
 downcase
 dt
-elsif
 emty
 env
+etag
 favicon
 Favicon
 filepath
@@ -47,6 +47,7 @@ Kramdown
 li
 LoadError
 localhost
+lx
 markita
 Markita
 md

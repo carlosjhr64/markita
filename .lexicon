@@ -29,6 +29,7 @@ dirname
 downcase
 each
 escape
+etag
 Exception
 exist
 exit
@@ -76,6 +77,7 @@ li
 line
 LoadError
 Login
+lx
 map
 MARKDOWN
 Markita
@@ -121,6 +123,7 @@ read
 redirect
 REDTTY
 Regexp
+regx
 request
 require
 require_relative
@@ -144,6 +147,7 @@ split
 src
 ssl
 ssl_options
+stag
 START_TIME
 String
 StringIO
@@ -151,6 +155,7 @@ strip
 style
 sub
 t
+TAG1
 text
 Time
 to_s

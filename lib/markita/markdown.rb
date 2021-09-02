@@ -1,19 +1,34 @@
 module Markita
+  TAG1 = lambda do |line, regx, stag, etag|
+    if md = regx.match(line)
+      line = md.pre_match + stag + md[1] + etag
+      post_match = md.post_match
+      while md = regx.match(post_match)
+        line << md.pre_match + stag + md[1] + etag
+        post_match = md.post_match
+      end
+      line << post_match
+      line
+    end
+    line
+  end
+
   INLINE = lambda do |line|
-    if /`/.match? line
-      while md = /`([^`]+)`/.match(line)
-        line = md.pre_match + %Q(<code>#{md[1]}</code>) + md.post_match
-      end
-    elsif not /[<>]/.match? line
-      while md = /\*([^*"]+)\*/.match(line)
-        line = md.pre_match + %Q(<b>#{md[1]}</b>) + md.post_match
-      end
-      while md = /\"([^*"]+)\"/.match(line)
-        line = md.pre_match + %Q(<i>#{md[1]}</i>) + md.post_match
+    if line == (line=TAG1[line, /`([^`]+)`/, '<code>', '</code>'])
+      if not /[<>]/.match? line
+        line = TAG1[line, /\*([^*"]+)\*/, '<b>', '</b>']
+        line = TAG1[line, /\"([^*"]+)\"/, '<i>', '</i>']
       end
     end
-    while md = /\[([^\[\]<>]+)\]\(([^()<>]+)\)/.match(line)
-      line = md.pre_match + %Q(<a href="#{md[2]}">#{md[1]}</a>) + md.post_match
+    lx = /\[([^\[\]]+)\]\(([^()]+)\)/
+    if md = lx.match(line)
+      line = md.pre_match + %Q(<a href="#{md[2]}">#{md[1]}</a>)
+      post_match = md.post_match
+      while md = lx.match(post_match)
+        line << md.pre_match + %Q(<a href="#{md[2]}">#{md[1]}</a>)
+        post_match = md.post_match
+      end
+      line << post_match
     end
     line.sub(/  $/,'<br>')
   end
