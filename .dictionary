@@ -17,6 +17,7 @@ dl
 DOCTYPE
 downcase
 dt
+elsif
 env
 etag
 favicon

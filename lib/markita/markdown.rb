@@ -237,24 +237,47 @@ module Markdown
     file.gets
   end
 
-  # Single line form
-  PARSER[/^! (\w+:\[\*?\w+\] )+\([^()]+\)$/] = lambda do |line, html, file, opt|
-    # One Line Forms
-    if /\((.*)\)$/.match line
-      action,method,form = $1,nil,[]
-      line.scan(/(\w+):\[(\*)?(\w+)\] /).each do |field, pwd, name|
-         type = (pwd)? 'password' : 'text'
-         method ||= ' method="post"' if pwd
-         form << %Q{  #{field}:<input type="#{type}" name="#{name}">}
-       end
-      form.push %Q(  <input type="submit">) if form.length>1
-      form.unshift %Q(<form action="#{action}"#{method}#{opt[:attributes]}>)
-      form.push %Q(</form>)
-      html << form.join("\n")
-      html << "\n"
+  # Forms
+  FORM = /^!( (\w+:)?\[\*?\w+(="[^"]*")?\])+/
+  PARSER[FORM] = lambda do |line, html, file, opt|
+    form = []
+    lines,fields,submit,method = 0,0,nil,nil
+    action = /\(([^\(\)]*)\)$/.match(line)&.values_at(1)
+    while line&.match? FORM
+      lines += 1
+      form << '  <br>' if lines > 1
+      line.scan(/(\w+:)?\[(\*)?(\w+)(="[^"]*")?\]/).each do |field, pwd, name, value|
+        field &&= field[0...-1]
+        value &&= value[2...-1]
+        if field
+          fields += 1
+          type = (pwd)? 'password' : 'text'
+          method ||= ' method="post"' if pwd
+          if value
+            form << %Q{  #{field}:<input type="#{type}" name="#{name}" value="#{value}">}
+          else
+            form << %Q{  #{field}:<input type="#{type}" name="#{name}">}
+          end
+        elsif name=='submit'
+          submit = value
+        else
+          form << %Q{  <input type="hidden" name="#{name}" value="#{value}">}
+        end
+      end
+      line = file.gets
     end
+    if submit or not fields==1
+      submit ||= 'Submit'
+      form << '  <br>' if lines > 1
+      form << %Q(  <input type="submit" value="#{submit}">)
+    end
+    form.unshift %Q(<form action="#{action}"#{method}#{opt[:attributes]}>)
+    form << %Q(</form>)
+    html << form.join("\n")
+    html << "\n"
+
     opt.delete(:attributes)
-    file.gets
+    line
   end
 
   # Embed text

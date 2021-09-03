@@ -42,6 +42,7 @@ f
 FAILED
 Favicon
 field
+fields
 file
 File
 filename
@@ -88,6 +89,7 @@ lex
 Lexer
 li
 line
+lines
 LoadError
 Login
 LX
@@ -129,7 +131,6 @@ post_match
 pre_match
 Preprocess
 private_key_file
-push
 puts
 pwd
 r
@@ -170,6 +171,7 @@ StringIO
 strip
 style
 sub
+submit
 t
 TAG1
 text
@@ -179,6 +181,7 @@ type
 unshift
 upcase
 value
+values_at
 verify_peer
 VERSION
 x
