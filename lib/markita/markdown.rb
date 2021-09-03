@@ -56,7 +56,7 @@ module Markdown
   end
 
   # Paragraph
-  PARAGRAPH = /^[\[\*\"]?\w/
+  PARAGRAPH = /^[`*"~_]?\w/
   PARSER[PARAGRAPH] = lambda do |line, html, file, opt|
     html << "<p#{opt[:attributes]}>\n"
     opt.delete(:attributes)
