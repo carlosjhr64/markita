@@ -175,22 +175,14 @@ Markdown:
 ### Inline links, code, bold, italic, strikes, and underline
 
 The *bold* and "italics" ~strikes~ at _underlined_,
-while a [link to no-where](no-where) sees
-the `~ code ~ "a*b*c"`
-to [https://somewhere.net].
+while a [link to no-where](no-where)
+sees the `~ code ~ "a*b*c"` to [https://somewhere.net].
 
 Markdown:
 
     The *bold* and "italics" ~strikes~ at _underlined_,
-    while a [link to no-where](no-where) sees
-    the `~ code ~ "a*b*c"`
-    to [https://somewhere.net].
-
-As the Markdown parser is a simple line by line parser,
-you'll need to place `code` on it's own line separate from
-other inline features.
-And bare bracketed url lines(`[url]`) on it's own separate line from
-named links(`[name](url)`).
+    while a [link to no-where](no-where)
+    sees the `~ code ~ "a*b*c"` to [https://somewhere.net].
 
 ### Lists: ordered, un-ordered, definitions
 

@@ -1,46 +1,67 @@
 module Markita
 module Markdown
-  TAG1 = lambda do |line, regx, stag, etag|
+  def Markdown.tag(line, regx, stag, etag, &block)
     if md = regx.match(line)
-      line = md.pre_match + stag + md[1] + etag
+      pre_match = (block ? block.call(md.pre_match) : md.pre_match)
+      string = pre_match + stag + md[1] + etag
       post_match = md.post_match
       while md = regx.match(post_match)
-        line << md.pre_match + stag + md[1] + etag
+        pre_match = (block ? block.call(md.pre_match) : md.pre_match)
+        string << pre_match + stag + md[1] + etag
         post_match = md.post_match
       end
-      line << post_match
-      line
+      string << (block ? block.call(post_match) : post_match)
+      return string
     end
-    line
+    return (block ? block.call(line) : line)
+  end
+
+  LX = /\[([^\[\]]+)\]\(([^()]+)\)/
+  def Markdown.lx(line, &block)
+    if md = LX.match(line)
+      pre_match = (block ? block.call(md.pre_match) : md.pre_match)
+      string = pre_match + %Q(<a href="#{md[2]}">#{md[1]}</a>)
+      post_match = md.post_match
+      while md = LX.match(post_match)
+        pre_match = (block ? block.call(md.pre_match) : md.pre_match)
+        string << pre_match + %Q(<a href="#{md[2]}">#{md[1]}</a>)
+        post_match = md.post_match
+      end
+      string << (block ? block.call(post_match) : post_match)
+      return string
+    end
+    return (block ? block.call(line) : line)
   end
 
   URL = %r(\[(https?://[\w\.\-\/\&\+\?\%]+)\])
-  LX = /\[([^\[\]]+)\]\(([^()]+)\)/
+  def Markdown.url(line, &block)
+    if md = URL.match(line)
+      pre_match = (block ? block.call(md.pre_match) : md.pre_match)
+      string = pre_match + %Q(<a href="#{md[1]}">#{md[1]}</a>)
+      post_match = md.post_match
+      while md = URL.match(post_match)
+        pre_match = (block ? block.call(md.pre_match) : md.pre_match)
+        string << pre_match + %Q(<a href="#{md[1]}">#{md[1]}</a>)
+        post_match = md.post_match
+      end
+      string << (block ? block.call(post_match) : post_match)
+      return string
+    end
+    return (block ? block.call(line) : line)
+  end
+
   INLINE = lambda do |line|
-    if line == (line=TAG1[line, /`([^`]+)`/, '<code>', '</code>'])
-      line = TAG1[line, /\*([^*]+)\*/, '<b>', '</b>']
-      line = TAG1[line, /"([^"]+)"/, '<i>', '</i>']
-      line = TAG1[line, /~([^~]+)~/, '<s>', '</s>']
-      line = TAG1[line, /_([^_]+)_/, '<u>', '</u>']
-      if md = LX.match(line)
-        line = md.pre_match + %Q(<a href="#{md[2]}">#{md[1]}</a>)
-        post_match = md.post_match
-        while md = LX.match(post_match)
-          line << md.pre_match + %Q(<a href="#{md[2]}">#{md[1]}</a>)
-          post_match = md.post_match
+    string = Markdown.tag(line, /`([^`]+)`/, '<code>', '</code>') do |line|
+      Markdown.lx(line) do |line|
+        Markdown.url(line) do |line|
+          string = Markdown.tag(line, /\*([^*]+)\*/, '<b>', '</b>')
+          string = Markdown.tag(string, /"([^"]+)"/, '<i>', '</i>')
+          string = Markdown.tag(string, /~([^~]+)~/, '<s>', '</s>')
+          Markdown.tag(string, /_([^_]+)_/, '<u>', '</u>')
         end
-        line << post_match
-      elsif md = URL.match(line)
-        line = md.pre_match + %Q(<a href="#{md[1]}">#{md[1]}</a>)
-        post_match = md.post_match
-        while md = URL.match(post_match)
-          line = md.pre_match + %Q(<a href="#{md[1]}">#{md[1]}</a>)
-          post_match = md.post_match
-        end
-        line << post_match
       end
     end
-    line.sub(/  $/,'<br>')
+    string.sub(/  $/,'<br>')
   end
 
   PARSER = Hash.new

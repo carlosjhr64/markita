@@ -14,6 +14,8 @@ Base
 basename
 before
 bind
+block
+call
 cell
 cert_chain_file
 CGI
@@ -92,6 +94,7 @@ line
 lines
 LoadError
 Login
+lx
 LX
 map
 Markdown
@@ -166,6 +169,7 @@ ssl
 ssl_options
 stag
 START_TIME
+string
 String
 StringIO
 strip
@@ -173,13 +177,14 @@ style
 sub
 submit
 t
-TAG1
+tag
 text
 Time
 to_s
 type
 unshift
 upcase
+url
 URL
 value
 values_at
