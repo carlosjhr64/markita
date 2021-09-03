@@ -18,8 +18,8 @@ module Markdown
   INLINE = lambda do |line|
     if line == (line=TAG1[line, /`([^`]+)`/, '<code>', '</code>'])
       if not /[<>]/.match? line
-        line = TAG1[line, /\*([^*"]+)\*/, '<b>', '</b>']
-        line = TAG1[line, /\"([^*"]+)\"/, '<i>', '</i>']
+        line = TAG1[line, /\*([^*]+)\*/, '<b>', '</b>']
+        line = TAG1[line, /\"([^"]+)\"/, '<i>', '</i>']
       end
     end
     if md = LX.match(line)
