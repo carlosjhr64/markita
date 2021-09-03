@@ -90,9 +90,9 @@ li
 line
 LoadError
 Login
-lx
+LX
 map
-MARKDOWN
+Markdown
 Markita
 match
 md
@@ -117,7 +117,9 @@ options
 OPTIONS
 page
 PAGE_KEY
+PARAGRAPH
 params
+PARSER
 path
 PATH
 path_info
