@@ -14,24 +14,31 @@ module Markdown
     line
   end
 
+  URL = %r(\[(https?://[\w\.\-\/\&\+\?\%]+)\])
   LX = /\[([^\[\]]+)\]\(([^()]+)\)/
   INLINE = lambda do |line|
     if line == (line=TAG1[line, /`([^`]+)`/, '<code>', '</code>'])
-      if not /[<>]/.match? line
-        line = TAG1[line, /\*([^*]+)\*/, '<b>', '</b>']
-        line = TAG1[line, /"([^"]+)"/, '<i>', '</i>']
-        line = TAG1[line, /~([^~]+)~/, '<s>', '</s>']
-        line = TAG1[line, /_([^_]+)_/, '<u>', '</u>']
-      end
-    end
-    if md = LX.match(line)
-      line = md.pre_match + %Q(<a href="#{md[2]}">#{md[1]}</a>)
-      post_match = md.post_match
-      while md = LX.match(post_match)
-        line << md.pre_match + %Q(<a href="#{md[2]}">#{md[1]}</a>)
+      line = TAG1[line, /\*([^*]+)\*/, '<b>', '</b>']
+      line = TAG1[line, /"([^"]+)"/, '<i>', '</i>']
+      line = TAG1[line, /~([^~]+)~/, '<s>', '</s>']
+      line = TAG1[line, /_([^_]+)_/, '<u>', '</u>']
+      if md = LX.match(line)
+        line = md.pre_match + %Q(<a href="#{md[2]}">#{md[1]}</a>)
         post_match = md.post_match
+        while md = LX.match(post_match)
+          line << md.pre_match + %Q(<a href="#{md[2]}">#{md[1]}</a>)
+          post_match = md.post_match
+        end
+        line << post_match
+      elsif md = URL.match(line)
+        line = md.pre_match + %Q(<a href="#{md[1]}">#{md[1]}</a>)
+        post_match = md.post_match
+        while md = URL.match(post_match)
+          line = md.pre_match + %Q(<a href="#{md[1]}">#{md[1]}</a>)
+          post_match = md.post_match
+        end
+        line << post_match
       end
-      line << post_match
     end
     line.sub(/  $/,'<br>')
   end

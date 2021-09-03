@@ -180,6 +180,7 @@ to_s
 type
 unshift
 upcase
+URL
 value
 values_at
 verify_peer
