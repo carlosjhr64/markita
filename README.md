@@ -162,17 +162,17 @@ Markdown:
 
 The *bold* and "italics" ~strikes~ at _underlined_,
 while a [link to no-where](no-where) sees
-the `code = "a*b*c"`.
+the `~ code ~ "a*b*c"`.
 
 Markdown:
 
     The *bold* and "italics" ~strikes~ at _underlined_,
     while a [link to no-where](no-where) sees
-    the `code = "a*b*c"`.
+    the `~ code ~ "a*b*c"`.
 
 As the markdown parser is very simple,
 you'll need to place code lines separately
-from lines containing bold and italics.
+from the other inline tags.
 
 ### Lists: ordered, un-ordered, definitions
 
@@ -202,13 +202,13 @@ Markdown:
 
 ### Block-quote
 
-As Hamlet says...
+Like Hamlet says...
 > To be or not to be...
 > That is the question!
 
 Markdown:
 
-    As Hamlet says...
+    Like Hamlet says...
     > To be or not to be...
     > That is the question!
 
