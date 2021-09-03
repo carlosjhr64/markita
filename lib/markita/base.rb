@@ -72,7 +72,7 @@ class Base < Sinatra::Base
     opt  = {}
     line = file.gets
     while line
-      f = MARKDOWN.detect{|r,_|r.match? line}&.last || DEFAULT
+      f = Markdown::PARSER.detect{|r,_|r.match? line}&.last || DEFAULT
       line = f[line, html, file, opt]
     end
     html << Base.footer

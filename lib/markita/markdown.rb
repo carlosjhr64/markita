@@ -1,4 +1,5 @@
 module Markita
+module Markdown
   TAG1 = lambda do |line, regx, stag, etag|
     if md = regx.match(line)
       line = md.pre_match + stag + md[1] + etag
@@ -33,15 +34,15 @@ module Markita
     line.sub(/  $/,'<br>')
   end
 
-  MARKDOWN = Hash.new
+  PARSER = Hash.new
 
   # Empty
-  MARKDOWN[/^$/] = lambda do |line, html, file, opt|
+  PARSER[/^$/] = lambda do |line, html, file, opt|
     file.gets
   end
 
   # Ordered list
-  MARKDOWN[/^\d+\. /] = lambda do |line, html, file, opt|
+  PARSER[/^\d+\. /] = lambda do |line, html, file, opt|
     html << "<ol#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match /^\d+. (.*)$/
@@ -54,7 +55,7 @@ module Markita
 
   # Paragraph
   PARAGRAPH = /^[\[\*\"]?\w/
-  MARKDOWN[PARAGRAPH] = lambda do |line, html, file, opt|
+  PARSER[PARAGRAPH] = lambda do |line, html, file, opt|
     html << "<p#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match PARAGRAPH
@@ -66,7 +67,7 @@ module Markita
   end
 
   # Unordered list
-  MARKDOWN[/^\* /] = lambda do |line, html, file, opt|
+  PARSER[/^\* /] = lambda do |line, html, file, opt|
     html << "<ul#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match /^[*] (.*)$/
@@ -78,7 +79,7 @@ module Markita
   end
 
   # Ballot box
-  MARKDOWN[/^- \[x| \] /] = lambda do |line, html, file, opt|
+  PARSER[/^- \[x| \] /] = lambda do |line, html, file, opt|
     html << "<ul#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match /^- \[(x| )\] (.*)$/
@@ -94,7 +95,7 @@ module Markita
   end
 
   # Definition list
-  MARKDOWN[/^: .+:$/] = lambda do |line, html, file, opt|
+  PARSER[/^: .+:$/] = lambda do |line, html, file, opt|
     html << "<dl#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match /^: (.*)$/
@@ -108,7 +109,7 @@ module Markita
   end
 
   # Headers
-  MARKDOWN[/^[#]{1,6} /] = lambda do |line, html, file, opt|
+  PARSER[/^[#]{1,6} /] = lambda do |line, html, file, opt|
     if line.match /^([#]{1,6}) (.*)$/
       i,header = $1.length,$2
       html << "<h#{i}#{opt[:attributes]}>#{INLINE[header]}</h#{i}>\n"
@@ -118,7 +119,7 @@ module Markita
   end
 
   # Block-quote
-  MARKDOWN[/^> /] = lambda do |line, html, file, opt|
+  PARSER[/^> /] = lambda do |line, html, file, opt|
     html << "<blockquote#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match /^> (.*)$/
@@ -133,7 +134,7 @@ module Markita
   HTML = Rouge::Formatters::HTML.new
 
   # Code
-  MARKDOWN[/^[`~]{3}\s*\w*$/] = lambda do |line, html, file, opt|
+  PARSER[/^[`~]{3}\s*\w*$/] = lambda do |line, html, file, opt|
     lang = (/(\w+)$/.match line)? Rouge::Lexer.find($1) : nil
     klass = lang ? ' class="highlight"' : nil
     html << "<pre#{klass}#{opt[:attributes]}><code>\n"
@@ -149,7 +150,7 @@ module Markita
   end
 
   # Preform
-  MARKDOWN[/^ {4}/] = lambda do |line, html, file, opt|
+  PARSER[/^ {4}/] = lambda do |line, html, file, opt|
     html << "<pre#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match /^ {4}(.*)$/
@@ -162,14 +163,14 @@ module Markita
   end
 
   # Horizontal rule
-  MARKDOWN[/^---+$/] = lambda do |line, html, file, opt|
+  PARSER[/^---+$/] = lambda do |line, html, file, opt|
     html << "<hr#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     file.gets
   end
 
   # Table
-  MARKDOWN[/^\|.+\|$/] = lambda do |line, html, file, opt|
+  PARSER[/^\|.+\|$/] = lambda do |line, html, file, opt|
     html << "<table#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     html << '<thead><tr><th>'
@@ -200,7 +201,7 @@ module Markita
   end
 
   # Splits
-  MARKDOWN[/^:?\|:?$/] = lambda do |line, html, file, opt|
+  PARSER[/^:?\|:?$/] = lambda do |line, html, file, opt|
     case line.chomp
     when '|:'
       html << %Q(<table><tr><td#{opt[:attributes]}>\n)
@@ -216,7 +217,7 @@ module Markita
   end
 
   # Image
-  MARKDOWN[/^!\[[^\[\]]+\]\([^\(\)]+\)$/] = lambda do |line, html, file, opt|
+  PARSER[/^!\[[^\[\]]+\]\([^\(\)]+\)$/] = lambda do |line, html, file, opt|
     if line.match /^!\[([^\[\]]+)\]\(([^\(\)]+)\)$/
       alt,src=$1,$2
       style = ' '
@@ -235,7 +236,7 @@ module Markita
   end
 
   # Single line form
-  MARKDOWN[/^! (\w+:\[\*?\w+\] )+\([^()]+\)$/] = lambda do |line, html, file, opt|
+  PARSER[/^! (\w+:\[\*?\w+\] )+\([^()]+\)$/] = lambda do |line, html, file, opt|
     # One Line Forms
     if /\((.*)\)$/.match line
       action,method,form = $1,nil,[]
@@ -255,7 +256,7 @@ module Markita
   end
 
   # Embed text
-  MARKDOWN[/^!> #{PAGE_KEY}\.txt$/] = lambda do |line, html, file, opt|
+  PARSER[/^!> #{PAGE_KEY}\.txt$/] = lambda do |line, html, file, opt|
     if /^!> (#{PAGE_KEY}\.txt)$/.match(line) and
         File.exist?(filename=File.join(ROOT, $1))
       html << "<pre>\n"
@@ -268,10 +269,11 @@ module Markita
   end
 
   # Attributes
-  MARKDOWN[/^\{: .+\}$/] = lambda do |line, html, file, opt|
+  PARSER[/^\{: .+\}$/] = lambda do |line, html, file, opt|
     if line.match /^\{:( .*)\}$/
       opt[:attributes] = $1
     end
     file.gets
   end
+end
 end
