@@ -158,15 +158,17 @@ Markdown:
     Bottom right
     :|
 
-### Inline bold, italic, code, and links
+### Inline links, code, bold, italic, strikes, and underline
 
-The *bold* and "italics", a [link](to-no-where),
-the `code = "a*b*c"`, and another [nowhere](/link.html).
+The *bold* and "italics" ~strikes~ at _underlined_,
+while a [link to no-where](no-where) sees
+the `code = "a*b*c"`.
 
 Markdown:
 
-    The *bold* and "italics", a [link](to-no-where),
-    the `code = "a*b*c"`, and another [nowhere](/link.html).
+    The *bold* and "italics" ~strikes~ at _underlined_,
+    while a [link to no-where](no-where) sees
+    the `code = "a*b*c"`.
 
 As the markdown parser is very simple,
 you'll need to place code lines separately

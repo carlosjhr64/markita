@@ -19,7 +19,9 @@ module Markdown
     if line == (line=TAG1[line, /`([^`]+)`/, '<code>', '</code>'])
       if not /[<>]/.match? line
         line = TAG1[line, /\*([^*]+)\*/, '<b>', '</b>']
-        line = TAG1[line, /\"([^"]+)\"/, '<i>', '</i>']
+        line = TAG1[line, /"([^"]+)"/, '<i>', '</i>']
+        line = TAG1[line, /~([^~]+)~/, '<s>', '</s>']
+        line = TAG1[line, /_([^_]+)_/, '<u>', '</u>']
       end
     end
     if md = LX.match(line)
