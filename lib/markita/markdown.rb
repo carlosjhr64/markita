@@ -14,6 +14,7 @@ module Markdown
     line
   end
 
+  LX = /\[([^\[\]]+)\]\(([^()]+)\)/
   INLINE = lambda do |line|
     if line == (line=TAG1[line, /`([^`]+)`/, '<code>', '</code>'])
       if not /[<>]/.match? line
@@ -21,11 +22,10 @@ module Markdown
         line = TAG1[line, /\"([^*"]+)\"/, '<i>', '</i>']
       end
     end
-    lx = /\[([^\[\]]+)\]\(([^()]+)\)/
-    if md = lx.match(line)
+    if md = LX.match(line)
       line = md.pre_match + %Q(<a href="#{md[2]}">#{md[1]}</a>)
       post_match = md.post_match
-      while md = lx.match(post_match)
+      while md = LX.match(post_match)
         line << md.pre_match + %Q(<a href="#{md[2]}">#{md[1]}</a>)
         post_match = md.post_match
       end
