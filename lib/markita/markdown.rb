@@ -53,10 +53,11 @@ module Markita
   end
 
   # Paragraph
-  MARKDOWN[/^\[?\w/] = lambda do |line, html, file, opt|
+  PARAGRAPH = /^[\[\*\"]?\w/
+  MARKDOWN[PARAGRAPH] = lambda do |line, html, file, opt|
     html << "<p#{opt[:attributes]}>\n"
     opt.delete(:attributes)
-    while line&.match /^\[?\w/
+    while line&.match PARAGRAPH
       html << INLINE[line]
       line = file.gets
     end
@@ -97,8 +98,9 @@ module Markita
     html << "<dl#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match /^: (.*)$/
-      line = (($1[-1]==':')? "<dt>#{$1[0..-2]}</dt>\n" : "<dd>#{$1}</dd>\n")
-      html << INLINE[line]
+      line = (($1[-1]==':')? "<dt>#{INLINE[$1[0..-2]]}</dt>\n" :
+              "<dd>#{INLINE[$1]}</dd>\n")
+      html << line
       line = file.gets
     end
     html << "</dl>\n"

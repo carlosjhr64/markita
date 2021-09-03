@@ -4,6 +4,11 @@
 * [github](https://www.github.com/carlosjhr64/markita)
 * [rubygems](https://rubygems.org/gems/markita)
 
+: *Markita*:
+: Esperanto for "marked"
+: No, really... It's "marked" in Esperanto
+: OK, so it may also be a girl's name
+
 ## DESCRIPTION
 
 A Sinatra Markdown server.
