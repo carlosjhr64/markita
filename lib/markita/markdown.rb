@@ -133,7 +133,10 @@ module Markdown
   PARSER[/^[#]{1,6} /] = lambda do |line, html, file, opt|
     if line.match /^([#]{1,6}) (.*)$/
       i,header = $1.length,$2
-      html << "<h#{i}#{opt[:attributes]}>#{INLINE[header]}</h#{i}>\n"
+      id = header.strip.gsub(/\s+/,'+')
+      html << %Q(<a id="#{id}">\n)
+      html << "  <h#{i}#{opt[:attributes]}>#{INLINE[header]}</h#{i}>\n"
+      html << "</a>\n"
     end
     opt.delete(:attributes)
     file.gets
