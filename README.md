@@ -56,27 +56,15 @@ Markdown:
 
 ### Image placement
 
-<img src="/img/markita.png" style="display: block; margin-left: auto; margin-right: auto;" alt="Centered Image">
-<img src="/img/markita.png" style="float:left;" alt="Left Floating">
-<img src="/img/markita.png" style="float:right;" alt="Right Floating">
-<p>
-Image to the left.
-Image  centered above.
-Image to the right.
-And set a HR bar below.
-</p>
-<hr>
-
 Markdown:
 
-    ![ Centered Image ](/img/markita.png)
-    ![Left Floating ](/img/markita.png)
-    ![ Right Floating](/img/markita.png)
+    ![ Centered Image ](/img/image.png)
+    ![Left Floating ](/img/image.png)
+    ![ Right Floating](/img/image.png)
     Image  centered above.
     Image to the left.
     Image to the right.
     And set a HR bar below.
-
     ---
 
 ### Forms
