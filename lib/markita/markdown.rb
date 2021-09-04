@@ -93,7 +93,7 @@ module Markdown
       html << INLINE[line]
       line = file.gets
     end
-    html << "<p>\n"
+    html << "</p>\n"
     line
   end
 
@@ -110,10 +110,11 @@ module Markdown
   end
 
   # Ballot box
-  PARSER[/^- \[x| \] /] = lambda do |line, html, file, opt|
+  BALLOT = /^- \[(x| )\] (.*)$/
+  PARSER[BALLOT] = lambda do |line, html, file, opt|
     html << "<ul#{opt[:attributes]}>\n"
     opt.delete(:attributes)
-    while line&.match /^- \[(x| )\] (.*)$/
+    while line&.match BALLOT
       x,t = $1,$2
       li = (x=='x')?
         %q{<li style="list-style-type: '&#9745; '">} :
@@ -257,7 +258,7 @@ module Markdown
       style = ' '
       case alt
       when /^ .* $/
-        style = %Q(style="display: block; margin-left: auto; margin-right: auto;")
+        style = %Q( style="display: block; margin-left: auto; margin-right: auto;")
       when / $/
         style = %Q( style="float:left;" )
       when /^ /
