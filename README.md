@@ -53,15 +53,13 @@ Types:
 
 ### Ballot boxes
 
-<ul>
-  <li style="list-style-type: '&#9744; '">Empty ballot</li>
-  <li style="list-style-type: '&#9745; '">Marked ballot</li>
-</ul>
+- [ ] Empty ballot
+- [x] Marked ballot
 
 Markdown:
 
-- [ ] Empty ballot
-- [x] Marked ballot
+    - [ ] Empty ballot
+    - [x] Marked ballot
 
 ### Image placement
 
