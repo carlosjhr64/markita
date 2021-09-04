@@ -69,18 +69,6 @@ Markdown:
 
 ### Forms
 
-A get method form without submit button on single field:
-! Google:[q] (https://www.google.com/search)
-
-A post method form due to the password field with
-a submit button due to multiple fields:
-! Username:[user] Password:[*pwd] (/login.html)
-
-A multi-line form with default entry and hidden field:
-! Name:[user] [status="active"] (/register.html)
-! Address:[address]
-! Code:[code="1234"]
-
 Markdown:
 
     A get method form without submit button on single field:
