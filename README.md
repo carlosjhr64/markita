@@ -250,7 +250,7 @@ Markdown:
 
 Markdown:
 
-    !> /path-to/assii_art.txt
+    !> /path-to/ascii_art.txt
 
 Must be a `*.txt` file.
 Useful for ASCII art.
