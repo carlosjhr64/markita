@@ -271,6 +271,14 @@ Markdown:
 Must be a `*.txt` file.
 Useful for ASCII art.
 
+### Emojis
+
+I :heart: to :laughing:!
+
+Markdown:
+
+    I :heart: to :laughing:!
+
 ## HOW-TOs
 
 ### Set site password:

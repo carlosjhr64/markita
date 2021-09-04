@@ -21,6 +21,9 @@ module Markdown
   URLx = %r(\[(https?://[\w\.\-\/\&\+\?\%]+)\])
   URL  = lambda {|md| %Q(<a href="#{md[1]}">#{md[1]}</a>)}
 
+  EMOJIx = /:(\w+):/
+  EMOJI  = lambda {|md| (_=EMOJIS[md[1]])? "&\#x#{_};" : md[0]}
+
   def Markdown.tag(line, regx, md2string, &block)
     if md = regx.match(line)
       pre_match = (block ? block.call(md.pre_match) : md.pre_match)
@@ -44,7 +47,8 @@ module Markdown
           string = Markdown.tag(line, Bx, B)
           string = Markdown.tag(string, Ix, I)
           string = Markdown.tag(string, Sx, S)
-          Markdown.tag(string, Ux, U)
+          string = Markdown.tag(string, Ux, U)
+          Markdown.tag(string, EMOJIx, EMOJI)
         end
       end
     end
