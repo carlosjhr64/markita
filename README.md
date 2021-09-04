@@ -179,6 +179,7 @@ Markdown:
 * Point A
 * Point B
 
+<dl>
 <dt>Word</dt>
 <dd>Definition of the word</dd>
 <dt>Symbol</dt>
