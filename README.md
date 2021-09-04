@@ -241,10 +241,6 @@ Markdown:
 
 ### Attributes
 
-<p style="color: blue;">
-You can set the attributes for most blocks.
-</p>
-
 Markdown:
 
     {: style="color: blue;"}
