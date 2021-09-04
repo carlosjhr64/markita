@@ -248,11 +248,9 @@ Markdown:
 
 ### Embed text
 
-!> /img/markita.txt
-
 Markdown:
 
-    !> /img/markita.txt
+    !> /path-to/assii_art.txt
 
 Must be a `*.txt` file.
 Useful for ASCII art.
