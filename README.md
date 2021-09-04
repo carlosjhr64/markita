@@ -279,6 +279,30 @@ Markdown:
 
     I :heart: to :laughing:!
 
+### Footnotes
+
+There once was a man from Nantucket[^1]  
+Who kept all his cash[^2] in a bucket.  
+But his daugter, named Nan,  
+Ran away with a man  
+And as for the bucket, Natucket.[^3]
+
+[^1]: Nantucket is an island in the U.S. state of Massachusetts.
+[^2]: Cash is money in currency.
+[^3]: Read as "Nan took it."
+
+Markdown:
+
+    There once was a man from Nantucket[^1]  
+    Who kept all his cash[^2] in a bucket.  
+    But his daugter, named Nan,  
+    Ran away with a man  
+    And as for the bucket, Natucket.[^3]
+
+    [^1]: Nantucket is an island in the U.S. state of Massachusetts.
+    [^2]: Cash is money in currency.
+    [^3]: Read as "Nan took it."
+
 ## HOW-TOs
 
 ### Set site password:

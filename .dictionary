@@ -12,6 +12,7 @@ config
 cp
 crt
 css
+daugter
 dir
 dirname
 dl
@@ -24,6 +25,9 @@ env
 favicon
 Favicon
 filepath
+fn
+fnref
+FOOTNOTEx
 Formatters
 gif
 github
@@ -54,6 +58,7 @@ md
 MERCHANTABILITY
 mkdir
 mv
+Natucket
 newkey
 NONINFRINGEMENT
 NotFound

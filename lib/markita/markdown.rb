@@ -24,6 +24,15 @@ module Markdown
   EMOJIx = /:(\w+):/
   EMOJI  = lambda {|md| (_=EMOJIS[md[1]])? "&\#x#{_};" : md[0]}
 
+  FOOTNOTEx = /\[\^(\d+)\](:)?/
+  FOOTNOTE  = lambda do |md|
+    if md[2]
+      %Q(<a id="fn:#{md[1]}" href="\#fnref:#{md[1]}">#{md[1]}:</a>)
+    else
+      %Q(<a id="fnref:#{md[1]}" href="\#fn:#{md[1]}"><sup>#{md[1]}</sup></a>)
+    end
+  end
+
   def Markdown.tag(line, regx, md2string, &block)
     if md = regx.match(line)
       pre_match = (block ? block.call(md.pre_match) : md.pre_match)
@@ -48,6 +57,7 @@ module Markdown
           string = Markdown.tag(string, Ix, I)
           string = Markdown.tag(string, Sx, S)
           string = Markdown.tag(string, Ux, U)
+          string = Markdown.tag(string, FOOTNOTEx, FOOTNOTE)
           Markdown.tag(string, EMOJIx, EMOJI)
         end
       end
@@ -313,6 +323,18 @@ module Markdown
       html << line
     end
     file.gets
+  end
+
+  # Footnotes
+  FOOTNOTES = /^\[\^\d+\]:/
+  PARSER[FOOTNOTES] = lambda do |line, html, file, opt|
+    html << "<small\n>"
+    while FOOTNOTES.match? line
+      html << INLINE[line.chomp]+"<br>\n"
+      line = file.gets
+    end
+    html << "</small>\n"
+    line
   end
 
   # Attributes
