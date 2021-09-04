@@ -97,25 +97,43 @@ Note: on upcased keys, value is CGI escaped.
 
 ### Split table
 
-|:
+<table><tr><td>
+<p>
 Top left
-|
+</p>
+</td><td>
+<p>
 Top center
-|
+</p>
+</td><td>
+<p>
 Top right
-:|:
+</p>
+</td></tr><tr><td>
+<p>
 Middle left
-|
+</p>
+</td><td>
+<p>
 Middle center
-|
+</p>
+</td><td>
+<p>
 Middle left
-:|:
+</p>
+</td></tr><tr><td>
+<p>
 Bottom left
-|
+</p>
+</td><td>
+<p>
 Bottom center
-|
+</p>
+</td><td>
+<p>
 Bottom right
-:|
+</p>
+</td></tr></table>
 
 Markdown:
 
