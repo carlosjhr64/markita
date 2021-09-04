@@ -179,10 +179,11 @@ Markdown:
 * Point A
 * Point B
 
-: Word:
-: Definition of the word
-: Symbol:
-: Usage for the symbol
+<dt>Word</dt>
+<dd>Definition of the word</dd>
+<dt>Symbol</dt>
+<dd>Usage for the symbol</dd>
+</dl>
 
 Markdown:
 
