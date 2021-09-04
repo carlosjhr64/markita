@@ -92,11 +92,6 @@ Markdown:
     * Grumpy Cat
     * It's over 9000!
 
-! template = "* [&query;](https://www.google.com/search?q=&QUERY;)"
-! regx = /^\* (?<query>.*)$/
-* Grumpy Cat
-* It's over 9000!
-
 Template clears after first non-match.
 Note: on upcased keys, value is CGI escaped.
 
