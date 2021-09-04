@@ -258,7 +258,7 @@ module Markdown
       style = ' '
       case alt
       when /^ .* $/
-        style = %Q( style="display: block; margin-left: auto; margin-right: auto;")
+        style = %Q( style="display: block; margin-left: auto; margin-right: auto;" )
       when / $/
         style = %Q( style="float:left;" )
       when /^ /

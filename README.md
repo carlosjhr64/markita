@@ -56,7 +56,7 @@ Markdown:
 
 ### Image placement
 
-<img src="/img/markita.png" style="display: block; margin-left: auto; margin-right: auto;"alt="Centered Image">
+<img src="/img/markita.png" style="display: block; margin-left: auto; margin-right: auto;" alt="Centered Image">
 <img src="/img/markita.png" style="float:left;" alt="Left Floating">
 <img src="/img/markita.png" style="float:right;" alt="Right Floating">
 <p>
