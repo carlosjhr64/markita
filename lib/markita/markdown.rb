@@ -85,7 +85,7 @@ module Markdown
   end
 
   # Paragraph
-  PARAGRAPH = /^[`*"~_]?\w/
+  PARAGRAPH = /^[\[`*"~_]?\w/
   PARSER[PARAGRAPH] = lambda do |line, html, file, opt|
     html << "<p#{opt[:attributes]}>\n"
     opt.delete(:attributes)
@@ -275,17 +275,17 @@ module Markdown
   PARSER[FORM] = lambda do |line, html, file, opt|
     form = []
     lines,fields,submit,method = 0,0,nil,nil
-    action = /\(([^\(\)]*)\)$/.match(line)&.values_at(1)
+    action = (_=/\(([^\(\)]*)\)$/.match(line))? _[1] : nil
     while line&.match? FORM
       lines += 1
       form << '  <br>' if lines > 1
       line.scan(/(\w+:)?\[(\*)?(\w+)(="[^"]*")?\]/).each do |field, pwd, name, value|
+        method ||= ' method="post"' if pwd
         field &&= field[0...-1]
         value &&= value[2...-1]
         if field
           fields += 1
           type = (pwd)? 'password' : 'text'
-          method ||= ' method="post"' if pwd
           if value
             form << %Q{  #{field}:<input type="#{type}" name="#{name}" value="#{value}">}
           else
@@ -308,7 +308,6 @@ module Markdown
     form << %Q(</form>)
     html << form.join("\n")
     html << "\n"
-
     opt.delete(:attributes)
     line
   end
@@ -329,7 +328,7 @@ module Markdown
   # Footnotes
   FOOTNOTES = /^\[\^\d+\]:/
   PARSER[FOOTNOTES] = lambda do |line, html, file, opt|
-    html << "<small\n>"
+    html << "<small>\n"
     while FOOTNOTES.match? line
       html << INLINE[line.chomp]+"<br>\n"
       line = file.gets
