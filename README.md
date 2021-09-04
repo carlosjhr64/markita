@@ -4,10 +4,12 @@
 * [github](https://www.github.com/carlosjhr64/markita)
 * [rubygems](https://rubygems.org/gems/markita)
 
-: *Markita*:
-: Esperanto for "marked"
-: No, really... It's "marked" in Esperanto
-: OK, so it may also be a girl's name
+<dl>
+<dt><b>Markita</b></dt>
+<dd>Esperanto for <i>marked</i></dd>
+<dd>No, really... It's <i>marked</i> in Esperanto</dd>
+<dd>OK, so it may also be a girl's name</dd>
+</dl>
 
 ## DESCRIPTION
 
