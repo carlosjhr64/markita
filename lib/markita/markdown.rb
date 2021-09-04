@@ -1,47 +1,34 @@
 module Markita
 module Markdown
-  def Markdown.tag(line, regx, stag, etag, &block)
+  Ux = /_([^_]+)_/
+  U  = lambda {|md| "<u>#{md[1]}</u>"}
+
+  Sx = /~([^~]+)~/
+  S  = lambda {|md| "<s>#{md[1]}</s>"}
+
+  Ix = /"([^"]+)"/
+  I  = lambda {|md| "<i>#{md[1]}</i>"}
+
+  Bx = /\*([^\*]+)\*/
+  B  = lambda {|md| "<b>#{md[1]}</b>"}
+
+  CODEx = /`([^`]+)`/
+  CODE  = lambda {|md| "<code>#{md[1]}</code>"}
+
+  Ax = /\[([^\[\]]+)\]\(([^()]+)\)/
+  A  = lambda {|md| %Q(<a href="#{md[2]}">#{md[1]}</a>)}
+
+  URLx = %r(\[(https?://[\w\.\-\/\&\+\?\%]+)\])
+  URL  = lambda {|md| %Q(<a href="#{md[1]}">#{md[1]}</a>)}
+
+  def Markdown.tag(line, regx, md2string, &block)
     if md = regx.match(line)
       pre_match = (block ? block.call(md.pre_match) : md.pre_match)
-      string = pre_match + stag + md[1] + etag
+      string = pre_match + md2string[md]
       post_match = md.post_match
       while md = regx.match(post_match)
         pre_match = (block ? block.call(md.pre_match) : md.pre_match)
-        string << pre_match + stag + md[1] + etag
-        post_match = md.post_match
-      end
-      string << (block ? block.call(post_match) : post_match)
-      return string
-    end
-    return (block ? block.call(line) : line)
-  end
-
-  LX = /\[([^\[\]]+)\]\(([^()]+)\)/
-  def Markdown.lx(line, &block)
-    if md = LX.match(line)
-      pre_match = (block ? block.call(md.pre_match) : md.pre_match)
-      string = pre_match + %Q(<a href="#{md[2]}">#{md[1]}</a>)
-      post_match = md.post_match
-      while md = LX.match(post_match)
-        pre_match = (block ? block.call(md.pre_match) : md.pre_match)
-        string << pre_match + %Q(<a href="#{md[2]}">#{md[1]}</a>)
-        post_match = md.post_match
-      end
-      string << (block ? block.call(post_match) : post_match)
-      return string
-    end
-    return (block ? block.call(line) : line)
-  end
-
-  URL = %r(\[(https?://[\w\.\-\/\&\+\?\%]+)\])
-  def Markdown.url(line, &block)
-    if md = URL.match(line)
-      pre_match = (block ? block.call(md.pre_match) : md.pre_match)
-      string = pre_match + %Q(<a href="#{md[1]}">#{md[1]}</a>)
-      post_match = md.post_match
-      while md = URL.match(post_match)
-        pre_match = (block ? block.call(md.pre_match) : md.pre_match)
-        string << pre_match + %Q(<a href="#{md[1]}">#{md[1]}</a>)
+        string << pre_match + md2string[md]
         post_match = md.post_match
       end
       string << (block ? block.call(post_match) : post_match)
@@ -51,13 +38,13 @@ module Markdown
   end
 
   INLINE = lambda do |line|
-    string = Markdown.tag(line, /`([^`]+)`/, '<code>', '</code>') do |line|
-      Markdown.lx(line) do |line|
-        Markdown.url(line) do |line|
-          string = Markdown.tag(line, /\*([^*]+)\*/, '<b>', '</b>')
-          string = Markdown.tag(string, /"([^"]+)"/, '<i>', '</i>')
-          string = Markdown.tag(string, /~([^~]+)~/, '<s>', '</s>')
-          Markdown.tag(string, /_([^_]+)_/, '<u>', '</u>')
+    string = Markdown.tag(line, CODEx, CODE) do |line|
+      Markdown.tag(line, Ax, A) do |line|
+        Markdown.tag(line, URLx, URL) do |line|
+          string = Markdown.tag(line, Bx, B)
+          string = Markdown.tag(string, Ix, I)
+          string = Markdown.tag(string, Sx, S)
+          Markdown.tag(string, Ux, U)
         end
       end
     end
