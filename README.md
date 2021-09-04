@@ -79,9 +79,9 @@ Markdown:
     ! Username:[user] Password:[*pwd] (/login.html)
 
     A multi-line form with default entry and hidden field:
-    ! Name:[user] (/register.html)
-    ! Address:[address] (.)
-    ! Code:[code=1234] [site=markita] (.)
+    ! Name:[user] [status="active"] (/register.html)
+    ! Address:[address]
+    ! Code:[code="1234"]
 
 ### Template substitutions
 
