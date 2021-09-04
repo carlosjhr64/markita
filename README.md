@@ -53,8 +53,10 @@ Types:
 
 ### Ballot boxes
 
-- [ ] Empty ballot
-- [x] Marked ballot
+<ul>
+  <li style="list-style-type: '&#9744; '">Empty ballot</li>
+  <li style="list-style-type: '&#9745; '">Marked ballot</li>
+</ul>
 
 Markdown:
 
