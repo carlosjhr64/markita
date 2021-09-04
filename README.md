@@ -4,13 +4,6 @@
 * [github](https://www.github.com/carlosjhr64/markita)
 * [rubygems](https://rubygems.org/gems/markita)
 
-<dl>
-<dt><b>Markita</b></dt>
-<dd>Esperanto for <i>marked</i></dd>
-<dd>No, really... It's <i>marked</i> in Esperanto</dd>
-<dd>OK, so it may also be a girl's name</dd>
-</dl>
-
 ## DESCRIPTION
 
 A Sinatra Markdown server.
@@ -63,7 +56,7 @@ Markdown:
 
 ### Image placement
 
-<img src="/img/markita.png"style="display: block; margin-left: auto; margin-right: auto;"alt="Centered Image">
+<img src="/img/markita.png" style="display: block; margin-left: auto; margin-right: auto;"alt="Centered Image">
 <img src="/img/markita.png" style="float:left;" alt="Left Floating">
 <img src="/img/markita.png" style="float:right;" alt="Right Floating">
 <p>
@@ -71,7 +64,7 @@ Image to the left.
 Image  centered above.
 Image to the right.
 And set a HR bar below.
-<p>
+</p>
 <hr>
 
 Markdown:
