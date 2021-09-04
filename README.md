@@ -161,15 +161,15 @@ Markdown:
 
 <p>
 The <b>bold</b> and <i>italics</i> <s>strikes</s> at <u>underlined</u>,
-while a <a href="no-where">link to no-where</a>
-sees the <code>~ code ~ "a*b*c"</code> to <a href="https://somewhere.net">https://somewhere.net</a>.
+while a <a href="#Markita">link to #Markita</a>
+sees the <code>~ code ~ "a*b*c"</code> to <a href="https://github.com">https://github.com</a>.
 </p>
 
 Markdown:
 
     The *bold* and "italics" ~strikes~ at _underlined_,
-    while a [link to no-where](no-where)
-    sees the `~ code ~ "a*b*c"` to [https://somewhere.net].
+    while a [link to #Markita](#Markita)
+    sees the `~ code ~ "a*b*c"` to [https://github.com].
 
 ### Lists: ordered, un-ordered, definitions
 
