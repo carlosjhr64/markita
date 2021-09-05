@@ -245,7 +245,7 @@ module Markdown
 
   # Splits
   SPLITS = /^:?\|:?$/
-  PARSER[SPLITS] = lambda do |line, html, file, opt, md|
+  PARSER[SPLITS] = lambda do |line, html, file, opt, _|
     case line.chomp
     when '|:'
       html << %Q(<table><tr><td#{opt[:attributes]}>\n)
