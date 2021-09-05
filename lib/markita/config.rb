@@ -17,9 +17,4 @@ module Markita
   IMAGE_PATH = %r{/(\w[\w\/\-]*\w\.((png)|(gif)))}
 
   START_TIME = Time.now
-
-  DEFAULT = lambda do |line, html, file, opt|
-    html << line
-    file.gets
-  end
 end

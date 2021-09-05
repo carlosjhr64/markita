@@ -57,6 +57,7 @@ expand_path
 f
 FAILED
 Favicon
+fct
 field
 fields
 file
@@ -107,7 +108,6 @@ key
 klass
 lambda
 lang
-last
 left
 length
 lex
@@ -160,7 +160,6 @@ Preprocess
 private_key_file
 puts
 pwd
-r
 raise
 read
 redirect
@@ -170,6 +169,7 @@ regx
 request
 require
 require_relative
+rgx
 right
 root
 ROOT

@@ -26,6 +26,7 @@ EMOJIx
 env
 favicon
 Favicon
+fct
 filepath
 fn
 fnref
@@ -77,6 +78,7 @@ rb
 REDTTY
 regx
 req
+rgx
 rsa
 rubygems
 RuntimeError
