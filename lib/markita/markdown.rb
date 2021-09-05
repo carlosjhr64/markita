@@ -116,13 +116,13 @@ module Markdown
   PARSER[BALLOTS] = lambda do |line, html, file, opt, md|
     html << "<ul#{opt[:attributes]}>\n"
     opt.delete(:attributes)
-    while line&.match BALLOTS
-      x,t = $1,$2
+    while md
+      x,t = md[1],md[2]
       li = (x=='x')?
         %q{<li style="list-style-type: '&#9745; '">} :
         %q{<li style="list-style-type: '&#9744; '">}
       html << "  #{li}#{INLINE[t]}</li>\n"
-      line = file.gets
+      md = (line=file.gets)&.match BALLOTS
     end
     html << "</ul>\n"
     line
