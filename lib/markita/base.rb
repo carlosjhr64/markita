@@ -65,16 +65,16 @@ class Base < Sinatra::Base
     FOOTER
   end
 
-  DEFAULT = lambda do |line, html, file, opt|
+  DEFAULT = lambda do |line, html, file, *_|
     html << line
     file.gets
   end
 
   def Base.page(key, f)
-    html,opt,file = '',{},Preprocess.new(f)
-    line,fct = Base.header(key),DEFAULT
-    while line = fct[line, html, file, opt]
-      fct = Markdown::PARSER.each{|rgx, fct| break fct if rgx.match? line} || DEFAULT
+    html,opt,file,line = '',{},Preprocess.new(f),Base.header(key)
+    fct,md = nil,nil
+    while line = (fct||DEFAULT)[line, html, file, opt] #, md]
+      fct = Markdown::PARSER.each{|r,f| break(f) if md=r.match(line)}
     end
     html << Base.footer
     html
