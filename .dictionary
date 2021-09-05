@@ -3,6 +3,7 @@ ARGV
 ascii
 backtrace
 basename
+BLOCKQS
 blockquote
 br
 carlosjhr
