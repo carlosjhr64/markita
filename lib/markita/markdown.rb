@@ -103,9 +103,9 @@ module Markdown
   PARSER[UNORDERED] = lambda do |line, html, file, opt, md|
     html << "<ul#{opt[:attributes]}>\n"
     opt.delete(:attributes)
-    while line&.match UNORDERED
-      html << "  <li>#{INLINE[$1]}</li>\n"
-      line = file.gets
+    while md
+      html << "  <li>#{INLINE[md[1]]}</li>\n"
+      md = (line=file.gets)&.match UNORDERED
     end
     html << "</ul>\n"
     line
