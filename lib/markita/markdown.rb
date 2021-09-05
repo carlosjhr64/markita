@@ -172,14 +172,14 @@ module Markdown
   HTML = Rouge::Formatters::HTML.new
 
   # Code
-  CODES = /^[`~]{3}[\s$]/
+  CODES = /^[`~]{3}\s*(\w+)?$/
   PARSER[CODES] = lambda do |line, html, file, opt, md|
-    lang = (/(\w+)$/.match line)? Rouge::Lexer.find($1) : nil
+    lang = Rouge::Lexer.find md[1]
     klass = lang ? ' class="highlight"' : nil
     html << "<pre#{klass}#{opt[:attributes]}><code>\n"
     opt.delete(:attributes)
     code = ''
-    while line = file.gets and not CODES.match line
+    while line=file.gets and not CODES.match(line)
       code << line
     end
     html << (lang ? HTML.format(lang.new.lex(code)) : code)
