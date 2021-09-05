@@ -284,7 +284,7 @@ module Markdown
     form = []
     lines,fields,submit,method = 0,0,nil,nil
     action = (_=/\(([^\(\)]*)\)$/.match(line))? _[1] : nil
-    while line&.match? FORMS
+    while md
       lines += 1
       form << '  <br>' if lines > 1
       line.scan(/(\w+:)?\[(\*)?(\w+)(="[^"]*")?\]/).each do |field, pwd, name, value|
@@ -305,7 +305,7 @@ module Markdown
           form << %Q{  <input type="hidden" name="#{name}" value="#{value}">}
         end
       end
-      line = file.gets
+      md = (line=file.gets).match FORMS
     end
     if submit or not fields==1
       submit ||= 'Submit'
