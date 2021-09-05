@@ -146,7 +146,6 @@ module Markdown
   # Headers
   HEADERS = /^([#]{1,6}) (.*)$/
   PARSER[HEADERS] = lambda do |line, html, file, opt, md|
-    md = HEADERS.match line
     i,header = md[1].length,md[2]
     id = header.strip.gsub(/\s+/,'+')
     html << %Q(<a id="#{id}">\n)
