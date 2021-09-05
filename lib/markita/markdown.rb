@@ -193,10 +193,10 @@ module Markdown
   PARSER[PREFORMS] = lambda do |line, html, file, opt, md|
     html << "<pre#{opt[:attributes]}>\n"
     opt.delete(:attributes)
-    while line&.match PREFORMS
-      html << $1
+    while md
+      html << md[1]
       html << "\n"
-      line = file.gets
+      md = (line=file.gets)&.match PREFORMS
     end
     html << "</pre>\n"
     line
