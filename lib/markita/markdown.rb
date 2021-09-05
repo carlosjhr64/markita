@@ -213,14 +213,14 @@ module Markdown
 
   # Table
   TABLES = /^\|.+\|$/
-  PARSER[TABLES] = lambda do |line, html, file, opt, md|
+  PARSER[TABLES] = lambda do |line, html, file, opt, _|
     html << "<table#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     html << '<thead><tr><th>'
     html << line[1...-1].split('|').map{INLINE[_1.strip]}.join('</th><th>')
     html << "</th></tr></thead>\n"
     align = []
-    while line = file.gets and TABLES.match line
+    while (line=file.gets)&.match TABLES
       html << '<tr>'
       line[1...-1].split('|').each_with_index do |cell, i|
         case cell
