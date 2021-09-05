@@ -90,9 +90,9 @@ module Markdown
   PARSER[PARAGRAPHS] = lambda do |line, html, file, opt, md|
     html << "<p#{opt[:attributes]}>\n"
     opt.delete(:attributes)
-    while line&.match PARAGRAPHS
+    while md
       html << INLINE[line]
-      line = file.gets
+      md = (line=file.gets)&.match PARAGRAPHS
     end
     html << "</p>\n"
     line
