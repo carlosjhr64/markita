@@ -323,8 +323,7 @@ module Markdown
   # Embed text
   EMBED_TEXTS = /^!> (#{PAGE_KEY}\.txt)$/
   PARSER[EMBED_TEXTS] = lambda do |line, html, file, opt, md|
-    if EMBED_TEXTS.match(line) and
-        File.exist?(filename=File.join(ROOT, $1))
+    if File.exist?(filename=File.join(ROOT, md[1]))
       html << "<pre>\n"
       html << File.read(filename)
       html << "</pre>\n"
