@@ -73,7 +73,7 @@ class Base < Sinatra::Base
   def Base.page(key, f)
     html,opt,file,line = '',{},Preprocess.new(f),Base.header(key)
     fct,md = nil,nil
-    while line = (fct||DEFAULT)[line, html, file, opt] #, md]
+    while line = (fct||DEFAULT)[line, html, file, opt, md]
       fct = Markdown::PARSER.each{|r,f| break(f) if md=r.match(line)}
     end
     html << Base.footer

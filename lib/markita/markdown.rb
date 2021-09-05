@@ -68,13 +68,13 @@ module Markdown
   PARSER = Hash.new
 
   # Empty
-  PARSER[/^$/] = lambda do |line, html, file, opt|
+  PARSER[/^$/] = lambda do |_, _, file, _, _|
     file.gets
   end
 
   # Ordered list
   ORDERED = /^\d+. (.*)$/
-  PARSER[ORDERED] = lambda do |line, html, file, opt|
+  PARSER[ORDERED] = lambda do |line, html, file, opt, md|
     html << "<ol#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match ORDERED
@@ -87,7 +87,7 @@ module Markdown
 
   # Paragraph
   PARAGRAPHS = /^[\[`*"~_]?\w/
-  PARSER[PARAGRAPHS] = lambda do |line, html, file, opt|
+  PARSER[PARAGRAPHS] = lambda do |line, html, file, opt, md|
     html << "<p#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match PARAGRAPHS
@@ -100,7 +100,7 @@ module Markdown
 
   # Unordered list
   UNORDERED = /^[*] (.*)$/
-  PARSER[UNORDERED] = lambda do |line, html, file, opt|
+  PARSER[UNORDERED] = lambda do |line, html, file, opt, md|
     html << "<ul#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match UNORDERED
@@ -113,7 +113,7 @@ module Markdown
 
   # Ballot box
   BALLOTS = /^- \[(x| )\] (.*)$/
-  PARSER[BALLOTS] = lambda do |line, html, file, opt|
+  PARSER[BALLOTS] = lambda do |line, html, file, opt, md|
     html << "<ul#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match BALLOTS
@@ -130,7 +130,7 @@ module Markdown
 
   # Definition list
   DEFINITIONS = /^: (.*)$/
-  PARSER[DEFINITIONS] = lambda do |line, html, file, opt|
+  PARSER[DEFINITIONS] = lambda do |line, html, file, opt, md|
     html << "<dl#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match DEFINITIONS
@@ -145,7 +145,7 @@ module Markdown
 
   # Headers
   HEADERS = /^([#]{1,6}) (.*)$/
-  PARSER[HEADERS] = lambda do |line, html, file, opt|
+  PARSER[HEADERS] = lambda do |line, html, file, opt, md|
     md = HEADERS.match line
     i,header = md[1].length,md[2]
     id = header.strip.gsub(/\s+/,'+')
@@ -158,7 +158,7 @@ module Markdown
 
   # Block-quote
   BLOCKQS = /^> (.*)$/
-  PARSER[BLOCKQS] = lambda do |line, html, file, opt|
+  PARSER[BLOCKQS] = lambda do |line, html, file, opt, md|
     html << "<blockquote#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match BLOCKQS
@@ -174,7 +174,7 @@ module Markdown
 
   # Code
   CODES = /^[`~]{3}[\s$]/
-  PARSER[CODES] = lambda do |line, html, file, opt|
+  PARSER[CODES] = lambda do |line, html, file, opt, md|
     lang = (/(\w+)$/.match line)? Rouge::Lexer.find($1) : nil
     klass = lang ? ' class="highlight"' : nil
     html << "<pre#{klass}#{opt[:attributes]}><code>\n"
@@ -191,7 +191,7 @@ module Markdown
 
   # Preform
   PREFORMS = /^ {4}(.*)$/
-  PARSER[PREFORMS] = lambda do |line, html, file, opt|
+  PARSER[PREFORMS] = lambda do |line, html, file, opt, md|
     html << "<pre#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     while line&.match PREFORMS
@@ -205,7 +205,7 @@ module Markdown
 
   # Horizontal rule
   HRS = /^---+$/
-  PARSER[HRS] = lambda do |line, html, file, opt|
+  PARSER[HRS] = lambda do |line, html, file, opt, md|
     html << "<hr#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     file.gets
@@ -213,7 +213,7 @@ module Markdown
 
   # Table
   TABLES = /^\|.+\|$/
-  PARSER[TABLES] = lambda do |line, html, file, opt|
+  PARSER[TABLES] = lambda do |line, html, file, opt, md|
     html << "<table#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     html << '<thead><tr><th>'
@@ -245,7 +245,7 @@ module Markdown
 
   # Splits
   SPLITS = /^:?\|:?$/
-  PARSER[SPLITS] = lambda do |line, html, file, opt|
+  PARSER[SPLITS] = lambda do |line, html, file, opt, md|
     case line.chomp
     when '|:'
       html << %Q(<table><tr><td#{opt[:attributes]}>\n)
@@ -262,7 +262,7 @@ module Markdown
 
   # Image
   IMAGES = /^!\[([^\[\]]+)\]\(([^\(\)]+)\)$/
-  PARSER[IMAGES] = lambda do |line, html, file, opt|
+  PARSER[IMAGES] = lambda do |line, html, file, opt, md|
     if IMAGES.match line
       alt,src=$1,$2
       style = ' '
@@ -282,7 +282,7 @@ module Markdown
 
   # Forms
   FORMS = /^!( (\w+:)?\[\*?\w+(="[^"]*")?\])+/
-  PARSER[FORMS] = lambda do |line, html, file, opt|
+  PARSER[FORMS] = lambda do |line, html, file, opt, md|
     form = []
     lines,fields,submit,method = 0,0,nil,nil
     action = (_=/\(([^\(\)]*)\)$/.match(line))? _[1] : nil
@@ -324,7 +324,7 @@ module Markdown
 
   # Embed text
   EMBED_TEXTS = /^!> (#{PAGE_KEY}\.txt)$/
-  PARSER[EMBED_TEXTS] = lambda do |line, html, file, opt|
+  PARSER[EMBED_TEXTS] = lambda do |line, html, file, opt, md|
     if EMBED_TEXTS.match(line) and
         File.exist?(filename=File.join(ROOT, $1))
       html << "<pre>\n"
@@ -338,7 +338,7 @@ module Markdown
 
   # Footnotes
   FOOTNOTES = /^\[\^\d+\]:/
-  PARSER[FOOTNOTES] = lambda do |line, html, file, opt|
+  PARSER[FOOTNOTES] = lambda do |line, html, file, opt, md|
     html << "<small>\n"
     while FOOTNOTES.match? line
       html << INLINE[line.chomp]+"<br>\n"
@@ -350,7 +350,7 @@ module Markdown
 
   # Attributes
   ATTRIBUTES = /^\{:( .*)\}/
-  PARSER[ATTRIBUTES] = lambda do |line, html, file, opt|
+  PARSER[ATTRIBUTES] = lambda do |line, html, file, opt, md|
     md = ATTRIBUTES.match line
     opt[:attributes] = md[1]
     md.post_match

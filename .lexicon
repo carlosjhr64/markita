@@ -160,6 +160,7 @@ Preprocess
 private_key_file
 puts
 pwd
+r
 raise
 read
 redirect
@@ -169,7 +170,6 @@ regx
 request
 require
 require_relative
-rgx
 right
 root
 ROOT

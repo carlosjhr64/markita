@@ -78,7 +78,6 @@ rb
 REDTTY
 regx
 req
-rgx
 rsa
 rubygems
 RuntimeError
