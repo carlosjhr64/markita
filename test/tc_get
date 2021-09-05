@@ -1,0 +1,16 @@
+#! ruby
+require 'test/unit'
+
+class TestGET < Test::Unit::TestCase
+  def test_get
+    pid = spawn('markita --root=./test --port=8081')
+    sleep 1
+    system "GET 'http://localhost:8081/TEST' > test/TEST.html"
+    system "kill #{pid}"
+    Process.wait pid
+    error = `git diff test`.chomp
+    unless error==''
+      flunk 'Run "git diff test"'
+    end
+  end
+end
