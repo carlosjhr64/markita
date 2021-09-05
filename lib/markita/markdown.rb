@@ -137,7 +137,7 @@ module Markdown
       line = (($1[-1]==':')? "<dt>#{INLINE[$1[0..-2]]}</dt>\n" :
               "<dd>#{INLINE[$1]}</dd>\n")
       html << line
-      line = file.gets
+      md = (line=file.gets)&.match DEFINITIONS
     end
     html << "</dl>\n"
     line
