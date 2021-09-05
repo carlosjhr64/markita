@@ -133,9 +133,10 @@ module Markdown
   PARSER[DEFINITIONS] = lambda do |line, html, file, opt, md|
     html << "<dl#{opt[:attributes]}>\n"
     opt.delete(:attributes)
-    while line&.match DEFINITIONS
-      line = (($1[-1]==':')? "<dt>#{INLINE[$1[0..-2]]}</dt>\n" :
-              "<dd>#{INLINE[$1]}</dd>\n")
+    while md
+      item = md[1]
+      line = ((item[-1]==':')? "<dt>#{INLINE[item[0..-2]]}</dt>\n" :
+              "<dd>#{INLINE[item]}</dd>\n")
       html << line
       md = (line=file.gets)&.match DEFINITIONS
     end
@@ -204,7 +205,7 @@ module Markdown
 
   # Horizontal rule
   HRS = /^---+$/
-  PARSER[HRS] = lambda do |line, html, file, opt, md|
+  PARSER[HRS] = lambda do |_, html, file, opt, _|
     html << "<hr#{opt[:attributes]}>\n"
     opt.delete(:attributes)
     file.gets

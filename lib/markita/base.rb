@@ -65,7 +65,7 @@ class Base < Sinatra::Base
     FOOTER
   end
 
-  DEFAULT = lambda do |line, html, file, *_|
+  DEFAULT = lambda do |line, html, file, _, _|
     html << line
     file.gets
   end
