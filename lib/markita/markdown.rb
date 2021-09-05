@@ -77,9 +77,9 @@ module Markdown
   PARSER[ORDERED] = lambda do |line, html, file, opt, md|
     html << "<ol#{opt[:attributes]}>\n"
     opt.delete(:attributes)
-    while line&.match ORDERED
-      html << "  <li>#{INLINE[$1]}</li>\n"
-      line = file.gets
+    while md
+      html << "  <li>#{INLINE[md[1]]}</li>\n"
+      md = (line=file.gets)&.match ORDERED
     end
     html << "</ol>\n"
     line
