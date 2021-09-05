@@ -305,7 +305,7 @@ module Markdown
           form << %Q{  <input type="hidden" name="#{name}" value="#{value}">}
         end
       end
-      md = (line=file.gets).match FORMS
+      md = (line=file.gets)&.match FORMS
     end
     if submit or not fields==1
       submit ||= 'Submit'
