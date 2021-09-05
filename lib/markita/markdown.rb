@@ -263,19 +263,17 @@ module Markdown
   # Image
   IMAGES = /^!\[([^\[\]]+)\]\(([^\(\)]+)\)$/
   PARSER[IMAGES] = lambda do |line, html, file, opt, md|
-    if IMAGES.match line
-      alt,src=$1,$2
-      style = ' '
-      case alt
-      when /^ .* $/
-        style = %Q( style="display: block; margin-left: auto; margin-right: auto;" )
-      when / $/
-        style = %Q( style="float:left;" )
-      when /^ /
-        style = %Q( style="float:right;" )
-      end
-      html << %Q(<img src="#{src}"#{style}alt="#{alt.strip}"#{opt[:attributes]}>\n)
+    alt,src=md[1],md[2]
+    style = ' '
+    case alt
+    when /^ .* $/
+      style = %Q( style="display: block; margin-left: auto; margin-right: auto;" )
+    when / $/
+      style = %Q( style="float:left;" )
+    when /^ /
+      style = %Q( style="float:right;" )
     end
+    html << %Q(<img src="#{src}"#{style}alt="#{alt.strip}"#{opt[:attributes]}>\n)
     opt.delete(:attributes)
     file.gets
   end
