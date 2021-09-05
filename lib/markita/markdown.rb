@@ -337,9 +337,9 @@ module Markdown
   FOOTNOTES = /^\[\^\d+\]:/
   PARSER[FOOTNOTES] = lambda do |line, html, file, opt, md|
     html << "<small>\n"
-    while FOOTNOTES.match? line
+    while md
       html << INLINE[line.chomp]+"<br>\n"
-      line = file.gets
+      md = (line=file.gets)&.match FOOTNOTES
     end
     html << "</small>\n"
     line
@@ -348,7 +348,6 @@ module Markdown
   # Attributes
   ATTRIBUTES = /^\{:( .*)\}/
   PARSER[ATTRIBUTES] = lambda do |line, html, file, opt, md|
-    md = ATTRIBUTES.match line
     opt[:attributes] = md[1]
     md.post_match
   end
