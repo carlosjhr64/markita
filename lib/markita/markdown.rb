@@ -160,10 +160,10 @@ module Markdown
   PARSER[BLOCKQS] = lambda do |line, html, file, opt, md|
     html << "<blockquote#{opt[:attributes]}>\n"
     opt.delete(:attributes)
-    while line&.match BLOCKQS
-      html << INLINE[$1]
+    while md
+      html << INLINE[md[1]]
       html << "\n"
-      line = file.gets
+      md = (line=file.gets)&.match BLOCKQS
     end
     html << "</blockquote>\n"
     line
