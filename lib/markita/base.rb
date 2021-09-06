@@ -18,26 +18,10 @@ class Base < Sinatra::Base
     end
   end
 
-  DEFAULT = lambda do |line, html, file, _, _|
-    html << line
-    file.gets
-  end
-
-  def Base.page(key, f)
-    html,opt,file,line = '',{},Preprocess.new(f),HTML.header(key)
-    fct,md = nil,nil
-    while line = (fct||DEFAULT)[line, html, file, opt, md]
-      fct = nil
-      Markdown::PARSER.each{|r,f| break if md=r.match(line) and fct=f}
-    end
-    html << HTML.footer
-    html
-  end
-
   get PAGE_KEY do |key|
     filepath = File.join ROOT, key+'.md'
     raise Sinatra::NotFound  unless File.exist? filepath
-    File.open(filepath, 'r'){|f| Base.page key, f}
+    Markdown.new(key).filepath filepath
   end
 
   get IMAGE_PATH do |path, *_|

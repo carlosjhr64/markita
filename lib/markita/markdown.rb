@@ -1,5 +1,40 @@
 module Markita
-module Markdown
+class Markdown
+  ROUGE = Rouge::Formatters::HTML.new
+  PARSERS = Hash.new
+
+  def initialize(title)
+    @title = title
+    @line=@html=@file=@opt=@md=nil
+  end
+
+  def default
+    @html << @line
+    @line = @file.gets
+  end
+
+  def start
+    @line,@html,@opt = HTML.header(@title),'',{}
+  end
+
+  def finish
+    @html << HTML.footer
+  end
+
+  def parse(file)
+    @file = Preprocess.new(file)
+    start
+    while @line
+      PARSERS.detect{|r, m| @md = r.match(@line) and method(m).call} or default
+    end
+    finish
+  end
+
+  def filepath(filepath)
+    File.open(filepath, 'r'){|file| parse file}
+    @html
+  end
+
   Ux = /_([^_]+)_/
   U  = lambda {|md| "<u>#{md[1]}</u>"}
 
@@ -65,205 +100,220 @@ module Markdown
     string.sub(/  $/,'<br>')
   end
 
-  PARSER = Hash.new
-
   # Empty
-  PARSER[/^$/] = lambda do |_, _, file, _, _|
-    file.gets
+  EMPTY = /^$/
+  PARSERS[EMPTY] = :empty
+  def empty
+    @line = @file.gets
+    true
   end
 
   # Ordered list
   ORDERED = /^\d+. (.*)$/
-  PARSER[ORDERED] = lambda do |line, html, file, opt, md|
-    html << "<ol#{opt[:attributes]}>\n"
-    opt.delete(:attributes)
-    while md
-      html << "  <li>#{INLINE[md[1]]}</li>\n"
-      md = (line=file.gets)&.match ORDERED
+  PARSERS[ORDERED] = :ordered
+  def ordered
+    @html << "<ol#{@opt[:attributes]}>\n"
+    @opt.delete(:attributes)
+    while @md
+      @html << "  <li>#{INLINE[@md[1]]}</li>\n"
+      @md = (@line=@file.gets)&.match ORDERED
     end
-    html << "</ol>\n"
-    line
+    @html << "</ol>\n"
+    true
   end
 
   # Paragraph
   PARAGRAPHS = /^[\[`*"~_]?\w/
-  PARSER[PARAGRAPHS] = lambda do |line, html, file, opt, md|
-    html << "<p#{opt[:attributes]}>\n"
-    opt.delete(:attributes)
-    while md
-      html << INLINE[line]
-      md = (line=file.gets)&.match PARAGRAPHS
+  PARSERS[PARAGRAPHS] = :paragraphs
+  def paragraphs
+    @html << "<p#{@opt[:attributes]}>\n"
+    @opt.delete(:attributes)
+    while @md
+      @html << INLINE[@line]
+      @md = (@line=@file.gets)&.match PARAGRAPHS
     end
-    html << "</p>\n"
-    line
+    @html << "</p>\n"
+    true
   end
 
   # Unordered list
   UNORDERED = /^[*] (.*)$/
-  PARSER[UNORDERED] = lambda do |line, html, file, opt, md|
-    html << "<ul#{opt[:attributes]}>\n"
-    opt.delete(:attributes)
-    while md
-      html << "  <li>#{INLINE[md[1]]}</li>\n"
-      md = (line=file.gets)&.match UNORDERED
+  PARSERS[UNORDERED] = :unordered
+  def unordered
+    @html << "<ul#{@opt[:attributes]}>\n"
+    @opt.delete(:attributes)
+    while @md
+      @html << "  <li>#{INLINE[@md[1]]}</li>\n"
+      @md = (@line=@file.gets)&.match UNORDERED
     end
-    html << "</ul>\n"
-    line
+    @html << "</ul>\n"
+    true
   end
 
   # Ballot box
   BALLOTS = /^- \[(x| )\] (.*)$/
-  PARSER[BALLOTS] = lambda do |line, html, file, opt, md|
-    html << "<ul#{opt[:attributes]}>\n"
-    opt.delete(:attributes)
-    while md
-      x,t = md[1],md[2]
+  PARSERS[BALLOTS] = :ballots
+  def ballots
+    @html << "<ul#{@opt[:attributes]}>\n"
+    @opt.delete(:attributes)
+    while @md
+      x,t = @md[1],@md[2]
       li = (x=='x')?
         %q{<li style="list-style-type: '&#9745; '">} :
         %q{<li style="list-style-type: '&#9744; '">}
-      html << "  #{li}#{INLINE[t]}</li>\n"
-      md = (line=file.gets)&.match BALLOTS
+      @html << "  #{li}#{INLINE[t]}</li>\n"
+      @md = (@line=@file.gets)&.match BALLOTS
     end
-    html << "</ul>\n"
-    line
+    @html << "</ul>\n"
+    true
   end
 
   # Definition list
   DEFINITIONS = /^: (.*)$/
-  PARSER[DEFINITIONS] = lambda do |line, html, file, opt, md|
-    html << "<dl#{opt[:attributes]}>\n"
-    opt.delete(:attributes)
-    while md
-      item = md[1]
-      line = ((item[-1]==':')? "<dt>#{INLINE[item[0..-2]]}</dt>\n" :
+  PARSERS[DEFINITIONS] = :definitions
+  def definitions
+    @html << "<dl#{@opt[:attributes]}>\n"
+    @opt.delete(:attributes)
+    while @md
+      item = @md[1]
+      @html << ((item[-1]==':')? "<dt>#{INLINE[item[0..-2]]}</dt>\n" :
               "<dd>#{INLINE[item]}</dd>\n")
-      html << line
-      md = (line=file.gets)&.match DEFINITIONS
+      @md = (@line=@file.gets)&.match DEFINITIONS
     end
-    html << "</dl>\n"
-    line
+    @html << "</dl>\n"
+    true
   end
 
   # Headers
   HEADERS = /^([#]{1,6}) (.*)$/
-  PARSER[HEADERS] = lambda do |line, html, file, opt, md|
-    i,header = md[1].length,md[2]
+  PARSERS[HEADERS] = :headers
+  def headers
+    i,header = @md[1].length,@md[2]
     id = header.strip.gsub(/\s+/,'+')
-    html << %Q(<a id="#{id}">\n)
-    html << "  <h#{i}#{opt[:attributes]}>#{INLINE[header]}</h#{i}>\n"
-    html << "</a>\n"
-    opt.delete(:attributes)
-    file.gets
+    @html << %Q(<a id="#{id}">\n)
+    @html << "  <h#{i}#{@opt[:attributes]}>#{INLINE[header]}</h#{i}>\n"
+    @html << "</a>\n"
+    @opt.delete(:attributes)
+    @line = @file.gets
+    true
   end
 
   # Block-quote
   BLOCKQS = /^> (.*)$/
-  PARSER[BLOCKQS] = lambda do |line, html, file, opt, md|
-    html << "<blockquote#{opt[:attributes]}>\n"
-    opt.delete(:attributes)
-    while md
-      html << INLINE[md[1]]
-      html << "\n"
-      md = (line=file.gets)&.match BLOCKQS
+  PARSERS[BLOCKQS] = :blockqs
+  def blockqs
+    @html << "<blockquote#{@opt[:attributes]}>\n"
+    @opt.delete(:attributes)
+    while @md
+      @html << INLINE[@md[1]]
+      @html << "\n"
+      @md = (@line=@file.gets)&.match BLOCKQS
     end
-    html << "</blockquote>\n"
-    line
+    @html << "</blockquote>\n"
+    true
   end
 
-  HTML = Rouge::Formatters::HTML.new
 
   # Code
   CODES = /^[`~]{3}\s*(\w+)?$/
-  PARSER[CODES] = lambda do |line, html, file, opt, md|
-    lang = Rouge::Lexer.find md[1]
+  PARSERS[CODES] = :codes
+  def codes
+    lang = Rouge::Lexer.find @md[1]
     klass = lang ? ' class="highlight"' : nil
-    html << "<pre#{klass}#{opt[:attributes]}><code>\n"
-    opt.delete(:attributes)
+    @html << "<pre#{klass}#{@opt[:attributes]}><code>\n"
+    @opt.delete(:attributes)
     code = ''
-    while line=file.gets and not CODES.match(line)
-      code << line
+    while @line=@file.gets and not CODES.match(@line)
+      code << @line
     end
-    html << (lang ? HTML.format(lang.new.lex(code)) : code)
-    html << "</code></pre>\n"
-    # line is either nil or the code close
-    line and file.gets
+    @html << (lang ? ROUGE.format(lang.new.lex(code)) : code)
+    @html << "</code></pre>\n"
+    @line = @file.gets if @line # then it's code close and thus need next line.
+    true
   end
 
   # Preform
   PREFORMS = /^ {4}(.*)$/
-  PARSER[PREFORMS] = lambda do |line, html, file, opt, md|
-    html << "<pre#{opt[:attributes]}>\n"
-    opt.delete(:attributes)
-    while md
-      html << md[1]
-      html << "\n"
-      md = (line=file.gets)&.match PREFORMS
+  PARSERS[PREFORMS] = :preforms
+  def preforms
+    @html << "<pre#{@opt[:attributes]}>\n"
+    @opt.delete(:attributes)
+    while @md
+      @html << @md[1]
+      @html << "\n"
+      @md = (@line=@file.gets)&.match PREFORMS
     end
-    html << "</pre>\n"
-    line
+    @html << "</pre>\n"
+    true
   end
 
   # Horizontal rule
   HRS = /^---+$/
-  PARSER[HRS] = lambda do |_, html, file, opt, _|
-    html << "<hr#{opt[:attributes]}>\n"
-    opt.delete(:attributes)
-    file.gets
+  PARSERS[HRS] = :hrs
+  def hrs
+    @html << "<hr#{@opt[:attributes]}>\n"
+    @opt.delete(:attributes)
+    @line = @file.gets
+    true
   end
 
   # Table
   TABLES = /^\|.+\|$/
-  PARSER[TABLES] = lambda do |line, html, file, opt, _|
-    html << "<table#{opt[:attributes]}>\n"
-    opt.delete(:attributes)
-    html << '<thead><tr><th>'
-    html << line[1...-1].split('|').map{INLINE[_1.strip]}.join('</th><th>')
-    html << "</th></tr></thead>\n"
+  PARSERS[TABLES] = :tables
+  def tables
+    @html << "<table#{@opt[:attributes]}>\n"
+    @opt.delete(:attributes)
+    @html << '<thead><tr><th>'
+    @html << @line[1...-1].split('|').map{INLINE[_1.strip]}.join('</th><th>')
+    @html << "</th></tr></thead>\n"
     align = []
-    while (line=file.gets)&.match TABLES
-      html << '<tr>'
-      line[1...-1].split('|').each_with_index do |cell, i|
+    while (@line=@file.gets)&.match TABLES
+      @html << '<tr>'
+      @line[1...-1].split('|').each_with_index do |cell, i|
         case cell
         when /^\s*:-+:\s*$/
           align[i] = ' align="center"'
-          html << '<td><hr></td>'
+          @html << '<td><hr></td>'
         when /^\s*-+:\s*$/
           align[i] = ' align="right"'
-          html << '<td><hr></td>'
+          @html << '<td><hr></td>'
         when /^\s*:-+\s*$/
           align[i] = ' align="left"'
-          html << '<td><hr></td>'
+          @html << '<td><hr></td>'
         else
-          html << "<td#{align[i]}>#{INLINE[cell.strip]}</td>"
+          @html << "<td#{align[i]}>#{INLINE[cell.strip]}</td>"
         end
       end
-      html << "</tr>\n"
+      @html << "</tr>\n"
     end
-    html << "</table>\n"
-    line
+    @html << "</table>\n"
+    true
   end
 
   # Splits
   SPLITS = /^:?\|:?$/
-  PARSER[SPLITS] = lambda do |line, html, file, opt, _|
-    case line.chomp
+  PARSERS[SPLITS] = :splits
+  def splits
+    case @line.chomp
     when '|:'
-      html << %Q(<table><tr><td#{opt[:attributes]}>\n)
+      @html << %Q(<table><tr><td#{@opt[:attributes]}>\n)
     when '|'
-      html << %Q(</td><td#{opt[:attributes]}>\n)
+      @html << %Q(</td><td#{@opt[:attributes]}>\n)
     when ':|:'
-      html << %Q(</td></tr><tr><td#{opt[:attributes]}>\n)
+      @html << %Q(</td></tr><tr><td#{@opt[:attributes]}>\n)
     when ':|'
-      html << %Q(</td></tr></table>\n)
+      @html << %Q(</td></tr></table>\n)
     end
-    opt.delete(:attributes)
-    file.gets
+    @opt.delete(:attributes)
+    @line = @file.gets
+    true
   end
 
   # Image
   IMAGES = /^!\[([^\[\]]+)\]\(([^\(\)]+)\)$/
-  PARSER[IMAGES] = lambda do |line, html, file, opt, md|
-    alt,src=md[1],md[2]
+  PARSERS[IMAGES] = :images
+  def images
+    alt,src=@md[1],@md[2]
     style = ' '
     case alt
     when /^ .* $/
@@ -273,21 +323,23 @@ module Markdown
     when /^ /
       style = %Q( style="float:right;" )
     end
-    html << %Q(<img src="#{src}"#{style}alt="#{alt.strip}"#{opt[:attributes]}>\n)
-    opt.delete(:attributes)
-    file.gets
+    @html << %Q(<img src="#{src}"#{style}alt="#{alt.strip}"#{@opt[:attributes]}>\n)
+    @opt.delete(:attributes)
+    @line = @file.gets
+    true
   end
 
   # Forms
   FORMS = /^!( (\w+:)?\[\*?\w+(="[^"]*")?\])+/
-  PARSER[FORMS] = lambda do |line, html, file, opt, md|
+  PARSERS[FORMS] = :forms
+  def forms
     form = []
     lines,fields,submit,method = 0,0,nil,nil
-    action = (_=/\(([^\(\)]*)\)$/.match(line))? _[1] : nil
-    while md
+    action = (_=/\(([^\(\)]*)\)$/.match(@line))? _[1] : nil
+    while @md
       lines += 1
       form << '  <br>' if lines > 1
-      line.scan(/(\w+:)?\[(\*)?(\w+)(="[^"]*")?\]/).each do |field, pwd, name, value|
+      @line.scan(/(\w+:)?\[(\*)?(\w+)(="[^"]*")?\]/).each do |field, pwd, name, value|
         method ||= ' method="post"' if pwd
         field &&= field[0...-1]
         value &&= value[2...-1]
@@ -305,51 +357,56 @@ module Markdown
           form << %Q{  <input type="hidden" name="#{name}" value="#{value}">}
         end
       end
-      md = (line=file.gets)&.match FORMS
+      @md = (@line=@file.gets)&.match FORMS
     end
     if submit or not fields==1
       submit ||= 'Submit'
       form << '  <br>' if lines > 1
       form << %Q(  <input type="submit" value="#{submit}">)
     end
-    form.unshift %Q(<form action="#{action}"#{method}#{opt[:attributes]}>)
+    form.unshift %Q(<form action="#{action}"#{method}#{@opt[:attributes]}>)
     form << %Q(</form>)
-    html << form.join("\n")
-    html << "\n"
-    opt.delete(:attributes)
-    line
+    @html << form.join("\n")
+    @html << "\n"
+    @opt.delete(:attributes)
+    true
   end
 
   # Embed text
   EMBED_TEXTS = /^!> (#{PAGE_KEY}\.txt)$/
-  PARSER[EMBED_TEXTS] = lambda do |line, html, file, opt, md|
-    if File.exist?(filename=File.join(ROOT, md[1]))
-      html << "<pre>\n"
-      html << File.read(filename)
-      html << "</pre>\n"
+  PARSERS[EMBED_TEXTS] = :embed_texts
+  def embed_texts
+    if File.exist?(filename=File.join(ROOT, @md[1]))
+      @html << "<pre>\n"
+      @html << File.read(filename)
+      @html << "</pre>\n"
     else
-      html << line
+      @html << line
     end
-    file.gets
+    @line = @file.gets
+    true
   end
 
   # Footnotes
   FOOTNOTES = /^\[\^\d+\]:/
-  PARSER[FOOTNOTES] = lambda do |line, html, file, opt, md|
-    html << "<small>\n"
-    while md
-      html << INLINE[line.chomp]+"<br>\n"
-      md = (line=file.gets)&.match FOOTNOTES
+  PARSERS[FOOTNOTES] = :footnotes
+  def footnotes
+    @html << "<small>\n"
+    while @md
+      @html << INLINE[@line.chomp]+"<br>\n"
+      @md = (@line=@file.gets)&.match FOOTNOTES
     end
-    html << "</small>\n"
-    line
+    @html << "</small>\n"
+    true
   end
 
   # Attributes
   ATTRIBUTES = /^\{:( .*)\}/
-  PARSER[ATTRIBUTES] = lambda do |line, html, file, opt, md|
-    opt[:attributes] = md[1]
-    md.post_match
+  PARSERS[ATTRIBUTES] = :attributes
+  def attributes
+    @opt[:attributes] = @md[1]
+    @line = @md.post_match
+    true
   end
 end
 end

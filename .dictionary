@@ -3,6 +3,7 @@ ARGV
 ascii
 backtrace
 basename
+blockqs
 BLOCKQS
 blockquote
 br
@@ -26,7 +27,6 @@ EMOJIx
 env
 favicon
 Favicon
-fct
 filepath
 fn
 fnref
@@ -68,10 +68,12 @@ NotFound
 ol
 openssl
 params
+PARSERS
 pem
 pkey
 png
 pre
+preprocess
 Preprocess
 pwd
 rb
