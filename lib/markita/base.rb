@@ -18,37 +18,19 @@ class Base < Sinatra::Base
     end
   end
 
-  def Base.header(key)
-    <<~HEADER
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>#{key}</title>
-      #{HEADER_LINKS}</head>
-      <body>
-    HEADER
-  end
-
-  def Base.footer
-    <<~FOOTER
-      </body>
-      </html>
-    FOOTER
-  end
-
   DEFAULT = lambda do |line, html, file, _, _|
     html << line
     file.gets
   end
 
   def Base.page(key, f)
-    html,opt,file,line = '',{},Preprocess.new(f),Base.header(key)
+    html,opt,file,line = '',{},Preprocess.new(f),HTML.header(key)
     fct,md = nil,nil
     while line = (fct||DEFAULT)[line, html, file, opt, md]
       fct = nil
       Markdown::PARSER.each{|r,f| break if md=r.match(line) and fct=f}
     end
-    html << Base.footer
+    html << HTML.footer
     html
   end
 
