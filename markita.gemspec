@@ -34,12 +34,14 @@ data/not_found.html
 lib/markita.rb
 lib/markita/base.rb
 lib/markita/config.rb
+lib/markita/html.rb
 lib/markita/markdown.rb
 lib/markita/plug/about.rb
 lib/markita/plug/favicon.rb
 lib/markita/plug/highlight.rb
 lib/markita/plug/login.rb
 lib/markita/plug/plugs.rb
+lib/markita/preprocess.rb
   )
   s.executables << 'markita'
   s.add_runtime_dependency 'help_parser', '~> 7.0', '>= 7.0.200907'
