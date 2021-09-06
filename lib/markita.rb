@@ -11,6 +11,7 @@ module Markita
     require 'thin'
     # Local
     require_relative 'markita/config.rb'
+    require_relative 'markita/preprocess.rb'
     require_relative 'markita/markdown.rb'
     require_relative 'markita/base.rb'
     # Plugs
