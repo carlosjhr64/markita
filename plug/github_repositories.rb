@@ -25,7 +25,7 @@ class Base
       end
     end
 
-    Base.page 'Github Repositories', text
+    Markdown.new('Github Repositories').markdown text
   end
 end
 end

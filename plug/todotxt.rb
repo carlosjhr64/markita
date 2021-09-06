@@ -84,7 +84,7 @@ class Base
       #{`todo.sh -V`.strip}
       ~~~
     VERSION
-    Base.page 'Todo.txt', text
+    Markdown.new('Todo.txt').markdown text
   end
 end
 end

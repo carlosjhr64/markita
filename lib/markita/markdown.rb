@@ -30,6 +30,11 @@ class Markdown
     finish
   end
 
+  def markdown(string)
+    parse StringIO.new string
+    @html
+  end
+
   def filepath(filepath)
     File.open(filepath, 'r'){|fh| parse fh}
     @html
