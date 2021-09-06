@@ -21,8 +21,8 @@ class Markdown
     @html << HTML.footer
   end
 
-  def parse(file)
-    @file = Preprocess.new(file)
+  def parse(fh)
+    @file = Preprocess.new(fh)
     start
     while @line
       PARSERS.detect{|r, m| @md = r.match(@line) and method(m).call} or default
@@ -31,64 +31,64 @@ class Markdown
   end
 
   def filepath(filepath)
-    File.open(filepath, 'r'){|file| parse file}
+    File.open(filepath, 'r'){|fh| parse fh}
     @html
   end
 
   Ux = /_([^_]+)_/
-  U  = lambda {|md| "<u>#{md[1]}</u>"}
+  U  = lambda {|m| "<u>#{m[1]}</u>"}
 
   Sx = /~([^~]+)~/
-  S  = lambda {|md| "<s>#{md[1]}</s>"}
+  S  = lambda {|m| "<s>#{m[1]}</s>"}
 
   Ix = /"([^"]+)"/
-  I  = lambda {|md| "<i>#{md[1]}</i>"}
+  I  = lambda {|m| "<i>#{m[1]}</i>"}
 
   Bx = /\*([^\*]+)\*/
-  B  = lambda {|md| "<b>#{md[1]}</b>"}
+  B  = lambda {|m| "<b>#{m[1]}</b>"}
 
   CODEx = /`([^`]+)`/
-  CODE  = lambda {|md| "<code>#{md[1]}</code>"}
+  CODE  = lambda {|m| "<code>#{m[1]}</code>"}
 
   Ax = /\[([^\[\]]+)\]\(([^()]+)\)/
-  A  = lambda {|md| %Q(<a href="#{md[2]}">#{md[1]}</a>)}
+  A  = lambda {|m| %Q(<a href="#{m[2]}">#{m[1]}</a>)}
 
   URLx = %r(\[(https?://[\w\.\-\/\&\+\?\%]+)\])
-  URL  = lambda {|md| %Q(<a href="#{md[1]}">#{md[1]}</a>)}
+  URL  = lambda {|m| %Q(<a href="#{m[1]}">#{m[1]}</a>)}
 
   EMOJIx = /:(\w+):/
-  EMOJI  = lambda {|md| (_=EMOJIS[md[1]])? "&\#x#{_};" : md[0]}
+  EMOJI  = lambda {|m| (_=EMOJIS[m[1]])? "&\#x#{_};" : m[0]}
 
   FOOTNOTEx = /\[\^(\d+)\](:)?/
-  FOOTNOTE  = lambda do |md|
-    if md[2]
-      %Q(<a id="fn:#{md[1]}" href="\#fnref:#{md[1]}">#{md[1]}:</a>)
+  FOOTNOTE  = lambda do |m|
+    if m[2]
+      %Q(<a id="fn:#{m[1]}" href="\#fnref:#{m[1]}">#{m[1]}:</a>)
     else
-      %Q(<a id="fnref:#{md[1]}" href="\#fn:#{md[1]}"><sup>#{md[1]}</sup></a>)
+      %Q(<a id="fnref:#{m[1]}" href="\#fn:#{m[1]}"><sup>#{m[1]}</sup></a>)
     end
   end
 
-  def Markdown.tag(line, regx, md2string, &block)
-    if md = regx.match(line)
-      pre_match = (block ? block.call(md.pre_match) : md.pre_match)
-      string = pre_match + md2string[md]
-      post_match = md.post_match
-      while md = regx.match(post_match)
-        pre_match = (block ? block.call(md.pre_match) : md.pre_match)
-        string << pre_match + md2string[md]
-        post_match = md.post_match
+  def Markdown.tag(entry, regx, m2string, &block)
+    if m = regx.match(entry)
+      pre_match = (block ? block.call(m.pre_match) : m.pre_match)
+      string = pre_match + m2string[m]
+      post_match = m.post_match
+      while m = regx.match(post_match)
+        pre_match = (block ? block.call(m.pre_match) : m.pre_match)
+        string << pre_match + m2string[m]
+        post_match = m.post_match
       end
       string << (block ? block.call(post_match) : post_match)
       return string
     end
-    return (block ? block.call(line) : line)
+    return (block ? block.call(entry) : entry)
   end
 
-  INLINE = lambda do |line|
-    string = Markdown.tag(line, CODEx, CODE) do |line|
-      Markdown.tag(line, Ax, A) do |line|
-        Markdown.tag(line, URLx, URL) do |line|
-          string = Markdown.tag(line, Bx, B)
+  INLINE = lambda do |entry|
+    string = Markdown.tag(entry, CODEx, CODE) do |entry|
+      Markdown.tag(entry, Ax, A) do |entry|
+        Markdown.tag(entry, URLx, URL) do |entry|
+          string = Markdown.tag(entry, Bx, B)
           string = Markdown.tag(string, Ix, I)
           string = Markdown.tag(string, Sx, S)
           string = Markdown.tag(string, Ux, U)
@@ -228,7 +228,7 @@ class Markdown
     end
     @html << (lang ? ROUGE.format(lang.new.lex(code)) : code)
     @html << "</code></pre>\n"
-    @line = @file.gets if @line # then it's code close and thus need next line.
+    @line = @file.gets if @line # then it's code close and thus need next @line.
     true
   end
 
@@ -334,11 +334,11 @@ class Markdown
   PARSERS[FORMS] = :forms
   def forms
     form = []
-    lines,fields,submit,method = 0,0,nil,nil
+    n,fields,submit,method = 0,0,nil,nil
     action = (_=/\(([^\(\)]*)\)$/.match(@line))? _[1] : nil
     while @md
-      lines += 1
-      form << '  <br>' if lines > 1
+      n += 1
+      form << '  <br>' if n > 1
       @line.scan(/(\w+:)?\[(\*)?(\w+)(="[^"]*")?\]/).each do |field, pwd, name, value|
         method ||= ' method="post"' if pwd
         field &&= field[0...-1]
@@ -361,7 +361,7 @@ class Markdown
     end
     if submit or not fields==1
       submit ||= 'Submit'
-      form << '  <br>' if lines > 1
+      form << '  <br>' if n > 1
       form << %Q(  <input type="submit" value="#{submit}">)
     end
     form.unshift %Q(<form action="#{action}"#{method}#{@opt[:attributes]}>)
@@ -381,7 +381,7 @@ class Markdown
       @html << File.read(filename)
       @html << "</pre>\n"
     else
-      @html << line
+      @html << @line
     end
     @line = @file.gets
     true

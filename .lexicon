@@ -56,6 +56,7 @@ EMOJIS
 EMOJIx
 empty
 EMPTY
+entry
 escape
 Exception
 exist
@@ -63,6 +64,7 @@ exit
 expand_path
 FAILED
 Favicon
+fh
 field
 fields
 file
@@ -124,18 +126,17 @@ lex
 Lexer
 li
 line
-lines
 LoadError
 Login
 m
+m2string
 map
 Markdown
 Markita
 match
-md
-md2string
 message
 method
+n
 name
 named_captures
 new
