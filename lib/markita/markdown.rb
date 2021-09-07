@@ -1,16 +1,11 @@
 module Markita
 class Markdown
   ROUGE = Rouge::Formatters::HTML.new
-  PARSERS = Hash.new
+  PARSERS = []
 
   def initialize(title)
     @title = title
-    @line=@html=@file=@opt=@md=nil
-  end
-
-  def default
-    @html << @line
-    @line = @file.gets
+    @line=@html=@file=@opt=nil
   end
 
   def start
@@ -21,11 +16,16 @@ class Markdown
     @html << HTML.footer
   end
 
+  def default
+    @html << @line
+    @line = @file.gets
+  end
+
   def parse(fh)
     @file = Preprocess.new(fh)
     start
     while @line
-      PARSERS.detect{|r, m| @md = r.match(@line) and method(m).call} or default
+      PARSERS.detect{method(_1).call} or default
     end
     finish
   end
@@ -107,21 +107,23 @@ class Markdown
 
   # Empty
   EMPTY = /^$/
-  PARSERS[EMPTY] = :empty
+  PARSERS << :empty
   def empty
+    EMPTY.match?(@line) or return false
     @line = @file.gets
     true
   end
 
   # Ordered list
   ORDERED = /^\d+. (.*)$/
-  PARSERS[ORDERED] = :ordered
+  PARSERS << :ordered
   def ordered
+    md = ORDERED.match(@line) or return false
     @html << "<ol#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
-    while @md
-      @html << "  <li>#{INLINE[@md[1]]}</li>\n"
-      @md = (@line=@file.gets)&.match ORDERED
+    while md
+      @html << "  <li>#{INLINE[md[1]]}</li>\n"
+      md = (@line=@file.gets)&.match ORDERED
     end
     @html << "</ol>\n"
     true
@@ -129,13 +131,14 @@ class Markdown
 
   # Paragraph
   PARAGRAPHS = /^[\[`*"~_]?\w/
-  PARSERS[PARAGRAPHS] = :paragraphs
+  PARSERS << :paragraphs
   def paragraphs
+    md = PARAGRAPHS.match(@line) or return false
     @html << "<p#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
-    while @md
+    while md
       @html << INLINE[@line]
-      @md = (@line=@file.gets)&.match PARAGRAPHS
+      md = (@line=@file.gets)&.match PARAGRAPHS
     end
     @html << "</p>\n"
     true
@@ -143,13 +146,14 @@ class Markdown
 
   # Unordered list
   UNORDERED = /^[*] (.*)$/
-  PARSERS[UNORDERED] = :unordered
+  PARSERS << :unordered
   def unordered
+    md = UNORDERED.match(@line) or return false
     @html << "<ul#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
-    while @md
-      @html << "  <li>#{INLINE[@md[1]]}</li>\n"
-      @md = (@line=@file.gets)&.match UNORDERED
+    while md
+      @html << "  <li>#{INLINE[md[1]]}</li>\n"
+      md = (@line=@file.gets)&.match UNORDERED
     end
     @html << "</ul>\n"
     true
@@ -157,17 +161,18 @@ class Markdown
 
   # Ballot box
   BALLOTS = /^- \[(x| )\] (.*)$/
-  PARSERS[BALLOTS] = :ballots
+  PARSERS << :ballots
   def ballots
+    md = BALLOTS.match(@line) or return false
     @html << "<ul#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
-    while @md
-      x,t = @md[1],@md[2]
+    while md
+      x,t = md[1],md[2]
       li = (x=='x')?
         %q{<li style="list-style-type: '&#9745; '">} :
         %q{<li style="list-style-type: '&#9744; '">}
       @html << "  #{li}#{INLINE[t]}</li>\n"
-      @md = (@line=@file.gets)&.match BALLOTS
+      md = (@line=@file.gets)&.match BALLOTS
     end
     @html << "</ul>\n"
     true
@@ -175,15 +180,16 @@ class Markdown
 
   # Definition list
   DEFINITIONS = /^: (.*)$/
-  PARSERS[DEFINITIONS] = :definitions
+  PARSERS << :definitions
   def definitions
+    md = DEFINITIONS.match(@line) or return false
     @html << "<dl#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
-    while @md
-      item = @md[1]
+    while md
+      item = md[1]
       @html << ((item[-1]==':')? "<dt>#{INLINE[item[0..-2]]}</dt>\n" :
               "<dd>#{INLINE[item]}</dd>\n")
-      @md = (@line=@file.gets)&.match DEFINITIONS
+      md = (@line=@file.gets)&.match DEFINITIONS
     end
     @html << "</dl>\n"
     true
@@ -191,9 +197,10 @@ class Markdown
 
   # Headers
   HEADERS = /^([#]{1,6}) (.*)$/
-  PARSERS[HEADERS] = :headers
+  PARSERS << :headers
   def headers
-    i,header = @md[1].length,@md[2]
+    md = HEADERS.match(@line) or return false
+    i,header = md[1].length,md[2]
     id = header.strip.gsub(/\s+/,'+')
     @html << %Q(<a id="#{id}">\n)
     @html << "  <h#{i}#{@opt[:attributes]}>#{INLINE[header]}</h#{i}>\n"
@@ -205,14 +212,15 @@ class Markdown
 
   # Block-quote
   BLOCKQS = /^> (.*)$/
-  PARSERS[BLOCKQS] = :blockqs
+  PARSERS << :blockqs
   def blockqs
+    md = BLOCKQS.match(@line) or return false
     @html << "<blockquote#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
-    while @md
-      @html << INLINE[@md[1]]
+    while md
+      @html << INLINE[md[1]]
       @html << "\n"
-      @md = (@line=@file.gets)&.match BLOCKQS
+      md = (@line=@file.gets)&.match BLOCKQS
     end
     @html << "</blockquote>\n"
     true
@@ -221,9 +229,10 @@ class Markdown
 
   # Code
   CODES = /^[`~]{3}\s*(\w+)?$/
-  PARSERS[CODES] = :codes
+  PARSERS << :codes
   def codes
-    lang = Rouge::Lexer.find @md[1]
+    md = CODES.match(@line) or return false
+    lang = Rouge::Lexer.find md[1]
     klass = lang ? ' class="highlight"' : nil
     @html << "<pre#{klass}#{@opt[:attributes]}><code>\n"
     @opt.delete(:attributes)
@@ -239,14 +248,15 @@ class Markdown
 
   # Preform
   PREFORMS = /^ {4}(.*)$/
-  PARSERS[PREFORMS] = :preforms
+  PARSERS << :preforms
   def preforms
+    md = PREFORMS.match(@line) or return false
     @html << "<pre#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
-    while @md
-      @html << @md[1]
+    while md
+      @html << md[1]
       @html << "\n"
-      @md = (@line=@file.gets)&.match PREFORMS
+      md = (@line=@file.gets)&.match PREFORMS
     end
     @html << "</pre>\n"
     true
@@ -254,8 +264,9 @@ class Markdown
 
   # Horizontal rule
   HRS = /^---+$/
-  PARSERS[HRS] = :hrs
+  PARSERS << :hrs
   def hrs
+    HRS.match? @line or return false
     @html << "<hr#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
     @line = @file.gets
@@ -264,8 +275,9 @@ class Markdown
 
   # Table
   TABLES = /^\|.+\|$/
-  PARSERS[TABLES] = :tables
+  PARSERS << :tables
   def tables
+    TABLES.match? @line or return false
     @html << "<table#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
     @html << '<thead><tr><th>'
@@ -297,8 +309,9 @@ class Markdown
 
   # Splits
   SPLITS = /^:?\|:?$/
-  PARSERS[SPLITS] = :splits
+  PARSERS << :splits
   def splits
+    SPLITS.match? @line or return false
     case @line.chomp
     when '|:'
       @html << %Q(<table><tr><td#{@opt[:attributes]}>\n)
@@ -316,9 +329,10 @@ class Markdown
 
   # Image
   IMAGES = /^!\[([^\[\]]+)\]\(([^\(\)]+)\)$/
-  PARSERS[IMAGES] = :images
+  PARSERS << :images
   def images
-    alt,src=@md[1],@md[2]
+    md = IMAGES.match(@line) or return false
+    alt,src=md[1],md[2]
     style = ' '
     case alt
     when /^ .* $/
@@ -336,12 +350,13 @@ class Markdown
 
   # Forms
   FORMS = /^!( (\w+:)?\[\*?\w+(="[^"]*")?\])+/
-  PARSERS[FORMS] = :forms
+  PARSERS << :forms
   def forms
+    md = FORMS.match(@line) or return false
     form = []
     n,fields,submit,method = 0,0,nil,nil
     action = (_=/\(([^\(\)]*)\)$/.match(@line))? _[1] : nil
-    while @md
+    while md
       n += 1
       form << '  <br>' if n > 1
       @line.scan(/(\w+:)?\[(\*)?(\w+)(="[^"]*")?\]/).each do |field, pwd, name, value|
@@ -362,7 +377,7 @@ class Markdown
           form << %Q{  <input type="hidden" name="#{name}" value="#{value}">}
         end
       end
-      @md = (@line=@file.gets)&.match FORMS
+      md = (@line=@file.gets)&.match FORMS
     end
     if submit or not fields==1
       submit ||= 'Submit'
@@ -379,9 +394,10 @@ class Markdown
 
   # Embed text
   EMBED_TEXTS = /^!> (#{PAGE_KEY}\.txt)$/
-  PARSERS[EMBED_TEXTS] = :embed_texts
+  PARSERS << :embed_texts
   def embed_texts
-    if File.exist?(filename=File.join(ROOT, @md[1]))
+    md = EMBED_TEXTS.match(@line) or return false
+    if File.exist?(filename=File.join(ROOT, md[1]))
       @html << "<pre>\n"
       @html << File.read(filename)
       @html << "</pre>\n"
@@ -394,12 +410,13 @@ class Markdown
 
   # Footnotes
   FOOTNOTES = /^\[\^\d+\]:/
-  PARSERS[FOOTNOTES] = :footnotes
+  PARSERS << :footnotes
   def footnotes
+    md = FOOTNOTES.match(@line) or return false
     @html << "<small>\n"
-    while @md
+    while md
       @html << INLINE[@line.chomp]+"<br>\n"
-      @md = (@line=@file.gets)&.match FOOTNOTES
+      md = (@line=@file.gets)&.match FOOTNOTES
     end
     @html << "</small>\n"
     true
@@ -407,10 +424,11 @@ class Markdown
 
   # Attributes
   ATTRIBUTES = /^\{:( .*)\}/
-  PARSERS[ATTRIBUTES] = :attributes
+  PARSERS << :attributes
   def attributes
-    @opt[:attributes] = @md[1]
-    @line = @md.post_match
+    md = ATTRIBUTES.match(@line) or return false
+    @opt[:attributes] = md[1]
+    @line = md.post_match
     true
   end
 end
