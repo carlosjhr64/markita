@@ -4,7 +4,7 @@ class Base
   get '/github_repositories.html' do
     sort = params['sort'] || 'pushed'
     direction = params['direction'] || 'asc'
-    username = params[username] || 'carlosjhr64' # Change the username to yours!
+    username = params['username'] || 'carlosjhr64' # Change the username to yours!
     url = "https://api.github.com/users/#{username}/repos?per_page=100&"
     today = Date.today
 
