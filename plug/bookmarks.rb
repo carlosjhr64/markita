@@ -6,7 +6,7 @@ require 'set'
 module Markita
 class Base
   class Bookmarks
-    KW = /\w\w+/
+    KW = /\b\w+\b/
     Bookmark = Struct.new(:href, :title, :tags, :keywords)
 
     attr_reader :list, :tags, :topics
@@ -21,9 +21,7 @@ class Base
         end
       end
       n = Math.sqrt(@list.length)
-      max = n*5.0 # How about by word length?
-      min = n/5.0
-      topics.delete_if{|k,v|v>max or v<min}
+      topics.delete_if{|k,v|m=Math.sqrt(3.0*[10,k.length-0.5].min); v>m*n or v*m<n}
       @topics = topics.keys.sort{|a,b|topics[b]<=>topics[a]}
     end
 
