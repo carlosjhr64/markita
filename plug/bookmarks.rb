@@ -6,6 +6,7 @@ require 'set'
 module Markita
 class Base
   class Bookmarks
+    KW = /\w\w+/
     attr_reader :titles, :tags, :taggers, :keywords, :topics
     def initialize
       @doc      = Nokogiri::HTML File.read File.join(ROOT, 'bookmarks.html')
@@ -23,11 +24,8 @@ class Base
         end
       end
       n = Math.sqrt(@keywords.length)
-      d = Math.sqrt(n)
-      f = (1 + d/n)**6
-      g = (1 - d/n)**6
-      max = (n*f).ceil
-      min = (n*g).floor
+      max = n*5.0
+      min = n/5.0
       topics.delete_if{|k,v|v>max or v<min}
       @topics = topics.keys.sort
       @taggers = @tags.values.map{|s|s.to_a}.flatten.uniq.sort
@@ -53,14 +51,14 @@ class Base
         @folders[1..-1].each{|folder| tags.add folder}
         title = branch.text
         titles.add(title.empty? ? href : title)
-        title.scan(/\w{3,}/){|kw| keywords.add kw.downcase}
-        href.scan(/\b[a-z]{3,}\b/i){|kw| keywords.add kw.downcase}
+        title.scan(KW){|kw| keywords.add kw.downcase}
+        href.scan(KW){|kw| keywords.add kw.downcase}
       end
     end
   end
 
   get '/bookmarks.html' do
-    search = params['search']&.scan(/\w\w\w+/)&.map{_1.downcase}
+    search = params['search']&.scan(Bookmarks::KW)&.map{|kw| kw.downcase}
     topic = params['topic']
     tag = params['tag']
     bookmarks = Bookmarks.new
