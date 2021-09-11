@@ -7,34 +7,36 @@ module Markita
 class Base
   class Bookmarks
     KW = /\w\w+/
-    attr_reader :titles, :tags, :taggers, :keywords, :topics
+    Bookmark = Struct.new(:href, :title, :tags, :keywords)
+
+    attr_reader :list, :tags, :topics
     def initialize
-      @doc      = Nokogiri::HTML File.read File.join(ROOT, 'bookmarks.html')
-      @titles   = Hash.new{|h,k| h[k]=Set.new}
-      @tags     = Hash.new{|h,k| h[k]=Set.new}
-      @keywords = Hash.new{|h,k| h[k]=Set.new}
-      @folders  = []
+      @list = []
       traverse!
-      # Don't need to carry these around anymore:
-      @doc = @folders = nil
+      @tags = @list.map{_1.tags}.flatten.uniq.sort
       topics = Hash.new{|h,k| h[k]=0}
-      @keywords.each do |href, keywords|
-        keywords.each do |kw|
+      @list.each do |bookmark|
+        bookmark.keywords.each do |kw|
           topics[kw] += 1
         end
       end
-      n = Math.sqrt(@keywords.length)
-      max = n*5.0
+      n = Math.sqrt(@list.length)
+      max = n*5.0 # How about by word length?
       min = n/5.0
       topics.delete_if{|k,v|v>max or v<min}
-      @topics = topics.keys.sort
-      @taggers = @tags.values.map{|s|s.to_a}.flatten.uniq.sort
+      @topics = topics.keys.sort{|a,b|topics[b]<=>topics[a]}
     end
+
     def traverse!
+      @doc = Nokogiri::HTML File.read File.join(ROOT, 'bookmarks.html')
+      @folders = []
       @doc.xpath('./html/body/dl').each do |shoot|
         traverse(shoot)
       end
+      # Don't need to carry these around anymore:
+      @doc = @folders = nil
     end
+
     def traverse(branch)
       name = branch.name
       case name
@@ -46,13 +48,15 @@ class Base
         end
         @folders.pop if name == 'dl'
       when 'a'
-        href = branch['href']
-        titles,tags,keywords = @titles[href],@tags[href],@keywords[href]
-        @folders[1..-1].each{|folder| tags.add folder}
-        title = branch.text
-        titles.add(title.empty? ? href : title)
-        title.scan(KW){|kw| keywords.add kw.downcase}
-        href.scan(KW){|kw| keywords.add kw.downcase}
+        href,title = branch['href'],branch.text
+        keywords = (title+' '+href).scan(KW).map{|kw| kw.downcase}.uniq
+        tags = @folders[1..-1].uniq
+        bookmark = Bookmark.new
+        bookmark.href = href
+        bookmark.title = title.empty? ? href : title
+        bookmark.tags = tags
+        bookmark.keywords = keywords
+        @list.push bookmark
       end
     end
   end
@@ -65,27 +69,23 @@ class Base
     text = "# Bookmarks\n"
     text << %Q(! Search:[search] [submit="Go!"] ()\n)
     text << "Tags:\n"
-    bookmarks.taggers.each do |tagger|
-      text << "[#{tagger}](?tag=#{tagger})\n"
-    end
+    bookmarks.tags.each{text << "[#{_1}](?tag=#{_1})\n"}
     text << "\nKeywords:\n"
-    bookmarks.topics.each do |topic|
-      text << "[#{topic}](?topic=#{topic})\n"
-    end
+    bookmarks.topics.each{text << "[#{_1}](?topic=#{_1})\n"}
     seen = Set.new
-    bookmarks.tags.sort{|a,b|a[1].to_a<=>b[1].to_a}.each do |href, tags|
+    sort = lambda {|a,b| (_=a.tags<=>b.tags)==0 ? a.title<=>b.title : _}
+    bookmarks.list.sort{sort[_1,_2]}.each do |bookmark|
+      keywords,tags = bookmark.keywords,bookmark.tags
       next unless tag.nil? or tags.include? tag
-      keywords = bookmarks.keywords[href]
       next unless topic.nil? or keywords.include? topic
-      next unless search.nil? or search.all?{|kw| keywords.include? kw}
+      next unless search.nil? or search.all?{keywords.include? _1}
       unless seen.include? tags
         seen.add tags
         text << "# #{tags.to_a.join('/')}\n"
       end
-      bookmarks.titles[href].each do |title|
-        title = title.gsub('[', '&#91;').gsub(']', '&#93;')
-        text << "* [#{title}](#{href})\n"
-      end
+      title = bookmark.title.gsub('[', '&#91;').gsub(']', '&#93;')
+      href = bookmark.href
+      text << "* [#{title}](#{href})\n"
     end
     Markdown.new('Bookmarks').markdown text
   end
