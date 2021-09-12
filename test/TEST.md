@@ -18,7 +18,7 @@
 Captain Kirk says:[^1]
 > To *boldly* go where where "no man" has ~been~ gone before.
 Well... It adds up like `1*2=2*1`.
-You know what I mean.
+You know what I mean:heavy_exclamation_mark:
 [https://github.com]!
 
 

@@ -93,12 +93,12 @@ class Markdown
     string = Markdown.tag(entry, CODEx, CODE) do |entry|
       Markdown.tag(entry, Ax, A) do |entry|
         Markdown.tag(entry, URLx, URL) do |entry|
-          string = Markdown.tag(entry, Bx, B)
-          string = Markdown.tag(string, Ix, I)
-          string = Markdown.tag(string, Sx, S)
-          string = Markdown.tag(string, Ux, U)
-          string = Markdown.tag(string, FOOTNOTEx, FOOTNOTE)
-          Markdown.tag(string, EMOJIx, EMOJI)
+          entry = Markdown.tag(entry, EMOJIx, EMOJI)
+          entry = Markdown.tag(entry, Bx, B)
+          entry = Markdown.tag(entry, Ix, I)
+          entry = Markdown.tag(entry, Sx, S)
+          entry = Markdown.tag(entry, Ux, U)
+          entry = Markdown.tag(entry, FOOTNOTEx, FOOTNOTE)
         end
       end
     end
