@@ -14,7 +14,16 @@ class Base
     text << "    {sort: :#{sort}, direction: :#{direction}}\n"
     repos = JSON.parse Net::HTTP.get URI("#{url}?&sort=#{sort}&direction=#{direction}")
     repos.each do |repo|
-      text << ": [#{repo['name']}](#{repo['html_url']}):\n"
+      stars,issues = '',''
+      if (n=repo['watchers'].to_i) > 0
+        n = Math.log(n+1, 2).round
+        stars = ' ' + ':star:'*n
+      end
+      if (n=repo['open_issues'].to_i) > 0
+        n = Math.log(n+1, 2).round
+        issues = ':heavy_exclamation_mark:'*n
+      end
+      text << ": [#{repo['name']}](#{repo['html_url']})#{stars}#{issues}:\n"
       text << ": #{repo['description']}\n"
       text << ": #{repo['language']} project created #{Date.parse(repo['created_at'])} "
       date = Date.parse repo['pushed_at']
