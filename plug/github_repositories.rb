@@ -9,9 +9,19 @@ class Base
     today = Date.today
 
     text = "# Github Repositories\n"
-    text << "* Sort [pushed](?sort=pushed&direction=#{direction}) or [created](?sort=created&direction=#{direction})\n"
-    text << "* Direction [ascending](?sort=#{sort}&direction=asc) or [descending](?sort=#{sort}&direction=desc)\n"
-    text << "    {sort: :#{sort}, direction: :#{direction}}\n"
+
+    text << %Q(! Username:[username="#{username}"])
+    text << %Q([sort="#{sort}"][direction="#{direction}"][submit="Go!"])
+    text << "()\n"
+
+    text << "* Sort [pushed](?username=#{username}&sort=pushed&direction=#{direction}) "
+    text << "or [created](?username=#{username}&sort=created&direction=#{direction})\n"
+
+    text << "* Direction [ascending](?username=#{username}&sort=#{sort}&direction=asc) "
+    text << "or [descending](?username=#{username}&sort=#{sort}&direction=desc)\n"
+
+    text << "## Repo #{username} sorted by #{sort}(#{direction}.)\n"
+
     repos = JSON.parse Net::HTTP.get URI("#{url}?&sort=#{sort}&direction=#{direction}")
     repos.each do |repo|
       stars,issues = '',''
