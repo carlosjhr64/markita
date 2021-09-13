@@ -1,14 +1,14 @@
 Gem::Specification.new do |s|
 
   s.name     = 'markita'
-  s.version  = '3.0.210912'
+  s.version  = '3.0.210913'
 
   s.homepage = 'https://github.com/carlosjhr64/markita'
 
   s.author   = 'CarlosJHR64'
   s.email    = 'carlosjhr64@gmail.com'
 
-  s.date     = '2021-09-12'
+  s.date     = '2021-09-13'
   s.licenses = ['MIT']
 
   s.description = <<DESCRIPTION
