@@ -342,6 +342,9 @@ class Markdown
     when /^ /
       style = %Q( style="float:right;" )
     end
+    if /(\d+)x(\d+)/.match alt
+      style << %Q(width="#{$1}" height="#{$2}" )
+    end
     @html << %Q(<img src="#{src}"#{style}alt="#{alt.strip}"#{@opt[:attributes]}>\n)
     @opt.delete(:attributes)
     @line = @file.gets
