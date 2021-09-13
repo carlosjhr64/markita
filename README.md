@@ -27,6 +27,7 @@ Options:
   --no_about
   --no_favicon
   --no_highlight
+  --no_navigation
   --no_login
   --no_plugs
 Types:

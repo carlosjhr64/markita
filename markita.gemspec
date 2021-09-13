@@ -40,6 +40,7 @@ lib/markita/plug/about.rb
 lib/markita/plug/favicon.rb
 lib/markita/plug/highlight.rb
 lib/markita/plug/login.rb
+lib/markita/plug/navigation.rb
 lib/markita/plug/plugs.rb
 lib/markita/preprocess.rb
   )
