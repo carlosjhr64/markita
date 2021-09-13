@@ -11,6 +11,10 @@ module HTML
     HEADER
   end
 
+  def HTML.navigation
+    NAVIGATION
+  end
+
   def HTML.footer
     <<~FOOTER
       </body>

@@ -9,11 +9,13 @@ class Markdown
   end
 
   def start
-    @line,@html,@opt = HTML.header(@title),'',{}
+    @html << HTML.header(@title)
+    @line = HTML.navigation
   end
 
   def finish
     @html << HTML.footer
+    @line = nil
   end
 
   def default
@@ -21,8 +23,12 @@ class Markdown
     @line = @file.gets
   end
 
+  def init(fh)
+    @file,@html,@opt = Preprocess.new(fh),'',{}
+  end
+
   def parse(fh)
-    @file = Preprocess.new(fh)
+    init(fh)
     start
     while @line
       PARSERS.detect{method(_1).call} or default
@@ -332,7 +338,7 @@ class Markdown
   PARSERS << :images
   def images
     md = IMAGES.match(@line) or return false
-    alt,src=md[1],md[2]
+    alt,src,href=md[1],*md[2].strip.split(/\s+/,2)
     style = ' '
     case alt
     when /^ .* $/
@@ -345,7 +351,9 @@ class Markdown
     if /(\d+)x(\d+)/.match alt
       style << %Q(width="#{$1}" height="#{$2}" )
     end
+    @html << %Q(<a href="#{href}">\n) if href
     @html << %Q(<img src="#{src}"#{style}alt="#{alt.strip}"#{@opt[:attributes]}>\n)
+    @html << %Q(</a>\n) if href
     @opt.delete(:attributes)
     @line = @file.gets
     true

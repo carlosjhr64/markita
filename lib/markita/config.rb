@@ -2,6 +2,7 @@ module Markita
   OPTIONS ||= nil
 
   HEADER_LINKS = ''
+  NAVIGATION = ''
 
   ROOT = File.expand_path OPTIONS&.root || '~/vimwiki'
   raise "Missing site root directory: "+ROOT  unless File.directory? ROOT

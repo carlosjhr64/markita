@@ -1,5 +1,5 @@
 module Markita
-class Base < Sinatra::Base
+class Base
   HEADER_LINKS << %Q(  <link rel="icon" type="image/x-icon" href="/favicon.ico">\n)
   module Favicon
     ICO = File.read PATH['favicon.ico']
