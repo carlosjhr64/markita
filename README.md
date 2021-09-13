@@ -59,13 +59,25 @@ Markdown:
 Markdown:
 
     ![ Centered Image ](/img/image.png)
-    ![Left Floating 50x50 ](/img/image.png)
+    ![Left Floating ](/img/image.png)
     ![ Right Floating](/img/image.png)
     Image  centered above.
     Image to the left with width and height set.
     Image to the right.
     And set a HR bar below.
     ---
+
+### Image size
+
+Markdown:
+
+    ![In alt text say 100x100](/img/image.png)
+
+### Image link
+
+Markdown:
+
+    ![Alt text](/img/image.png /href_to/page)
 
 ### Forms
 
