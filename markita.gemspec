@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
 
   s.name     = 'markita'
-  s.version  = '3.1.210915'
+  s.version  = '3.2.210915'
 
   s.homepage = 'https://github.com/carlosjhr64/markita'
 
