@@ -66,7 +66,9 @@ FAILED
 Favicon
 fh
 field
+FIELD
 fields
+FIELDS
 file
 File
 filename
@@ -244,6 +246,7 @@ URL
 URLx
 Ux
 value
+values
 verify_peer
 VERSION
 x

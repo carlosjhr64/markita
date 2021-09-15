@@ -360,7 +360,9 @@ class Markdown
   end
 
   # Forms
-  FORMS = /^!( (\w+:)?\[\*?\w+(="[^"]*")?\])+/
+  FIELD = '(\w+:)?\[(\*)?(\w+)(=("[^"]+")(,"[^"]+")*)?\]'
+  FIELDS = Regexp.new FIELD
+  FORMS = Regexp.new "^!( #{FIELD})+"
   PARSERS << :forms
   def forms
     md = FORMS.match(@line) or return false
@@ -370,16 +372,26 @@ class Markdown
     while md
       n += 1
       form << '  <br>' if n > 1
-      @line.scan(/(\w+:)?\[(\*)?(\w+)(="[^"]*")?\]/).each do |field, pwd, name, value|
+      @line.scan(FIELDS).each do |field, pwd, name, value|
         method ||= ' method="post"' if pwd
         field &&= field[0...-1]
         value &&= value[2...-1]
         if field
-          fields += 1
           type = (pwd)? 'password' : 'text'
           if value
-            form << %Q{  #{field}:<input type="#{type}" name="#{name}" value="#{value}">}
+            if (values = value.split('","')).length > 1
+form << %Q(#{field}:<select name="#{name}">)
+values.each do |value|
+  fields += 1
+  form << %Q(  <option value="#{value}">#{value}</option>)
+end
+form << "</select>"
+            else
+fields += 1
+form << %Q{  #{field}:<input type="#{type}" name="#{name}" value="#{value}">}
+            end
           else
+            fields += 1
             form << %Q{  #{field}:<input type="#{type}" name="#{name}">}
           end
         elsif name=='submit'
