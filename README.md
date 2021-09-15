@@ -34,7 +34,6 @@ Types:
   DIRECTORY /^~?[\/\w\.]+$/
   BIND      /^[\w\.]+$/
   PORT      /^\d+$/
-  THEME     /^[\w\.]+$/
   IPS       /^[\d\.\,]+$/
 # NOTE:
 # Assuming site is in ~/vimwiki,
