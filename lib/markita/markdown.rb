@@ -121,15 +121,20 @@ class Markdown
   end
 
   # Ordered list
-  ORDERED = /^\d+. (.*)$/
+  ORDERED = /^( {0,3})\d+\. (\S.*)$/
   PARSERS << :ordered
-  def ordered
-    md = ORDERED.match(@line) or return false
+  def ordered(md=ORDERED.match(@line), level=0)
+    return false unless md
     @html << "<ol#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
-    while md
-      @html << "  <li>#{INLINE[md[1]]}</li>\n"
-      md = (@line=@file.gets)&.match ORDERED
+    while md and level==md[1].length
+      @html << "  <li>#{INLINE[md[2]]}</li>\n"
+      if md = (@line=@file.gets)&.match(ORDERED)
+        if level < md[1].length
+          ordered(md, md[1].length)
+          md = @line&.match(ORDERED)
+        end
+      end
     end
     @html << "</ol>\n"
     true
@@ -151,15 +156,20 @@ class Markdown
   end
 
   # Unordered list
-  UNORDERED = /^[*] (.*)$/
+  UNORDERED = /^( {0,3})[*] (\S.*)$/
   PARSERS << :unordered
-  def unordered
-    md = UNORDERED.match(@line) or return false
+  def unordered(md=UNORDERED.match(@line), level=0)
+    return false unless md
     @html << "<ul#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
-    while md
-      @html << "  <li>#{INLINE[md[1]]}</li>\n"
-      md = (@line=@file.gets)&.match UNORDERED
+    while md and level==md[1].length
+      @html << "  <li>#{INLINE[md[2]]}</li>\n"
+      if md = (@line=@file.gets)&.match(UNORDERED)
+        if level < md[1].length
+          unordered(md, md[1].length)
+          md = @line&.match(UNORDERED)
+        end
+      end
     end
     @html << "</ul>\n"
     true
