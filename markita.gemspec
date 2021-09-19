@@ -27,7 +27,6 @@ README.md
 bin/markita
 data/emojis.tsv
 data/favicon.ico
-data/highlight.css
 data/login_failed.html
 data/login_form.html
 data/not_found.html

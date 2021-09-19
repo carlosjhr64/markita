@@ -23,6 +23,7 @@ Options:
   --root=DIRECTORY 	 ~/vimwiki
   --bind=BIND      	 0.0.0.0
   --port=PORT      	 8080
+  --theme=THEME    	 base16.light
   --allowed=IPS
   --no_about
   --no_favicon
@@ -35,6 +36,7 @@ Types:
   BIND      /^[\w\.]+$/
   PORT      /^\d+$/
   IPS       /^[\d\.\,]+$/
+  THEME     /^[\w\.]+$/
 # NOTE:
 # Assuming site is in ~/vimwiki,
 # when ~/vimwiki/.valid-id is set with a sha256sum of a password,
