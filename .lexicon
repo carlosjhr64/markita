@@ -191,6 +191,7 @@ redirect
 REDTTY
 Regexp
 regx
+render
 request
 require
 require_relative
@@ -206,6 +207,7 @@ run
 RuntimeError
 S
 scan
+scope
 send_file
 server
 session
@@ -234,6 +236,8 @@ tables
 TABLES
 tag
 text
+theme
+Theme
 Time
 title
 to_s
