@@ -6,6 +6,7 @@ class Markdown
   def initialize(title)
     @title = title
     @line=@html=@file=@opt=nil
+    @metadata = {}
   end
 
   def start
@@ -14,6 +15,9 @@ class Markdown
   end
 
   def finish
+    if title = @metadata['Title']
+      @html << %Q(<script> document.title = "#{title}" </script>\n)
+    end
     @html << HTML.footer
     @line = nil
   end
@@ -279,12 +283,11 @@ class Markdown
   end
 
   # Meta-data
-  METADATA = {}
   METADATAS = /^(\w+): (.*)$/
   def metadata
     md = METADATAS.match(@line) or return false
     while md
-      METADATA[md[1]] = md[2]
+      @metadata[md[1]] = md[2]
       md = (@line=@file.gets)&.match METADATAS
     end
     true
