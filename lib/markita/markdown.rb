@@ -224,7 +224,7 @@ class Markdown
   def headers
     md = HEADERS.match(@line) or return false
     i,header = md[1].length,md[2]
-    id = header.strip.gsub(/\s+/,'+')
+    id = header.gsub(/\([^\(\)]*\)/,'').scan(/\w+/).join('+')
     @html << %Q(<a id="#{id}">\n)
     @html << "  <h#{i}#{@opt[:attributes]}>#{inline(header)}</h#{i}>\n"
     @html << "</a>\n"
