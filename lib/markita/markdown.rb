@@ -450,14 +450,28 @@ form << %Q{  #{field}:<input type="#{type}" name="#{name}" value="#{value}">}
   end
 
   # Embed text
-  EMBED_TEXTS = /^!> (#{PAGE_KEY}\.txt)$/
+  EMBED_TEXTS = /^!> (#{PAGE_KEY}\.\w+)$/
   PARSERS << :embed_texts
   def embed_texts
     md = EMBED_TEXTS.match(@line) or return false
     if File.exist?(filename=File.join(ROOT, md[1]))
-      @html << "<pre>\n"
-      @html << File.read(filename)
-      @html << "</pre>\n"
+      extension,lang = filename.split('.').last,nil
+      unless extension=='html'
+        lang = Rouge::Lexer.find extension
+        klass = lang ? ' class="highlight"' : nil
+        @html << "<pre#{klass}#{@opt[:attributes]}>"
+        @opt.delete(:attributes)
+        @html << '<code>' unless extension=='txt'
+        @html << "\n"
+      end
+      code = File.read(filename)
+      puts "#{extension}: #{lang}"
+      @html << (lang ? ROUGE.format(lang.new.lex(code)) : code)
+      unless extension=='html'
+        @html << '</code>' unless extension=='txt'
+        @html << '</pre>'
+        @html << "\n"
+      end
     else
       @html << @line
     end

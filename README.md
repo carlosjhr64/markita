@@ -269,8 +269,9 @@ Markdown:
 
     !> /path-to/ascii_art.txt
 
-Must be a `*.txt` file.
 Useful for ASCII art.
+Unless an `*.html` file, the text is embedded in `pre` tags.
+Further more unless a `*.txt` file, the text is embedded in `code` tags.
 
 ### Emojis
 
