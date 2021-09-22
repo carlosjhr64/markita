@@ -1,6 +1,6 @@
 # Markita
 
-* [VERSION 3.3.210918](https://github.com/carlosjhr64/markita/releases)
+* [VERSION 3.4.210922](https://github.com/carlosjhr64/markita/releases)
 * [github](https://www.github.com/carlosjhr64/markita)
 * [rubygems](https://rubygems.org/gems/markita)
 

@@ -278,14 +278,32 @@ class Markdown
     true
   end
 
-  # Horizontal rule
+  # Meta-data
+  METADATA = {}
+  METADATAS = /^(\w+): (.*)$/
+  def metadata
+    md = METADATAS.match(@line) or return false
+    while md
+      METADATA[md[1]] = md[2]
+      md = (@line=@file.gets)&.match METADATAS
+    end
+    true
+  end
+
+  # Horizontal rule or Meta-data
   HRS = /^---+$/
   PARSERS << :hrs
   def hrs
     HRS.match? @line or return false
-    @html << "<hr#{@opt[:attributes]}>\n"
-    @opt.delete(:attributes)
     @line = @file.gets
+    if metadata
+      # Optional closing HRS
+      @line = @file.gets if @line&.match? HRS
+    else
+      # Display HR
+      @html << "<hr#{@opt[:attributes]}>\n"
+      @opt.delete(:attributes)
+    end
     true
   end
 
