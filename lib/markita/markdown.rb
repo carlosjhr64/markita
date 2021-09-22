@@ -465,7 +465,6 @@ form << %Q{  #{field}:<input type="#{type}" name="#{name}" value="#{value}">}
         @html << "\n"
       end
       code = File.read(filename)
-      puts "#{extension}: #{lang}"
       @html << (lang ? ROUGE.format(lang.new.lex(code)) : code)
       unless extension=='html'
         @html << '</code>' unless extension=='txt'

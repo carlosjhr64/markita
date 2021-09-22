@@ -68,3 +68,4 @@ Oh so blue!!!
 
 ! Pick:[color="Red","White","Blue"]
 !> /TEST.rb
+!> /test.html
