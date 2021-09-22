@@ -294,6 +294,16 @@ Markdown:
     [^2]: Cash is money in currency.
     [^3]: Read as "Nan took it."
 
+### Meta-data
+
+Markdown:
+
+    ---
+    Title: The Title You Want For Your Page
+    1: https://way.to/create/ref/links
+    ---
+    You can now [link](1) with a reference number.
+
 ## HOW-TOs
 
 ### Set site password:
