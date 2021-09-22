@@ -1,12 +1,12 @@
 _
 _1
-A
 About
 action
 align
 all
 allowed
 alt
+anchor
 APPDATA
 ARGV
 attributes
@@ -113,7 +113,7 @@ IMAGES
 include
 init
 initialize
-INLINE
+inline
 ip
 IPS
 is_a

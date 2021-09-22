@@ -66,7 +66,10 @@ class Markdown
   CODE  = lambda {|m| "<code>#{m[1]}</code>"}
 
   Ax = /\[([^\[\]]+)\]\(([^()]+)\)/
-  A  = lambda {|m| %Q(<a href="#{m[2]}">#{m[1]}</a>)}
+  def anchor(m)
+    href = ((_=m[2]).match?(/^\d+$/) and @metadata[_] or _)
+    %Q(<a href="#{href}">#{m[1]}</a>)
+  end
 
   URLx = %r(\[(https?://[\w\.\-\/\&\+\?\%]+)\])
   URL  = lambda {|m| %Q(<a href="#{m[1]}">#{m[1]}</a>)}
@@ -99,9 +102,9 @@ class Markdown
     return (block ? block.call(entry) : entry)
   end
 
-  INLINE = lambda do |entry|
+  def inline(entry)
     string = Markdown.tag(entry, CODEx, CODE) do |entry|
-      Markdown.tag(entry, Ax, A) do |entry|
+      Markdown.tag(entry, Ax, method(:anchor)) do |entry|
         Markdown.tag(entry, URLx, URL) do |entry|
           entry = Markdown.tag(entry, EMOJIx, EMOJI)
           entry = Markdown.tag(entry, Bx, B)
@@ -132,7 +135,7 @@ class Markdown
     @html << "<ol#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
     while md and level==md[1].length
-      @html << "  <li>#{INLINE[md[2]]}</li>\n"
+      @html << "  <li>#{inline(md[2])}</li>\n"
       if md = (@line=@file.gets)&.match(ORDERED)
         if level < md[1].length
           ordered(md, md[1].length)
@@ -152,7 +155,7 @@ class Markdown
     @html << "<p#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
     while md
-      @html << INLINE[@line]
+      @html << inline(@line)
       md = (@line=@file.gets)&.match PARAGRAPHS
     end
     @html << "</p>\n"
@@ -167,7 +170,7 @@ class Markdown
     @html << "<ul#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
     while md and level==md[1].length
-      @html << "  <li>#{INLINE[md[2]]}</li>\n"
+      @html << "  <li>#{inline(md[2])}</li>\n"
       if md = (@line=@file.gets)&.match(UNORDERED)
         if level < md[1].length
           unordered(md, md[1].length)
@@ -191,7 +194,7 @@ class Markdown
       li = (x=='x')?
         %q{<li style="list-style-type: '&#9745; '">} :
         %q{<li style="list-style-type: '&#9744; '">}
-      @html << "  #{li}#{INLINE[t]}</li>\n"
+      @html << "  #{li}#{inline(t)}</li>\n"
       md = (@line=@file.gets)&.match BALLOTS
     end
     @html << "</ul>\n"
@@ -207,8 +210,8 @@ class Markdown
     @opt.delete(:attributes)
     while md
       item = md[1]
-      @html << ((item[-1]==':')? "<dt>#{INLINE[item[0..-2]]}</dt>\n" :
-              "<dd>#{INLINE[item]}</dd>\n")
+      @html << ((item[-1]==':')? "<dt>#{inline(item[0..-2])}</dt>\n" :
+              "<dd>#{inline(item)}</dd>\n")
       md = (@line=@file.gets)&.match DEFINITIONS
     end
     @html << "</dl>\n"
@@ -223,7 +226,7 @@ class Markdown
     i,header = md[1].length,md[2]
     id = header.strip.gsub(/\s+/,'+')
     @html << %Q(<a id="#{id}">\n)
-    @html << "  <h#{i}#{@opt[:attributes]}>#{INLINE[header]}</h#{i}>\n"
+    @html << "  <h#{i}#{@opt[:attributes]}>#{inline(header)}</h#{i}>\n"
     @html << "</a>\n"
     @opt.delete(:attributes)
     @line = @file.gets
@@ -238,7 +241,7 @@ class Markdown
     @html << "<blockquote#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
     while md
-      @html << INLINE[md[1]]
+      @html << inline(md[1])
       @html << "\n"
       md = (@line=@file.gets)&.match BLOCKQS
     end
@@ -318,7 +321,7 @@ class Markdown
     @html << "<table#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
     @html << '<thead><tr><th>'
-    @html << @line[1...-1].split('|').map{INLINE[_1.strip]}.join('</th><th>')
+    @html << @line[1...-1].split('|').map{inline(_1.strip)}.join('</th><th>')
     @html << "</th></tr></thead>\n"
     align = []
     while (@line=@file.gets)&.match TABLES
@@ -335,7 +338,7 @@ class Markdown
           align[i] = ' align="left"'
           @html << '<td><hr></td>'
         else
-          @html << "<td#{align[i]}>#{INLINE[cell.strip]}</td>"
+          @html << "<td#{align[i]}>#{inline(cell.strip)}</td>"
         end
       end
       @html << "</tr>\n"
@@ -469,7 +472,7 @@ form << %Q{  #{field}:<input type="#{type}" name="#{name}" value="#{value}">}
     md = FOOTNOTES.match(@line) or return false
     @html << "<small>\n"
     while md
-      @html << INLINE[@line.chomp]+"<br>\n"
+      @html << inline(@line.chomp)+"<br>\n"
       md = (@line=@file.gets)&.match FOOTNOTES
     end
     @html << "</small>\n"
