@@ -148,7 +148,7 @@ class Markdown
   end
 
   # Paragraph
-  PARAGRAPHS = /^[\[`*"~_]?\w/
+  PARAGRAPHS = /^[\[\(`*"~_]?\w/
   PARSERS << :paragraphs
   def paragraphs
     md = PARAGRAPHS.match(@line) or return false
