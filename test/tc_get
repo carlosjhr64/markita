@@ -6,10 +6,6 @@ class TestGET < Test::Unit::TestCase
   TEST_FILES = 'README.md test/README.html test/test.html test/TEST.html test/TEST.md test/TEST.rb test/TEST.txt'
 
   def test_get
-    error = `git diff #{TEST_FILES}`.chomp
-    unless error==''
-      flunk "Run 'git diff #{TEST_FILES}'"
-    end
     pid = spawn("markita --root=./test --port=#{PORT}")
     sleep 3
     system "GET 'http://localhost:#{PORT}/TEST' > test/TEST.html"

@@ -15,12 +15,9 @@ Title: Testing
 * Fa-SO
 * La la la
 |
-: X:
-: Length
-: Y:
-: Width
-: Z:
-: Depth
++ X: Length
++ Y: Width
++ Z: Depth
 :|
 Captain Kirk says:[^1]
 > To *boldly* go where where "no man" has ~been~ gone before.

@@ -212,10 +212,8 @@ Markdown:
     * Point A
     * Point B
 
-    : Word:
-    : Definition of the word
-    : Symbol:
-    : Usage for the symbol
+    + Word: Definition of the word
+    + Symbol: Usage for the symbol
 
 ### Block-quote
 
