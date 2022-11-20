@@ -2,13 +2,21 @@
 require 'test/unit'
 
 class TestGET < Test::Unit::TestCase
+  PORT = 8082
+  TEST_FILES = 'README.md test/README.html test/test.html test/TEST.html test/TEST.md test/TEST.rb test/TEST.txt'
+
   def test_get
-    pid = spawn('markita --root=./test --port=8081')
-    sleep 1
-    system "GET 'http://localhost:8081/TEST' > test/TEST.html"
+    error = `git diff #{TEST_FILES}`.chomp
+    unless error==''
+      flunk "Run 'git diff #{TEST_FILES}'"
+    end
+    pid = spawn("markita --root=./test --port=#{PORT}")
+    sleep 3
+    system "GET 'http://localhost:#{PORT}/TEST' > test/TEST.html"
+    system "GET 'http://localhost:#{PORT}/README' > test/README.html"
     system "kill #{pid}"
     Process.wait pid
-    error = `git diff test/TEST.*`.chomp
+    error = `git diff #{TEST_FILES}`.chomp
     unless error==''
       flunk 'Run "git diff test"'
     end
