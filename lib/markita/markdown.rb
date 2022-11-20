@@ -63,15 +63,16 @@ class Markdown
   B  = lambda {|m| "<b>#{m[1]}</b>"}
 
   CODEx = /`([^`]+)`/
-  CODE  = lambda {|m| "<code>#{m[1]}</code>"}
+  CODE  = lambda {|m| "<code>#{m[1].gsub('<','&lt;')}</code>"}
 
   Ax = /\[([^\[\]]+)\]\(([^()]+)\)/
   def anchor(m)
     href = ((_=m[2]).match?(/^\d+$/) and @metadata[_] or _)
-    %Q(<a href="#{href}">#{m[1]}</a>)
+    text = Markdown.tag(m[1], EMOJIx, EMOJI)
+    %Q(<a href="#{href}">#{text}</a>)
   end
 
-  URLx = %r(\[(https?://[\w\.\-\/\&\+\?\%]+)\])
+  URLx = %r((https?://[\w\.\-\/\&\+\?\%]+))
   URL  = lambda {|m| %Q(<a href="#{m[1]}">#{m[1]}</a>)}
 
   EMOJIx = /:(\w+):/
@@ -148,7 +149,7 @@ class Markdown
   end
 
   # Paragraph
-  PARAGRAPHS = /^[\[\(`*"~_]?\w/
+  PARAGRAPHS = /^[\[\(*`'"~_]?:?\w/
   PARSERS << :paragraphs
   def paragraphs
     md = PARAGRAPHS.match(@line) or return false
@@ -156,7 +157,10 @@ class Markdown
     @opt.delete(:attributes)
     while md
       @html << inline(@line)
-      md = (@line=@file.gets)&.match PARAGRAPHS
+      while (@line=@file.gets)&.start_with?('<')
+        @html << @line
+      end
+      md = @line&.match PARAGRAPHS
     end
     @html << "</p>\n"
     true

@@ -1,5 +1,5 @@
 module Markita
-  VERSION = '3.4.211004'
+  VERSION = '4.0.221120'
 
   def self.run!
     # Standard libraries
