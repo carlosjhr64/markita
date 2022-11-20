@@ -1,6 +1,6 @@
 # Markita
 
-* [VERSION 3.4.211004](https://github.com/carlosjhr64/markita/releases)
+* [VERSION 4.0.221120](https://github.com/carlosjhr64/markita/releases)
 * [github](https://www.github.com/carlosjhr64/markita)
 * [rubygems](https://rubygems.org/gems/markita)
 
@@ -177,9 +177,10 @@ Markdown:
 ### Inline links, code, bold, italic, strikes, and underline
 
 <p>
-The <b>bold</b> and <i>italics</i> <s>strikes</s> at <u>underlined</u>,
-while a <a href="#Markita">link to #Markita</a>
-sees the <code>~ code ~ "a*b*c"</code> to <a href="https://github.com">https://github.com</a>.
+The <b>bold</b> and <i>italics</i> <s>strikes</s> at <u>underlined</u>, while a
+<a href="#Markita">link to #Markita</a>
+sees the <code>~ code ~ "a*b*c"</code> to
+<a href="https://github.com">https://github.com</a>.
 </p>
 
 Markdown:
@@ -287,7 +288,7 @@ Markdown:
 
     There once was a man from Nantucket[^1]  
     Who kept all his cash[^2] in a bucket.  
-    But his daugter, named Nan,  
+    But his daughter, named Nan,  
     Ran away with a man  
     And as for the bucket, Natucket.[^3]
 
@@ -346,7 +347,7 @@ $ GET https://raw.githubusercontent.com/carlosjhr64/markita/main/plug/todotxt.rb
 ```
 ## LICENSE
 
-Copyright 2021 CarlosJHR64
+Copyright 2022 CarlosJHR64
 
 Permission is hereby granted, free of charge,
 to any person obtaining a copy of this software and

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>README</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/highlight.css" type="text/css">
+</head>
+<body>
+<a href="/index">
+<img src="/favicon.ico" style="float:right;" alt="Navigation">
+</a>
+<a id="Markita">
+  <h1>Markita</h1>
+</a>
+<ul>
+  <li><a href="https://github.com/carlosjhr64/markita/releases">VERSION 4.0.221120</a></li>
+  <li><a href="https://www.github.com/carlosjhr64/markita">github</a></li>
+  <li><a href="https://rubygems.org/gems/markita">rubygems</a></li>
+</ul>
+<a id="DESCRIPTION">
+  <h2>DESCRIPTION</h2>
+</a>
+<p>
+A Sinatra Markdown server.
+</p>
+<p>
+With many extra non-standard features.
+</p>
+<a id="INSTALL">
+  <h2>INSTALL</h2>
+</a>
+<pre class="highlight"><code>
+<span class="gp">$</span><span class="w"> </span>gem <span class="nb">install </span>markita
+</code></pre>
+<a id="HELP">
+  <h2>HELP</h2>
+</a>
+<pre class="highlight"><code>
+<span class="gp">$</span><span class="w"> </span>markita <span class="nt">--help</span>
+<span class="go">Usage:
+  markita [:options+]
+Options:
+  --root=DIRECTORY 	 ~/vimwiki
+  --bind=BIND      	 0.0.0.0
+  --port=PORT      	 8080
+  --theme=THEME    	 base16.light
+  --allowed=IPS
+  --no_about
+  --no_favicon
+  --no_highlight
+  --no_navigation
+  --no_login
+  --no_plugs
+Types:
+</span><span class="gp">  DIRECTORY /^~?[\/\w\.]+$</span>/
+<span class="gp">  BIND      /^[\w\.]+$</span>/
+<span class="gp">  PORT      /^\d+$</span>/
+<span class="gp">  IPS       /^[\d\.\,]+$</span>/
+<span class="gp">  THEME     /^[\w\.]+$</span>/
+<span class="gp">#</span><span class="w"> </span>NOTE:
+<span class="gp">#</span><span class="w"> </span>Assuming site is <span class="k">in</span> ~/vimwiki,
+<span class="gp">#</span><span class="w"> </span>when ~/vimwiki/.valid-id is <span class="nb">set </span>with a <span class="nb">sha256sum </span>of a password,
+<span class="gp">#</span><span class="w"> </span>that password will restrict the site.
+<span class="gp">#</span><span class="w"> </span>Allowed IPs bypass the need <span class="k">for </span>site password
+<span class="gp">#</span><span class="w"> </span>when the site is accessed from those locations.
+</code></pre>
+<a id="FEATURES">
+  <h2>FEATURES</h2>
+</a>
+<a id="Ballot+boxes">
+  <h3>Ballot boxes</h3>
+</a>
+<ul>
+  <li style="list-style-type: '&#9744; '">Empty ballot</li>
+  <li style="list-style-type: '&#9745; '">Marked ballot</li>
+</ul>
+<p>
+Markdown:
+</p>
+<pre>
+- [ ] Empty ballot
+- [x] Marked ballot
+</pre>
+<a id="Image+placement">
+  <h3>Image placement</h3>
+</a>
+<p>
+Markdown:
+</p>
+<pre>
+![ Centered Image ](/img/image.png)
+![Left Floating ](/img/image.png)
+![ Right Floating](/img/image.png)
+Image  centered above.
+Image to the left with width and height set.
+Image to the right.
+And set a HR bar below.
+---
+</pre>
+<a id="Image+size">
+  <h3>Image size</h3>
+</a>
+<p>
+Markdown:
+</p>
+<pre>
+![In alt text say 100x100](/img/image.png)
+</pre>
+<a id="Image+link">
+  <h3>Image link</h3>
+</a>
+<p>
+Markdown:
+</p>
+<pre>
+![Alt text](/img/image.png /href_to/page)
+</pre>
+<a id="Forms">
+  <h3>Forms</h3>
+</a>
+<p>
+Markdown:
+</p>
+<pre>
+A get method form without submit button on single field:
+! Google:[q] (https://www.google.com/search)
+</pre>
+<pre>
+A post method form due to the password field with
+a submit button due to multiple fields:
+! Username:[user] Password:[*pwd] (/login.html)
+</pre>
+<pre>
+A multi-line form with default entry and hidden field:
+! Name:[user] [status="active"] (/register.html)
+! Address:[address]
+! Code:[code="1234"]
+</pre>
+<pre>
+A selection list:
+! Color:[color="Red","White","Blue"]
+</pre>
+<a id="Template+substitutions">
+  <h3>Template substitutions</h3>
+</a>
+<p>
+Markdown:
+</p>
+<pre>
+! template = "* [&query;](https://www.google.com/search?q=&QUERY;)"
+! regx = /^\* (?<query>.*)$/
+* Grumpy Cat
+* It's over 9000!
+</pre>
+<p>
+Template clears after first non-match.
+Note: on upcased keys, value is CGI escaped.
+</p>
+<a id="Split+table">
+  <h3>Split table</h3>
+</a>
+<table><tr><td>
+<p>
+<p>
+Top left
+</p>
+</td><td>
+<p>
+Top center
+</p>
+</td><td>
+<p>
+Top right
+</p>
+</td></tr><tr><td>
+<p>
+Middle left
+</p>
+</td><td>
+<p>
+Middle center
+</p>
+</td><td>
+<p>
+Middle left
+</p>
+</td></tr><tr><td>
+<p>
+Bottom left
+</p>
+</td><td>
+<p>
+Bottom center
+</p>
+</td><td>
+<p>
+Bottom right
+</p>
+</td></tr></table>
+</p>
+<p>
+Markdown:
+</p>
+<pre>
+|:
+Top left
+|
+Top center
+|
+Top right
+:|:
+Middle left
+|
+Middle center
+|
+Middle left
+:|:
+Bottom left
+|
+Bottom center
+|
+Bottom right
+:|
+</pre>
+<a id="Inline+links+code+bold+italic+strikes+and+underline">
+  <h3>Inline links, code, bold, italic, strikes, and underline</h3>
+</a>
+<p>
+<p>
+The <b>bold</b> and <i>italics</i> <s>strikes</s> at <u>underlined</u>, while a
+<a href="#Markita">link to #Markita</a>
+sees the <code><s> code </s> <i>a<b>b</b>c</i></code> to
+<a href="https://github.com">https://github.com</a>.
+</p>
+</p>
+<p>
+Markdown:
+</p>
+<pre>
+The *bold* and "italics" ~strikes~ at _underlined_,
+while a [link to #Markita](#Markita)
+sees the `~ code ~ "a*b*c"` to [https://github.com].
+</pre>
+<a id="Lists+ordered+un+ordered+definitions">
+  <h3>Lists: ordered, un-ordered, definitions</h3>
+</a>
+<ol>
+  <li>One</li>
+  <li>Two</li>
+</ol>
+<ul>
+  <li>Point A</li>
+  <li>Point B</li>
+</ul>
+<dl>
+<dt>Word</dt>
+<dd>Definition of the word</dd>
+<dt>Symbol</dt>
+<dd>Usage for the symbol</dd>
+</dl>
+<p>
+Markdown:
+</p>
+<pre>
+1. One
+2. Two
+</pre>
+<pre>
+* Point A
+* Point B
+</pre>
+<pre>
+: Word:
+: Definition of the word
+: Symbol:
+: Usage for the symbol
+</pre>
+<a id="Block+quote">
+  <h3>Block-quote</h3>
+</a>
+<p>
+Like Hamlet says...
+</p>
+<blockquote>
+To be or not to be...
+That is the question!
+</blockquote>
+<p>
+Markdown:
+</p>
+<pre>
+Like Hamlet says...
+> To be or not to be...
+> That is the question!
+</pre>
+<a id="Code">
+  <h3>Code</h3>
+</a>
+<pre class="highlight"><code>
+<span class="k">def</span> <span class="nf">wut</span>
+  <span class="nb">puts</span> <span class="s2">"Wut?"</span>
+<span class="k">end</span>
+</code></pre>
+<p>
+Markdown:
+</p>
+<pre>
+```ruby
+def wut
+  puts "Wut?"
+end
+```
+</pre>
+<a id="Tables">
+  <h3>Tables</h3>
+</a>
+<table>
+<thead><tr><th>Integer</th><th>Float</th><th>Symbol</th><th>Word</th></tr></thead>
+<tr><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr>
+<tr><td align="right">1</td><td align="right">1.0</td><td align="center">$</td><td align="left">The word</td></tr>
+<tr><td align="right">1234</td><td align="right">12.3</td><td align="center">&</td><td align="left">On the street</td></tr>
+</table>
+<p>
+Markdown:
+</p>
+<pre>
+| Integer | Float | Symbol | Word          |
+| ------: | ----: | :----: | :------------ |
+|       1 |   1.0 |   $    | The word      |
+|    1234 |  12.3 |   &    | On the street |
+</pre>
+<a id="Attributes">
+  <h3>Attributes</h3>
+</a>
+<p>
+Markdown:
+</p>
+<pre>
+{: style="color: blue;"}
+You can set the attributes for most blocks.
+</pre>
+<a id="Embed+text">
+  <h3>Embed text</h3>
+</a>
+<p>
+Markdown:
+</p>
+<pre>
+!> /path-to/ascii_art.txt
+</pre>
+<p>
+Useful for ASCII art.
+Unless an <code>*.html</code> file, the text is embedded in <code>pre</code> tags.
+Further more unless a <code>*.txt</code> file, the text is embedded in <code>code</code> tags.
+</p>
+<a id="Emojis">
+  <h3>Emojis</h3>
+</a>
+<p>
+I &#x2764; to &#x1f606;!
+</p>
+<p>
+Markdown:
+</p>
+<pre>
+I :heart: to :laughing:!
+</pre>
+<a id="Footnotes">
+  <h3>Footnotes</h3>
+</a>
+<p>
+Markdown:
+</p>
+<pre>
+There once was a man from Nantucket[^1]  
+Who kept all his cash[^2] in a bucket.  
+But his daughter, named Nan,  
+Ran away with a man  
+And as for the bucket, Natucket.[^3]
+</pre>
+<pre>
+[^1]: Nantucket is an island in the U.S. state of Massachusetts.
+[^2]: Cash is money in currency.
+[^3]: Read as "Nan took it."
+</pre>
+<a id="Meta+data">
+  <h3>Meta-data</h3>
+</a>
+<p>
+Markdown:
+</p>
+<pre>
+---
+Title: The Title You Want For Your Page
+1: https://way.to/create/ref/links
+---
+You can now [link](1) with a reference number.
+</pre>
+<a id="HOW+TOs">
+  <h2>HOW-TOs</h2>
+</a>
+<a id="Set+site+password">
+  <h3>Set site password:</h3>
+</a>
+<pre class="highlight"><code>
+<span class="gp">$</span><span class="w"> </span><span class="c"># Assuming ~/vimwiki is your site's root...</span>
+<span class="gp">$</span><span class="w"> </span><span class="nb">echo</span> <span class="nt">-n</span> <span class="s1">'&lt;SitePasswordHere&gt;'</span> | <span class="nb">sha256sum</span> | <span class="nb">grep</span> <span class="nt">-o</span> <span class="s1">'^\w*'</span> <span class="o">&gt;</span> ~/vimwiki/.valid-id
+</code></pre>
+<a id="Set+site+custom+favicon+not+found+page+and+login+form+and+fail+page">
+  <h3>Set site custom favicon, not found page, and login form and fail page:</h3>
+</a>
+<pre class="highlight"><code>
+<span class="gp">$</span><span class="w"> </span><span class="c"># Assuming ~/vimwiki is your site's root...</span>
+<span class="gp">$</span><span class="w"> </span><span class="c"># Note that you'll have to restart the server on any change to these:</span>
+<span class="gp">$</span><span class="w"> </span><span class="nb">cp</span> /path-to/custom/favicon.ico ~/vimwiki/favicon.ico
+<span class="gp">$</span><span class="w"> </span><span class="nb">cp</span> /path-to/custom/not_found.html ~/vimwiki/not_found.html
+<span class="gp">$</span><span class="w"> </span><span class="nb">cp</span> /path-to/custom/login_form.html ~/vimwiki/login_form.html
+<span class="gp">$</span><span class="w"> </span><span class="nb">cp</span> /path-to/custom/login_fail.html ~/vimwiki/login_fail.html
+</code></pre>
+<a id="Run+site+in+https">
+  <h3>Run site in https:</h3>
+</a>
+<pre><code>
+$ # Assuming ~/vimwiki is your site's root...
+$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout pkey.pem -out cert.crt
+$ # Stuff happens... Answer all the dumb questions... then:
+$ mv cert.crt ~/vimwiki/.cert.crt
+$ mv pkey.pem ~/vimwiki/.pkey.pem
+</code></pre>
+<a id="Allow+localhost+to+bypass+password">
+  <h3>Allow localhost to bypass password:</h3>
+</a>
+<pre class="highlight"><code>
+<span class="gp">$</span><span class="w"> </span><span class="c"># Assuming ~/vimwiki with a site password set...</span>
+<span class="gp">$</span><span class="w"> </span>markita <span class="nt">--allowed</span><span class="o">=</span>127.0.0.1
+<span class="go">./bin/markita-1.0.210826
+== Sinatra (v2.1.0) has taken the stage on 8080 for development with backup from Thin
+</span></code></pre>
+<a id="Adding+plugs">
+  <h3>Adding plugs</h3>
+</a>
+<pre class="highlight"><code>
+<span class="gp">$</span><span class="w"> </span><span class="c"># Assuming ~/vimwiki</span>
+<span class="gp">$</span><span class="w"> </span><span class="nb">mkdir</span> ~/viwiki/plug
+<span class="gp">$</span><span class="w"> </span><span class="c"># Then copy (or create) your plug there.</span>
+<span class="gp">$</span><span class="w"> </span><span class="c"># For example:</span>
+<span class="gp">$</span><span class="w"> </span>GET https://raw.githubusercontent.com/carlosjhr64/markita/main/plug/todotxt.rb <span class="o">&gt;</span> ~/vimwiki/plug/todotxt.rb
+</code></pre>
+<a id="LICENSE">
+  <h2>LICENSE</h2>
+</a>
+<p>
+Copyright 2022 CarlosJHR64
+</p>
+<p>
+Permission is hereby granted, free of charge,
+to any person obtaining a copy of this software and
+associated documentation files (the <i>Software</i>),
+to deal in the Software without restriction,
+including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and
+to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice
+shall be included in all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED <i>AS IS</i>,
+WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
+THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+</body>
+</html>
