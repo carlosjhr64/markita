@@ -18,7 +18,7 @@ class TestGET < Test::Unit::TestCase
     Process.wait pid
     error = `git diff #{TEST_FILES}`.chomp
     unless error==''
-      flunk 'Run "git diff test"'
+      flunk "Run 'git diff #{TEST_FILES}'"
     end
   end
 end
