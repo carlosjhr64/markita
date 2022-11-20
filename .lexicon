@@ -206,7 +206,7 @@ Rouge
 ROUGE
 route
 routes
-Ruby30
+Ruby31
 run
 RuntimeError
 S
@@ -227,6 +227,7 @@ ssl
 ssl_options
 start
 START_TIME
+start_with
 string
 String
 StringIO
