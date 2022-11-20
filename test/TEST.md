@@ -43,9 +43,9 @@ end
 |@       | 1       | Ant Bat Cow |
 |    $   |    234  | Zebra         |
 |      %|      67891| Supercalifragilistic |
-![left 60x40 ](/favicon.ico)
-![ right](/favicon.ico)
-![ center ](/favicon.ico)
+![left 60x40:](/favicon.ico)
+![:right](/favicon.ico)
+![:center:](/favicon.ico)
 
 ! [q="Definition of"] Definition:[q] (https://google.com/search)
 

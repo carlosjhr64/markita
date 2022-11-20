@@ -378,11 +378,11 @@ class Markdown
     alt,src,href=md[1],*md[2].strip.split(/\s+/,2)
     style = ' '
     case alt
-    when /^ .* $/
+    when /^:.*:$/
       style = %Q( style="display: block; margin-left: auto; margin-right: auto;" )
-    when / $/
+    when /:$/
       style = %Q( style="float:left;" )
-    when /^ /
+    when /^:/
       style = %Q( style="float:right;" )
     end
     if /(\d+)x(\d+)/.match alt

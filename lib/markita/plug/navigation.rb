@@ -1,3 +1,3 @@
 module Markita
-  NAVIGATION << %Q(![ Navigation](/favicon.ico /index)\n)
+  NAVIGATION << %Q(![:Navigation](/favicon.ico /index)\n)
 end

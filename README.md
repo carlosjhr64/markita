@@ -60,11 +60,11 @@ Markdown:
 
 Markdown:
 
-    ![ Centered Image ](/img/image.png)
-    ![Left Floating ](/img/image.png)
-    ![ Right Floating](/img/image.png)
+    ![:Centered Image:](/img/image.png)
+    ![Left Floating:](/img/image.png)
+    ![:Right Floating](/img/image.png)
     Image  centered above.
-    Image to the left with width and height set.
+    Image to the left.
     Image to the right.
     And set a HR bar below.
     ---
