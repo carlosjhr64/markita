@@ -468,17 +468,17 @@ form << %Q{  #{field}:<input type="#{type}" name="#{name}" value="#{value}">}
     if File.exist?(filename=File.join(ROOT, md[1]))
       extension,lang = filename.split('.').last,nil
       unless extension=='html'
-        lang = Rouge::Lexer.find extension
+        lang = Rouge::Lexer.find(extension) unless extension=='txt'
         klass = lang ? ' class="highlight"' : nil
         @html << "<pre#{klass}#{@opt[:attributes]}>"
         @opt.delete(:attributes)
-        @html << '<code>' unless extension=='txt'
+        @html << '<code>' if lang
         @html << "\n"
       end
       code = File.read(filename)
       @html << (lang ? ROUGE.format(lang.new.lex(code)) : code)
       unless extension=='html'
-        @html << '</code>' unless extension=='txt'
+        @html << '</code>' if lang
         @html << '</pre>'
         @html << "\n"
       end
