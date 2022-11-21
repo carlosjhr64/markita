@@ -158,7 +158,7 @@ class Markdown
     while md
       @html << inline(@line)
       while (@line=@file.gets)&.start_with?('<')
-        @html << @line
+        @html << @line # Exceptional HTML injection into the paragraph
       end
       md = @line&.match PARAGRAPHS
     end
