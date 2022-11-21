@@ -131,15 +131,16 @@ class Markdown
   # Ordered list
   ORDERED = /^( {0,3})\d+\. (\S.*)$/
   PARSERS << :ordered
-  def ordered(md=ORDERED.match(@line), level=0)
-    return false unless md
+  def ordered(md=nil)
+    return false unless md||=ORDERED.match(@line)
+    level = md[1].length
     @html << "<ol#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
     while md and level==md[1].length
       @html << "  <li>#{inline(md[2])}</li>\n"
       if md = (@line=@file.gets)&.match(ORDERED)
         if level < md[1].length
-          ordered(md, md[1].length)
+          ordered(md)
           md = @line&.match(ORDERED)
         end
       end
