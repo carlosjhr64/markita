@@ -411,52 +411,48 @@ class Markdown
   PARSERS << :forms
   def forms
     md = FORMS.match(@line) or return false
-    form = []
-    n,fields,submit,method = 0,0,nil,nil
-    action = (_=/\(([^\(\)]*)\)$/.match(@line))? _[1] : nil
+    fields,nl,submit = 0,false,nil
+    action = (_=/\(([^\(\)]*)\)!?$/.match(@line))? %Q( action="#{_[1]}") : nil
+    method = @line.match?(/!$/) ? ' method="post"' : nil
+    @html << %Q(<form#{action}#{method}#{@opt[:attributes]}>\n)
+    @opt.delete(:attributes)
     while md
-      n += 1
-      form << '  <br>' if n > 1
+      @html << "  <br>\n" if nl
       @line.scan(FIELDS).each do |field, pwd, name, value|
-        method ||= ' method="post"' if pwd
         field &&= field[0...-1]
         value &&= value[2...-1]
         if field
           type = (pwd)? 'password' : 'text'
           if value
             if (values = value.split('","')).length > 1
-form << %Q(#{field}:<select name="#{name}">)
-values.each do |value|
-  fields += 1
-  form << %Q(  <option value="#{value}">#{value}</option>)
-end
-form << "</select>"
+              @html << %Q(#{field}:<select name="#{name}">\n)
+              values.each do |value|
+                fields += 1
+                @html << %Q(  <option value="#{value}">#{value}</option>\n)
+              end
+              @html << "</select>\n"
             else
-fields += 1
-form << %Q{  #{field}:<input type="#{type}" name="#{name}" value="#{value}">}
+              fields += 1
+              @html << %Q{  #{field}:<input type="#{type}" name="#{name}" value="#{value}">\n}
             end
           else
             fields += 1
-            form << %Q{  #{field}:<input type="#{type}" name="#{name}">}
+            @html << %Q{  #{field}:<input type="#{type}" name="#{name}">\n}
           end
         elsif name=='submit'
           submit = value
         else
-          form << %Q{  <input type="hidden" name="#{name}" value="#{value}">}
+          @html << %Q{  <input type="hidden" name="#{name}" value="#{value}">\n}
         end
       end
-      md = (@line=@file.gets)&.match FORMS
+      md=(@line=@file.gets)&.match(FORMS) and nl=true
     end
     if submit or not fields==1
       submit ||= 'Submit'
-      form << '  <br>' if n > 1
-      form << %Q(  <input type="submit" value="#{submit}">)
+      @html << "  <br>\n" if nl
+      @html << %Q(  <input type="submit" value="#{submit}">\n)
     end
-    form.unshift %Q(<form action="#{action}"#{method}#{@opt[:attributes]}>)
-    form << %Q(</form>)
-    @html << form.join("\n")
-    @html << "\n"
-    @opt.delete(:attributes)
+    @html << %Q(</form>\n)
     true
   end
 

@@ -49,9 +49,9 @@ end
 
 ! [q="Definition of"] Definition:[q] (https://google.com/search)
 
-! Username:[user] Password:[*pwd] (/login.html)
+! Username:[user] Password:[*pwd](/login.html)!
 
-! Name:[name] (/register.html)
+! Name:[name] (/register.html)!
 ! Address:[address] [*submit="Register!"]
 {: style="color: blue;"}
 Am I blue?
