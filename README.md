@@ -215,7 +215,8 @@ Markdown:
     * Point B
 
     + Word: Definition of the word
-    + Symbol: Usage for the symbol
+    + Symbol:
+    +   Usage for the symbol
 
 ### Block-quote
 

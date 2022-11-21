@@ -260,7 +260,6 @@ class Markdown
     true
   end
 
-
   # Code
   CODES = /^[`~]{3}\s*(\w+)?$/
   PARSERS << :codes
