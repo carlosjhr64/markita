@@ -169,15 +169,16 @@ class Markdown
   # Unordered list
   UNORDERED = /^( {0,3})[*] (\S.*)$/
   PARSERS << :unordered
-  def unordered(md=UNORDERED.match(@line), level=0)
-    return false unless md
+  def unordered(md=nil)
+    return false unless md||=UNORDERED.match(@line)
+    level = md[1].length
     @html << "<ul#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
     while md and level==md[1].length
       @html << "  <li>#{inline(md[2])}</li>\n"
       if md = (@line=@file.gets)&.match(UNORDERED)
         if level < md[1].length
-          unordered(md, md[1].length)
+          unordered(md)
           md = @line&.match(UNORDERED)
         end
       end
