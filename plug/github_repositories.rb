@@ -33,9 +33,9 @@ class Base
         n = Math.log(n+1, 2).round
         issues = ':heavy_exclamation_mark:'*n
       end
-      text << ": [#{repo['name']}](#{repo['html_url']})#{stars}#{issues}:\n"
-      text << ": #{repo['description']}\n"
-      text << ": #{repo['language']} project created #{Date.parse(repo['created_at'])} "
+      text << "+ [#{repo['name']}](#{repo['html_url']})#{stars}#{issues}:\n"
+      text << "+ #{repo['description']}\n"
+      text << "+ #{repo['language']} project created #{Date.parse(repo['created_at'])} "
       date = Date.parse repo['pushed_at']
       if today-date > 365
         text << %Q(last pushed <mark>#{date}</mark>\n)

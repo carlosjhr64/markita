@@ -26,9 +26,9 @@ class Base
           stars << ':star:'*n
         end
         name = project['name']
-        text << ": [#{name}](?gemname=#{name})#{stars}:\n"
-        text << ": #{project['info'].gsub(/\s+/,' ')}\n"
-        text << ": Version #{project['version']} created at "
+        text << "+ [#{name}](?gemname=#{name})#{stars}:\n"
+        text << "+ #{project['info'].gsub(/\s+/,' ').gsub(':','&#58;')}\n"
+        text << "+ Version #{project['version']} created at "
         date = Date.parse project['version_created_at']
         if today-date > 365
           text << "<mark>#{date}</mark>.\n"
@@ -59,7 +59,7 @@ class Base
       text << about['info'].strip.gsub(/\s+/, ' ')+"\n"
       text << "|:\n"
       text << "* Authors: #{about['authors']}\n"
-      text << "* Home: [#{about['homepage_uri']}]\n"
+      text << "* Home: #{about['homepage_uri']}\n"
       text << "* Downloads this version: #{about['version_downloads']}\n"
       text << "|\n"
       date = Date.parse about['version_created_at']
@@ -68,7 +68,7 @@ class Base
       else
         text << "* Date: #{date}\n"
       end
-      text << "* Project: [#{about['project_uri']}]\n"
+      text << "* Project: #{about['project_uri']}\n"
       text << "* Total downloads: #{about['downloads']}\n"
       text << ":|\n"
       text << "## Owners\n"
@@ -101,7 +101,7 @@ class Base
                  'info',
                  'project_uri',
                  'homepage_uri'].include? key
-        text << ": #{key.gsub('_',' ')}:\n"
+        text << "+ #{key.gsub('_',' ')}:\n"
         if value.is_a? String
           value = value.gsub(/\s+/, ' ')
           value = Date.parse(value).to_s if value.match? /^\d\d\d\d-\d\d-\d\dT/
@@ -109,9 +109,9 @@ class Base
         value = 'N/A' if value.nil?
         value = value.to_s if value.is_a? Numeric
         if value.is_a? String
-          text << ": #{value}\n"
+          text << "+ #{value}\n"
         else
-          text << ": `#{value}`\n"
+          text << "+ `#{value}`\n"
         end
       end
       text

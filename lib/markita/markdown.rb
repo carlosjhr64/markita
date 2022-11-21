@@ -206,15 +206,22 @@ class Markdown
   end
 
   # Definition list
-  DEFINITIONS = /^[+] ([^:]+): (.*)$/
+  DEFINITIONS = /^[+] (.*)$/
   PARSERS << :definitions
   def definitions
     md = DEFINITIONS.match(@line) or return false
     @html << "<dl#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
     while md
-      @html << "<dt>#{inline md[1]}</dt>\n"
-      @html << "<dd>#{inline md[2]}</dd>\n"
+      case md[1]
+      when /(.*): (.*)$/
+        @html << "<dt>#{inline $1.strip}</dt>\n"
+        @html << "<dd>#{inline $2.strip}</dd>\n"
+      when /(.*):$/
+        @html << "<dt>#{inline $1.strip}</dt>\n"
+      else
+        @html << "<dd>#{inline md[1].strip}</dd>\n"
+      end
       md = (@line=@file.gets)&.match DEFINITIONS
     end
     @html << "</dl>\n"
