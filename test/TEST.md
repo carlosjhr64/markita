@@ -66,3 +66,10 @@ Oh so blue!!!
 ! Pick:[color="Red","White","Blue"]
 !> /TEST.rb
 !> /test.html
+
+# Template test
+
+! template = "* [&query;](https://www.google.com/search?q=&QUERY;)"
+! regx = /^\* (?<query>.*)$/
+* Grumpy Cat
+* It's over 9000!
