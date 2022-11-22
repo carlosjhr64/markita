@@ -14,8 +14,8 @@ module Markita
 
   EMOJIS = Hash[*File.read(PATH['emojis.tsv']).split(/\s+/)]
 
-  PAGE_KEY   = %r{/(\w[\w\/\-]*\w)}
-  IMAGE_PATH = %r{/(\w[\w\/\-]*\w\.((png)|(gif)))}
+  PAGE_KEY  = %r{/(\w[\w\/\-]*\w)}
+  SEND_FILE = %r{/(\w[\w\/\-]*\w\.\w+)}
 
   START_TIME = Time.now
 end

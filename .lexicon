@@ -107,7 +107,6 @@ I
 ICO
 id
 ID
-IMAGE_PATH
 images
 IMAGES
 include
@@ -212,6 +211,7 @@ S
 scan
 scope
 send_file
+SEND_FILE
 server
 session
 sessions
