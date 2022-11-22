@@ -246,16 +246,22 @@ class Markdown
   end
 
   # Block-quote
-  BLOCKQS = /^> (.*)$/
+  BLOCKQS = /^( {0,3})> (.*)$/
   PARSERS << :blockqs
-  def blockqs
-    md = BLOCKQS.match(@line) or return false
+  def blockqs(md=nil)
+    md ||= BLOCKQS.match(@line) or return false
+    level = md[1].length
     @html << "<blockquote#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
-    while md
-      @html << inline(md[1])
+    while md and level==md[1].length
+      @html << inline(md[2])
       @html << "\n"
-      md = (@line=@file.gets)&.match BLOCKQS
+      if md = (@line=@file.gets)&.match(BLOCKQS)
+        if level < md[1].length
+          blockqs(md)
+          md = @line&.match(BLOCKQS)
+        end
+      end
     end
     @html << "</blockquote>\n"
     true
