@@ -132,7 +132,7 @@ class Markdown
   ORDERED = /^( {0,3})\d+\. (\S.*)$/
   PARSERS << :ordered
   def ordered(md=nil)
-    return false unless md||=ORDERED.match(@line)
+    md ||= ORDERED.match(@line) or return false
     level = md[1].length
     @html << "<ol#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
@@ -171,7 +171,7 @@ class Markdown
   UNORDERED = /^( {0,3})[*] (\S.*)$/
   PARSERS << :unordered
   def unordered(md=nil)
-    return false unless md||=UNORDERED.match(@line)
+    md ||= UNORDERED.match(@line) or return false
     level = md[1].length
     @html << "<ul#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
