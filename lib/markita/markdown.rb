@@ -89,13 +89,12 @@ class Markdown
 
   def Markdown.tag(entry, regx, m2string, &block)
     if m = regx.match(entry)
-      pre_match = (block ? block.call(m.pre_match) : m.pre_match)
-      string = pre_match + m2string[m]
-      post_match = m.post_match
-      while m = regx.match(post_match)
+      string = ''
+      while m
         pre_match = (block ? block.call(m.pre_match) : m.pre_match)
         string << pre_match + m2string[m]
         post_match = m.post_match
+        m = regx.match(post_match)
       end
       string << (block ? block.call(post_match) : post_match)
       return string
