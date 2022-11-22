@@ -24,9 +24,9 @@ class Base < Sinatra::Base
     Markdown.new(key).filepath filepath
   end
 
-  get SEND_FILE do |path, *_|
+  get SEND_FILE do |path|
     filepath = File.join ROOT, path
-    raise Sinatra::NotFound  unless File.exist? filepath
+    pass unless File.exist? filepath
     send_file File.join(ROOT, path)
   end
 
