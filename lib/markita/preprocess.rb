@@ -6,7 +6,7 @@ class Preprocess
   end
 
   def gets
-    if line = @file.gets
+    while line = @file.gets
       case line
       when @regx
         line = @template if @template
@@ -14,17 +14,17 @@ class Preprocess
           line = line.gsub("&#{name.downcase};", value)
           line = line.gsub("&#{name.upcase};", CGI.escape(value))
         end
+        return line
       when %r(^! regx = /(.*)/$)
         @regx = Regexp.new $1
-        line = gets
       when %r(^! template = "(.*)"$)
         @template = $1+"\n"
-        line = gets
       else
         @regx &&= (@template=nil)
+        return line
       end
     end
-    line
+    return nil
   end
 end
 end
