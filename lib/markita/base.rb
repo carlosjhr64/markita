@@ -25,9 +25,10 @@ class Base < Sinatra::Base
   end
 
   get SEND_FILE do |path|
-    filepath = File.join ROOT, path
-    pass unless File.exist? filepath
-    send_file File.join(ROOT, path)
+    pass unless params.length==1 and
+                filepath = File.join(ROOT, path) and
+                File.exist?(filepath)
+    send_file filepath
   end
 
   get '/' do
