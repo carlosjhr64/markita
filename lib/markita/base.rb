@@ -32,7 +32,13 @@ class Base < Sinatra::Base
   end
 
   get '/' do
-    redirect '/index'
+    filepath = File.join ROOT, 'index.md'
+    if File.exist? filepath
+      Markdown.new('index').filepath filepath
+    else
+      redirect '/about.html'  unless OPTIONS&.no_about
+      raise Sinatra::NotFound
+    end
   end
 
   not_found do

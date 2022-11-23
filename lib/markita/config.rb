@@ -6,7 +6,8 @@ module Markita
 
   ROOT = File.expand_path OPTIONS&.root || '~/vimwiki'
   raise "Missing site root directory: "+ROOT  unless File.directory? ROOT
-  APPDATA = File.join File.dirname(File.dirname __dir__), 'data'
+  APPDIR = File.dirname File.dirname __dir__
+  APPDATA = File.join APPDIR, 'data'
   PATH = lambda do |basename|
     [ROOT, APPDATA].map{ File.join _1, basename}.detect{ File.exist? _1}
   end

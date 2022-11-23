@@ -8,6 +8,7 @@ allowed
 alt
 anchor
 APPDATA
+APPDIR
 ARGV
 attributes
 ATTRIBUTES
@@ -158,6 +159,7 @@ no_highlight
 no_login
 no_navigation
 no_plugs
+no_readme
 not_found
 NotFound
 NOT_FOUND

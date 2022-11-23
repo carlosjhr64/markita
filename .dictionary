@@ -1,6 +1,7 @@
 alt
 Alt
 APPDATA
+APPDIR
 ARGV
 ascii
 backtrace
@@ -78,6 +79,7 @@ newkey
 nl
 favicon
 NONINFRINGEMENT
+readme
 NotFound
 ol
 openssl
@@ -95,6 +97,7 @@ preprocess
 Preprocess
 pwd
 rb
+readme
 REDTTY
 Regexp
 regx
