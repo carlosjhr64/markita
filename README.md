@@ -28,9 +28,12 @@ Options:
   --no_about
   --no_favicon
   --no_highlight
-  --no_navigation
   --no_login
+  --no_navigation
   --no_plugs
+  --no_readme
+Exclusive:
+  no_login allowed
 Types:
   DIRECTORY /^~?[\/\w\.]+$/
   BIND      /^[\w\.]+$/

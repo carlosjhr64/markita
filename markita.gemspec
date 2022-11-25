@@ -41,6 +41,7 @@ lib/markita/plug/highlight.rb
 lib/markita/plug/login.rb
 lib/markita/plug/navigation.rb
 lib/markita/plug/plugs.rb
+lib/markita/plug/readme.rb
 lib/markita/preprocess.rb
   )
   s.executables << 'markita'
