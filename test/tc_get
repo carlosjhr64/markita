@@ -2,7 +2,7 @@
 require 'test/unit'
 
 class TestGET < Test::Unit::TestCase
-  PORT = 8082
+  PORT = 8083
   TEST_FILES = 'README.md test/README.html test/test.html test/TEST.html test/TEST.md test/TEST.rb test/TEST.txt'
 
   def test_get
