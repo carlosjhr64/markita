@@ -276,7 +276,7 @@ class Markdown
     @html << "<pre#{klass}#{@opt[:attributes]}><code>\n"
     @opt.delete(:attributes)
     code = ''
-    while @line=@file.gets and not CODES.match(@line)
+    while @line=@file.gets and not CODES.match?(@line)
       code << @line
     end
     @html << (lang ? ROUGE.format(lang.new.lex(code)) : code)
@@ -354,7 +354,7 @@ class Markdown
     @html << @line[1...-1].split('|').map{inline(_1.strip)}.join('</th><th>')
     @html << "</th></tr></thead>\n"
     align = []
-    while (@line=@file.gets)&.match TABLES
+    while (@line=@file.gets)&.match? TABLES
       @html << '<tr>'
       @line[1...-1].split('|').each_with_index do |cell, i|
         case cell
