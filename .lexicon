@@ -213,6 +213,8 @@ RuntimeError
 S
 scan
 scope
+script
+SCRIPT
 send_file
 SEND_FILE
 server

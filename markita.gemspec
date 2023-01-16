@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
 
   s.name     = 'markita'
-  s.version  = '4.0.221124'
+  s.version  = '4.1.230116'
 
   s.homepage = 'https://github.com/carlosjhr64/markita'
 
@@ -49,6 +49,6 @@ lib/markita/preprocess.rb
   s.add_runtime_dependency 'rouge', '~> 4.0', '>= 4.0.0'
   s.add_runtime_dependency 'sinatra', '~> 3.0', '>= 3.0.3'
   s.add_runtime_dependency 'thin', '~> 1.8', '>= 1.8.1'
-  s.requirements << 'ruby: ruby 3.1.2p20 (2022-04-12 revision 4491bb740a) [aarch64-linux]'
+  s.requirements << 'ruby: ruby 3.2.0 (2022-12-25 revision a528908271) [aarch64-linux]'
 
 end
