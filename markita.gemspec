@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.author   = 'CarlosJHR64'
   s.email    = 'carlosjhr64@gmail.com'
 
-  s.date     = '2022-11-24'
+  s.date     = '2023-01-16'
   s.licenses = ['MIT']
 
   s.description = <<DESCRIPTION
@@ -45,9 +45,9 @@ lib/markita/plug/readme.rb
 lib/markita/preprocess.rb
   )
   s.executables << 'markita'
-  s.add_runtime_dependency 'help_parser', '~> 8.0', '>= 8.0.210917'
-  s.add_runtime_dependency 'rouge', '~> 4.0', '>= 4.0.0'
-  s.add_runtime_dependency 'sinatra', '~> 3.0', '>= 3.0.3'
+  s.add_runtime_dependency 'help_parser', '~> 8.1', '>= 8.1.221206'
+  s.add_runtime_dependency 'rouge', '~> 4.0', '>= 4.0.1'
+  s.add_runtime_dependency 'sinatra', '~> 3.0', '>= 3.0.5'
   s.add_runtime_dependency 'thin', '~> 1.8', '>= 1.8.1'
   s.requirements << 'ruby: ruby 3.2.0 (2022-12-25 revision a528908271) [aarch64-linux]'
 
