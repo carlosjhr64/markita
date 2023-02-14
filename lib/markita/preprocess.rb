@@ -1,12 +1,12 @@
 module Markita
 class Preprocess
   def initialize(file)
-    @file = (file.is_a? String)? StringIO.new(file) : file
+    @file = file.is_a?(String)? StringIO.new(file) : file
     @regx = @template = nil
   end
 
   def gets
-    while line = @file.gets
+    while (line=@file.gets)
       case line
       when @regx
         line = @template if @template
@@ -15,16 +15,16 @@ class Preprocess
           line = line.gsub("&#{name.upcase};", CGI.escape(value))
         end
         return line
-      when %r(^! regx = /(.*)/$)
+      when %r{^! regx = /(.*)/$}
         @regx = Regexp.new $1
-      when %r(^! template = "(.*)"$)
+      when %r{^! template = "(.*)"$}
         @template = $1+"\n"
       else
         @regx &&= (@template=nil)
         return line
       end
     end
-    return nil
+    nil
   end
 end
 end
