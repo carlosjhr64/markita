@@ -30,7 +30,7 @@ class Base
         text << "+ #{project['info'].gsub(/\s+/,' ').gsub(':','&#58;')}\n"
         text << "+ Version #{project['version']} created at "
         date = Date.parse project['version_created_at']
-        text << today-date>365 ? "<mark>#{date}</mark>.\n" : "#{date}.\n"
+        text << (today-date>365 ? "<mark>#{date}</mark>.\n" : "#{date}.\n")
       end
       text
     end
@@ -60,8 +60,8 @@ class Base
       text << "* Downloads this version: #{about['version_downloads']}\n"
       text << "|\n"
       date = Date.parse about['version_created_at']
-      text << today-date>365 ? "* Date: <mark>#{date}</mark>\n" :
-                               "* Date: #{date}\n"
+      text << (today-date>365 ? "* Date: <mark>#{date}</mark>\n" :
+                               "* Date: #{date}\n")
       text << "* Project: #{about['project_uri']}\n"
       text << "* Total downloads: #{about['downloads']}\n"
       text << ":|\n"
@@ -95,7 +95,7 @@ class Base
         end
         value = 'N/A' if value.nil?
         value = value.to_s if value.is_a? Numeric
-        text << value.is_a?(String)? "+ #{value}\n": "+ `#{value}`\n"
+        text << (value.is_a?(String)? "+ #{value}\n": "+ `#{value}`\n")
       end
       text
     end
