@@ -2,13 +2,13 @@ require 'net/http'
 module Markita
 class Base
   module RubyGems
-    def RubyGems.by_username(username)
+    def self.by_username(username)
       gems = JSON.parse Net::HTTP.get URI(
         "https://rubygems.org/api/v1/owners/#{username}/gems.json")
       today = Date.today
       text = "# Ruby gems\n"
-      text << %Q(! Username:[username="#{username}"])
-      text << %Q([submit="Go!"]()\n)
+      text << %(! Username:[username="#{username}"])
+      text << %([submit="Go!"]()\n)
       text << "## Gems by #{username}\n"
       gems.sort!{|a,b| b['version_downloads']<=>a['version_downloads']}
       gems.each do |project|
@@ -30,30 +30,27 @@ class Base
         text << "+ #{project['info'].gsub(/\s+/,' ').gsub(':','&#58;')}\n"
         text << "+ Version #{project['version']} created at "
         date = Date.parse project['version_created_at']
-        if today-date > 365
-          text << "<mark>#{date}</mark>.\n"
-        else
-          text << "#{date}.\n"
-        end
+        text << today-date>365 ? "<mark>#{date}</mark>.\n" : "#{date}.\n"
       end
       text
     end
 
-    def RubyGems.about_gem(gemname)
+    def self.about_gem(gemname)
       today = Date.today
       about,used_by,owners=nil,nil,nil
-      t1 = Thread.new{
+      t1 = Thread.new do
         about = JSON.parse Net::HTTP.get URI(
-        "https://rubygems.org/api/v1/gems/#{gemname}.json")
-      }
-      t2 = Thread.new{
+          "https://rubygems.org/api/v1/gems/#{gemname}.json")
+      end
+      t2 = Thread.new do
         used_by = JSON.parse Net::HTTP.get URI(
-        "https://rubygems.org/api/v1/gems/#{gemname}/reverse_dependencies.json")
-      }
-      t3 = Thread.new{
+          'https://rubygems.org/api/v1/gems/' \
+          "#{gemname}/reverse_dependencies.json")
+      end
+      t3 = Thread.new do
         owners = JSON.parse Net::HTTP.get URI(
-        "https://rubygems.org/api/v1/gems/#{gemname}/owners.json")
-      }
+          "https://rubygems.org/api/v1/gems/#{gemname}/owners.json")
+      end
       t1.join; t2.join; t3.join
       text = "# #{gemname} #{about['version']}\n"
       text << about['info'].strip.gsub(/\s+/, ' ')+"\n"
@@ -63,11 +60,8 @@ class Base
       text << "* Downloads this version: #{about['version_downloads']}\n"
       text << "|\n"
       date = Date.parse about['version_created_at']
-      if today-date > 365
-        text << "* Date: <mark>#{date}</mark>\n"
-      else
-        text << "* Date: #{date}\n"
-      end
+      text << today-date>365 ? "* Date: <mark>#{date}</mark>\n" :
+                               "* Date: #{date}\n"
       text << "* Project: #{about['project_uri']}\n"
       text << "* Total downloads: #{about['downloads']}\n"
       text << ":|\n"
@@ -76,14 +70,14 @@ class Base
         handle = owner['handle']
         text << "* [#{handle}](?username=#{handle})\n"
       end
-      if (dependencies = about['dependencies']['runtime']).length > 0
+      unless (dependencies=about['dependencies']['runtime']).empty?
         text << "## Runtime dependencies\n"
         dependencies.each do |h|
           name = h['name']
           text << "* [#{name}](?gemname=#{name}) `#{h['requirements']}`\n"
         end
       end
-      if used_by.length > 0
+      unless used_by.empty?
         text << "## Dependant users\n"
         used_by.sort!{|a,b| a.downcase<=>b.downcase}
         used_by.each do |user|
@@ -92,15 +86,8 @@ class Base
       end
       text << "## More...\n"
       about.each do |key, value|
-        next if ['name',
-                 'downloads',
-                 'version',
-                 'version_created_at',
-                 'version_downloads',
-                 'authors',
-                 'info',
-                 'project_uri',
-                 'homepage_uri'].include? key
+        next if %w[name downloads version version_created_at version_downloads
+                   authors info project_uri homepage_uri].include? key
         text << "+ #{key.gsub('_',' ')}:\n"
         if value.is_a? String
           value = value.gsub(/\s+/, ' ')
@@ -108,21 +95,18 @@ class Base
         end
         value = 'N/A' if value.nil?
         value = value.to_s if value.is_a? Numeric
-        if value.is_a? String
-          text << "+ #{value}\n"
-        else
-          text << "+ `#{value}`\n"
-        end
+        text << value.is_a?(String)? "+ #{value}\n": "+ `#{value}`\n"
       end
       text
     end
   end
 
   get '/rubygems.html' do
-    if gemname = params['gemname']
+    if (gemname=params['gemname'])
       text = RubyGems.about_gem(gemname)
     else
-      username = params['username'] || 'carlosjhr64' # Change the username to yours!
+      # Change the username to yours!
+      username = params['username'] || 'carlosjhr64'
       text = RubyGems.by_username(username)
     end
     Markdown.new('Ruby gems').markdown text
