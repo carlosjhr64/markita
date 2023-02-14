@@ -1,6 +1,6 @@
 module Markita
 module HTML
-  def HTML.header(key)
+  def self.header(key)
     <<~HEADER
       <!DOCTYPE html>
       <html>
@@ -11,11 +11,11 @@ module HTML
     HEADER
   end
 
-  def HTML.navigation
+  def self.navigation
     NAVIGATION
   end
 
-  def HTML.footer
+  def self.footer
     <<~FOOTER
       </body>
       </html>
