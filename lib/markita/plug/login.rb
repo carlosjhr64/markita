@@ -5,16 +5,16 @@ class Base
          File.read(_).strip :
          nil
     IPS = (_=OPTIONS&.allowed)? _.split(',') : nil
-    if IPS and not ID
-      raise "Allowed ips without site password does not make sense."
+    if IPS && !ID
+      raise 'Allowed ips without site password does not make sense.'
     end
     FORM   = File.read PATH['login_form.html']
     FAILED = File.read PATH['login_failed.html']
   end
 
   before do
-    unless Login::ID.nil? or Login::IPS&.include?(request.ip)
-      if id = params[:id]
+    unless Login::ID.nil? || Login::IPS&.include?(request.ip)
+      if (id=params[:id])
         session[:id] = Digest::SHA256.hexdigest id
       end
       if session[:id] == Login::ID

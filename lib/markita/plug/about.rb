@@ -15,11 +15,11 @@ class Base
       TEXT
       Base.routes['GET'].each do |route|
         path = route[0].to_s
-        next  unless %r{^/\w+\.html$}.match? path
+        next unless %r{^/\w+\.html$}.match? path
         basename = File.basename(path, '.*')
         text << "* [#{basename}](#{path})\n"
       end
-      if defined? Favicon and Favicon::ICO
+      if defined? Favicon && Favicon::ICO
         text << "\n![Favicon](/favicon.ico)\n"
       end
       text
