@@ -59,7 +59,6 @@ empty
 EMPTY
 entry
 escape
-Exception
 exist
 exit
 expand_path
@@ -262,4 +261,5 @@ value
 values
 verify_peer
 VERSION
+warn
 x
