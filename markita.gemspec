@@ -48,6 +48,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'thin', '~> 1.8', '>= 1.8.1'
   s.add_development_dependency 'colorize', '~> 0.8', '>= 0.8.1'
   s.add_development_dependency 'nokogiri', '~> 1.14', '>= 1.14.2'
+  s.add_development_dependency 'parser', '~> 3.2', '>= 3.2.1'
   s.add_development_dependency 'rubocop', '~> 1.45', '>= 1.45.1'
   s.add_development_dependency 'test-unit', '~> 3.5', '>= 3.5.7'
   s.requirements << 'git: 2.30'
