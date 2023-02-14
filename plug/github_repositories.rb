@@ -4,44 +4,48 @@ class Base
   get '/github_repositories.html' do
     sort = params['sort'] || 'pushed'
     direction = params['direction'] || 'asc'
-    username = params['username'] || 'carlosjhr64' # Change the username to yours!
+    # Change the username to yours!
+    username = params['username'] || 'carlosjhr64'
     url = "https://api.github.com/users/#{username}/repos?per_page=100&"
     today = Date.today
 
     text = "# Github Repositories\n"
 
-    text << %Q(! Username:[username="#{username}"])
-    text << %Q([sort="#{sort}"][direction="#{direction}"][submit="Go!"])
+    text << %(! Username:[username="#{username}"])
+    text << %([sort="#{sort}"][direction="#{direction}"][submit="Go!"])
     text << "()\n"
 
-    text << "* Sort [pushed](?username=#{username}&sort=pushed&direction=#{direction}) "
-    text << "or [created](?username=#{username}&sort=created&direction=#{direction})\n"
+    text << '* Sort [pushed]'
+    text << "(?username=#{username}&sort=pushed&direction=#{direction}) "
+    text << 'or [created]'
+    text << "(?username=#{username}&sort=created&direction=#{direction})\n"
 
-    text << "* Direction [ascending](?username=#{username}&sort=#{sort}&direction=asc) "
-    text << "or [descending](?username=#{username}&sort=#{sort}&direction=desc)\n"
+    text << '* Direction [ascending]'
+    text << "(?username=#{username}&sort=#{sort}&direction=asc) "
+    text << 'or [descending]'
+    text << "(?username=#{username}&sort=#{sort}&direction=desc)\n"
 
     text << "## Repo #{username} sorted by #{sort}(#{direction}.)\n"
 
-    repos = JSON.parse Net::HTTP.get URI("#{url}?&sort=#{sort}&direction=#{direction}")
+    repos = JSON.parse Net::HTTP.get(
+      URI "#{url}?&sort=#{sort}&direction=#{direction}")
     repos.each do |repo|
       stars,issues = '',''
-      if (n=repo['watchers'].to_i) > 0
+      if (n=repo['watchers'].to_i).positive?
         n = Math.log(n+1, 2).round
         stars = ' ' + ':star:'*n
       end
-      if (n=repo['open_issues'].to_i) > 0
+      if (n=repo['open_issues'].to_i).positive?
         n = Math.log(n+1, 2).round
         issues = ':heavy_exclamation_mark:'*n
       end
       text << "+ [#{repo['name']}](#{repo['html_url']})#{stars}#{issues}:\n"
       text << "+ #{repo['description']}\n"
-      text << "+ #{repo['language']} project created #{Date.parse(repo['created_at'])} "
+      text << "+ #{repo['language']} project created " \
+              "#{Date.parse(repo['created_at'])} "
       date = Date.parse repo['pushed_at']
-      if today-date > 365
-        text << %Q(last pushed <mark>#{date}</mark>\n)
-      else
-        text << %Q(last pushed #{date}\n)
-      end
+      text << today-date>365 ? %(last pushed <mark>#{date}</mark>\n) :
+                               %(last pushed #{date}\n)
     end
 
     Markdown.new('Github Repositories').markdown text
