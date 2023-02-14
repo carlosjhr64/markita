@@ -1,5 +1,5 @@
 class Wut
   def wut
-    "WUT?"
+    'WUT?'
   end
 end
