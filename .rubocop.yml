@@ -78,6 +78,8 @@ Metrics/ModuleLength:
   Enabled: false
 Metrics/PerceivedComplexity:
   Enabled: false
+Naming/ConstantName:
+  Enabled: false
 Naming/MethodParameterName:
   Enabled: false
 Naming/MemoizedInstanceVariableName:

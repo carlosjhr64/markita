@@ -15,8 +15,8 @@ class Markdown
   end
 
   def finish
-    if title = @metadata['Title']
-      @html << %Q(<script> document.title = "#{title}" </script>\n)
+    if (title=@metadata['Title'])
+      @html << %(<script> document.title = "#{title}" </script>\n)
     end
     @html << HTML.footer
     @line = nil
@@ -34,9 +34,7 @@ class Markdown
   def parse(fh)
     init(fh)
     start
-    while @line
-      PARSERS.detect{method(_1).call} or default
-    end
+    PARSERS.detect{method(_1).call} or default while @line
     finish
   end
 
@@ -51,44 +49,44 @@ class Markdown
   end
 
   Ux = /_([^_]+)_/
-  U  = lambda {|m| "<u>#{m[1]}</u>"}
+  U  = ->(m){"<u>#{m[1]}</u>"}
 
   Sx = /~([^~]+)~/
-  S  = lambda {|m| "<s>#{m[1]}</s>"}
+  S  = ->(m){"<s>#{m[1]}</s>"}
 
   Ix = /"([^"]+)"/
-  I  = lambda {|m| "<i>#{m[1]}</i>"}
+  I  = ->(m){"<i>#{m[1]}</i>"}
 
-  Bx = /\*([^\*]+)\*/
-  B  = lambda {|m| "<b>#{m[1]}</b>"}
+  Bx = /\*([^*]+)\*/
+  B  = ->(m){"<b>#{m[1]}</b>"}
 
   CODEx = /`([^`]+)`/
-  CODE  = lambda {|m| "<code>#{m[1].gsub('<','&lt;')}</code>"}
+  CODE  = ->(m){"<code>#{m[1].gsub('<','&lt;')}</code>"}
 
   Ax = /\[([^\[\]]+)\]\(([^()]+)\)/
   def anchor(m)
     href = ((_=m[2]).match?(/^\d+$/) and @metadata[_] or _)
     text = Markdown.tag(m[1], EMOJIx, EMOJI)
-    %Q(<a href="#{href}">#{text}</a>)
+    %(<a href="#{href}">#{text}</a>)
   end
 
-  URLx = %r((https?://[\w\.\-\/\&\+\?\%]+))
-  URL  = lambda {|m| %Q(<a href="#{m[1]}">#{m[1]}</a>)}
+  URLx = %r{(https?://[\w./&+?%-]+)}
+  URL  = ->(m){%(<a href="#{m[1]}">#{m[1]}</a>)}
 
   EMOJIx = /:(\w+):/
-  EMOJI  = lambda {|m| (_=EMOJIS[m[1]])? "&\#x#{_};" : m[0]}
+  EMOJI  = ->(m){(_=EMOJIS[m[1]])? "&#x#{_};" : m[0]}
 
   FOOTNOTEx = /\[\^(\d+)\](:)?/
   FOOTNOTE  = lambda do |m|
     if m[2]
-      %Q(<a id="fn:#{m[1]}" href="\#fnref:#{m[1]}">#{m[1]}:</a>)
+      %(<a id="fn:#{m[1]}" href="#fnref:#{m[1]}">#{m[1]}:</a>)
     else
-      %Q(<a id="fnref:#{m[1]}" href="\#fn:#{m[1]}"><sup>#{m[1]}</sup></a>)
+      %(<a id="fnref:#{m[1]}" href="#fn:#{m[1]}"><sup>#{m[1]}</sup></a>)
     end
   end
 
-  def Markdown.tag(entry, regx, m2string, &block)
-    if m = regx.match(entry)
+  def self.tag(entry, regx, m2string, &block)
+    if (m=regx.match entry)
       string = ''
       while m
         pre_match = (block ? block.call(m.pre_match) : m.pre_match)
@@ -99,7 +97,7 @@ class Markdown
       string << (block ? block.call(post_match) : post_match)
       return string
     end
-    return (block ? block.call(entry) : entry)
+    block ? block.call(entry) : entry
   end
 
   def inline(entry)
@@ -111,7 +109,7 @@ class Markdown
           entry = Markdown.tag(entry, Ix, I)
           entry = Markdown.tag(entry, Sx, S)
           entry = Markdown.tag(entry, Ux, U)
-          entry = Markdown.tag(entry, FOOTNOTEx, FOOTNOTE)
+          Markdown.tag(entry, FOOTNOTEx, FOOTNOTE)
         end
       end
     end
@@ -135,21 +133,18 @@ class Markdown
     level = md[1].length
     @html << "<ol#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
-    while md and level==md[1].length
+    while md && level==md[1].length
       @html << "  <li>#{inline(md[2])}</li>\n"
-      if md = (@line=@file.gets)&.match(ORDERED)
-        if level < md[1].length
-          ordered(md)
-          md = @line&.match(ORDERED)
-        end
-      end
+      next unless (md=(@line=@file.gets)&.match ORDERED) && level<md[1].length
+      ordered(md)
+      md = @line&.match(ORDERED)
     end
     @html << "</ol>\n"
     true
   end
 
   # Paragraph
-  PARAGRAPHS = /^[\[\(*`'"~_]?:?\w/
+  PARAGRAPHS = /^[\[(*`'"~_]?:?\w/
   PARSERS << :paragraphs
   def paragraphs
     md = PARAGRAPHS.match(@line) or return false
@@ -174,14 +169,11 @@ class Markdown
     level = md[1].length
     @html << "<ul#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
-    while md and level==md[1].length
+    while md && level==md[1].length
       @html << "  <li>#{inline(md[2])}</li>\n"
-      if md = (@line=@file.gets)&.match(UNORDERED)
-        if level < md[1].length
-          unordered(md)
-          md = @line&.match(UNORDERED)
-        end
-      end
+      next unless (md=(@line=@file.gets)&.match UNORDERED) && level<md[1].length
+      unordered(md)
+      md = @line&.match(UNORDERED)
     end
     @html << "</ul>\n"
     true
@@ -196,9 +188,9 @@ class Markdown
     @opt.delete(:attributes)
     while md
       x,t = md[1],md[2]
-      li = (x=='x')?
-        %q{<li style="list-style-type: '&#9745; '">} :
-        %q{<li style="list-style-type: '&#9744; '">}
+      li = x=='x' ?
+        %q(<li style="list-style-type: '&#9745; '">) :
+        %q(<li style="list-style-type: '&#9744; '">)
       @html << "  #{li}#{inline(t)}</li>\n"
       md = (@line=@file.gets)&.match BALLOTS
     end
@@ -230,13 +222,13 @@ class Markdown
   end
 
   # Headers
-  HEADERS = /^([#]{1,6}) (.*)$/
+  HEADERS = /^(\#{1,6}) (.*)$/
   PARSERS << :headers
   def headers
     md = HEADERS.match(@line) or return false
     i,header = md[1].length,md[2]
-    id = header.gsub(/\([^\(\)]*\)/,'').scan(/\w+/).join('+')
-    @html << %Q(<a id="#{id}">\n)
+    id = header.gsub(/\([^()]*\)/,'').scan(/\w+/).join('+')
+    @html << %(<a id="#{id}">\n)
     @html << "  <h#{i}#{@opt[:attributes]}>#{inline(header)}</h#{i}>\n"
     @html << "</a>\n"
     @opt.delete(:attributes)
@@ -252,15 +244,12 @@ class Markdown
     level = md[1].length
     @html << "<blockquote#{@opt[:attributes]}>\n"
     @opt.delete(:attributes)
-    while md and level==md[1].length
+    while md && level==md[1].length
       @html << inline(md[2])
       @html << "\n"
-      if md = (@line=@file.gets)&.match(BLOCKQS)
-        if level < md[1].length
-          blockqs(md)
-          md = @line&.match(BLOCKQS)
-        end
-      end
+      next unless (md=(@line=@file.gets)&.match BLOCKQS) && level<md[1].length
+      blockqs(md)
+      md = @line&.match(BLOCKQS)
     end
     @html << "</blockquote>\n"
     true
@@ -276,9 +265,7 @@ class Markdown
     @html << "<pre#{klass}#{@opt[:attributes]}><code>\n"
     @opt.delete(:attributes)
     code = ''
-    while @line=@file.gets and not CODES.match?(@line)
-      code << @line
-    end
+    code << @line while (@line=@file.gets) && !CODES.match?(@line)
     @html << (lang ? ROUGE.format(lang.new.lex(code)) : code)
     @html << "</code></pre>\n"
     @line = @file.gets if @line # then it's code close and thus need next @line.
@@ -289,11 +276,11 @@ class Markdown
   SCRIPT = /^<script/
   PARSERS << :script
   def script
-    md = SCRIPT.match(@line) or return false
+    SCRIPT.match(@line) or return false
     @html << @line
-    while @line=@file.gets
+    while (@line=@file.gets)
       @html << @line
-      break if %r(^</script>).match?(@line)
+      break if %r{^</script>}.match?(@line)
     end
     @line = @file.gets if @line
     true
@@ -384,13 +371,13 @@ class Markdown
     SPLITS.match? @line or return false
     case @line.chomp
     when '|:'
-      @html << %Q(<table><tr><td#{@opt[:attributes]}>\n)
+      @html << %(<table><tr><td#{@opt[:attributes]}>\n)
     when '|'
-      @html << %Q(</td><td#{@opt[:attributes]}>\n)
+      @html << %(</td><td#{@opt[:attributes]}>\n)
     when ':|:'
-      @html << %Q(</td></tr><tr><td#{@opt[:attributes]}>\n)
+      @html << %(</td></tr><tr><td#{@opt[:attributes]}>\n)
     when ':|'
-      @html << %Q(</td></tr></table>\n)
+      @html << %(</td></tr></table>\n)
     end
     @opt.delete(:attributes)
     @line = @file.gets
@@ -398,7 +385,7 @@ class Markdown
   end
 
   # Image
-  IMAGES = /^!\[([^\[\]]+)\]\(([^\(\)]+)\)$/
+  IMAGES = /^!\[([^\[\]]+)\]\(([^()]+)\)$/
   PARSERS << :images
   def images
     md = IMAGES.match(@line) or return false
@@ -406,18 +393,20 @@ class Markdown
     style = ' '
     case alt
     when /^:.*:$/
-      style = %Q( style="display: block; margin-left: auto; margin-right: auto;" )
+      style =
+      %( style="display: block; margin-left: auto; margin-right: auto;" )
     when /:$/
-      style = %Q( style="float:left;" )
+      style = %( style="float:left;" )
     when /^:/
-      style = %Q( style="float:right;" )
+      style = %( style="float:right;" )
     end
     if /(\d+)x(\d+)/.match alt
-      style << %Q(width="#{$1}" height="#{$2}" )
+      style << %(width="#{$1}" height="#{$2}" )
     end
-    @html << %Q(<a href="#{href}">\n) if href
-    @html << %Q(<img src="#{src}"#{style}alt="#{alt.strip}"#{@opt[:attributes]}>\n)
-    @html << %Q(</a>\n) if href
+    @html << %(<a href="#{href}">\n) if href
+    @html <<
+      %(<img src="#{src}"#{style}alt="#{alt.strip}"#{@opt[:attributes]}>\n)
+    @html << %(</a>\n) if href
     @opt.delete(:attributes)
     @line = @file.gets
     true
@@ -431,9 +420,9 @@ class Markdown
   def forms
     md = FORMS.match(@line) or return false
     fields,nl,submit = 0,false,nil
-    action = (_=/\(([^\(\)]*)\)!?$/.match(@line))? %Q( action="#{_[1]}") : nil
+    action = (_=/\(([^()]*)\)!?$/.match(@line))? %( action="#{_[1]}") : nil
     method = @line.match?(/!$/) ? ' method="post"' : nil
-    @html << %Q(<form#{action}#{method}#{@opt[:attributes]}>\n)
+    @html << %(<form#{action}#{method}#{@opt[:attributes]}>\n)
     @opt.delete(:attributes)
     while md
       @html << "  <br>\n" if nl
@@ -441,37 +430,38 @@ class Markdown
         field &&= field[0...-1]
         value &&= value[2...-1]
         if field
-          type = (pwd)? 'password' : 'text'
+          type = pwd ? 'password' : 'text'
           if value
             if (values = value.split('","')).length > 1
-              @html << %Q(#{field}:<select name="#{name}">\n)
+              @html << %(#{field}:<select name="#{name}">\n)
               values.each do |value|
                 fields += 1
-                @html << %Q(  <option value="#{value}">#{value}</option>\n)
+                @html << %(  <option value="#{value}">#{value}</option>\n)
               end
               @html << "</select>\n"
             else
               fields += 1
-              @html << %Q{  #{field}:<input type="#{type}" name="#{name}" value="#{value}">\n}
+              @html << %(  #{field}:<input type="#{type}" name="#{name}")
+              @html << %( value="#{value}">\n)
             end
           else
             fields += 1
-            @html << %Q{  #{field}:<input type="#{type}" name="#{name}">\n}
+            @html << %(  #{field}:<input type="#{type}" name="#{name}">\n)
           end
         elsif name=='submit'
           submit = value
         else
-          @html << %Q{  <input type="hidden" name="#{name}" value="#{value}">\n}
+          @html << %(  <input type="hidden" name="#{name}" value="#{value}">\n)
         end
       end
       md=(@line=@file.gets)&.match(FORMS) and nl=true
     end
-    if submit or not fields==1
+    if submit || fields!=1
       submit ||= 'Submit'
       @html << "  <br>\n" if nl
-      @html << %Q(  <input type="submit" value="#{submit}">\n)
+      @html << %(  <input type="submit" value="#{submit}">\n)
     end
-    @html << %Q(</form>\n)
+    @html << %(</form>\n)
     true
   end
 
