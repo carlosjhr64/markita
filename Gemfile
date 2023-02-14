@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+ruby '3.2.0'
+# Application
+gem 'help_parser'
+gem 'rouge'
+gem 'sinatra'
+gem 'thin'
+# Testing
+gem 'test-unit'
+gem 'colorize'

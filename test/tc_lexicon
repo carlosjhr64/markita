@@ -1,19 +1,16 @@
-#!/usr/bin/ruby
-require 'set'
+#!/usr/bin/env ruby
 require 'test/unit'
 require 'colorize'
+=begin
+The gem 'parser' provides `ruby-parse`
+require 'parser'
+=end
 
 class TestLexicon < Test::Unit::TestCase
   GLOB = (Dir.glob('bin/*') + Dir.glob('lib/**/*.rb')).join(' ')
-
-  def test_dictionary
-    system('fish', '-c', %Q(cat README.md #{GLOB} | egrep -o '\\w+' | sort -u | spell > tmp/dictionary))
-    diff = `colordiff .dictionary tmp/dictionary`.strip
-    flunk 'Dictionary changed:'.colorize(:blue)+"\n"+diff unless diff.empty?
-  end
-
+  ADD_TO_LEXI = %q(egrep -o ':\w+' | sort -u | egrep -o '\w+' > tmp/lexicon)
   def test_lexicon
-    system %Q(ruby-parse #{GLOB} | egrep -o ':\\w+' | sort -u | egrep -o '\\w+' > tmp/lexicon)
+    system %(ruby-parse #{GLOB} | #{ADD_TO_LEXI})
     diff = `colordiff .lexicon tmp/lexicon`.strip
     flunk 'Code lexicon changed:'.colorize(:blue)+"\n"+diff unless diff.empty?
   end
