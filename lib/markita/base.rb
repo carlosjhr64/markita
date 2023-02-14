@@ -4,7 +4,7 @@ class Base < Sinatra::Base
   set port: OPTIONS&.port || '8080'
   set sessions: true
 
-  def Base.run!
+  def self.run!
     puts "#{$0}-#{VERSION}"
     super do |server|
       if ['.cert.crt', '.pkey.pem'].all?{ File.exist? File.join(ROOT, _1)}
@@ -20,13 +20,13 @@ class Base < Sinatra::Base
 
   get PAGE_KEY do |key|
     filepath = File.join ROOT, key+'.md'
-    raise Sinatra::NotFound  unless File.exist? filepath
+    raise Sinatra::NotFound unless File.exist? filepath
     Markdown.new(key).filepath filepath
   end
 
   get SEND_FILE do |path|
-    pass unless params.length==1 and
-                filepath = File.join(ROOT, path) and
+    pass unless params.length==1 &&
+                (filepath=File.join ROOT, path) &&
                 File.exist?(filepath)
     send_file filepath
   end
@@ -36,7 +36,7 @@ class Base < Sinatra::Base
     if File.exist? filepath
       Markdown.new('index').filepath filepath
     else
-      redirect '/about.html'  unless OPTIONS&.no_about
+      redirect '/about.html' unless OPTIONS&.no_about
       raise Sinatra::NotFound
     end
   end
