@@ -10,19 +10,19 @@ module Markita
     require 'sinatra/base'
     require 'thin'
     # Local
-    require_relative 'markita/config.rb'
-    require_relative 'markita/html.rb'
-    require_relative 'markita/preprocess.rb'
-    require_relative 'markita/markdown.rb'
-    require_relative 'markita/base.rb'
+    require_relative 'markita/config'
+    require_relative 'markita/html'
+    require_relative 'markita/preprocess'
+    require_relative 'markita/markdown'
+    require_relative 'markita/base'
     # Plugs
-    require_relative 'markita/plug/about.rb'      unless OPTIONS&.no_about
-    require_relative 'markita/plug/favicon.rb'    unless OPTIONS&.no_favicon
-    require_relative 'markita/plug/highlight.rb'  unless OPTIONS&.no_highlight
-    require_relative 'markita/plug/login.rb'      unless OPTIONS&.no_login
-    require_relative 'markita/plug/navigation.rb' unless OPTIONS&.no_navigation
-    require_relative 'markita/plug/plugs.rb'      unless OPTIONS&.no_plugs
-    require_relative 'markita/plug/readme.rb'     unless OPTIONS&.no_readme
+    require_relative 'markita/plug/about'      unless OPTIONS&.no_about
+    require_relative 'markita/plug/favicon'    unless OPTIONS&.no_favicon
+    require_relative 'markita/plug/highlight'  unless OPTIONS&.no_highlight
+    require_relative 'markita/plug/login'      unless OPTIONS&.no_login
+    require_relative 'markita/plug/navigation' unless OPTIONS&.no_navigation
+    require_relative 'markita/plug/plugs'      unless OPTIONS&.no_plugs
+    require_relative 'markita/plug/readme'     unless OPTIONS&.no_readme
     Base.run!
   end
 end
