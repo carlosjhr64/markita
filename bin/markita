@@ -2,36 +2,36 @@
 require 'help_parser'
 require 'markita'
 
-OPTIONS = HelpParser[Markita::VERSION, <<HELP]
-Usage:
-  markita [:options+]
-Options:
-  --root=DIRECTORY \t ~/vimwiki
-  --bind=BIND      \t 0.0.0.0
-  --port=PORT      \t 8080
-  --theme=THEME    \t base16.light
-  --allowed=IPS
-  --no_about
-  --no_favicon
-  --no_highlight
-  --no_login
-  --no_navigation
-  --no_plugs
-  --no_readme
-Exclusive:
-  no_login allowed
-Types:
-  DIRECTORY /^~?[\\/\\w\\.]+$/
-  BIND      /^[\\w\\.]+$/
-  PORT      /^\\d+$/
-  IPS       /^[\\d\\.\\,]+$/
-  THEME     /^[\\w\\.]+$/
-# NOTE:
-# Assuming site is in ~/vimwiki,
-# when ~/vimwiki/.valid-id is set with a sha256sum of a password,
-# that password will restrict the site.
-# Allowed IPs bypass the need for site password
-# when the site is accessed from those locations.
+OPTIONS = HelpParser[Markita::VERSION, <<~HELP]
+  Usage:
+    markita [:options+]
+  Options:
+    --root=DIRECTORY \t ~/vimwiki
+    --bind=BIND      \t 0.0.0.0
+    --port=PORT      \t 8080
+    --theme=THEME    \t base16.light
+    --allowed=IPS
+    --no_about
+    --no_favicon
+    --no_highlight
+    --no_login
+    --no_navigation
+    --no_plugs
+    --no_readme
+  Exclusive:
+    no_login allowed
+  Types:
+    DIRECTORY /^~?[\\/\\w\\.]+$/
+    BIND      /^[\\w\\.]+$/
+    PORT      /^\\d+$/
+    IPS       /^[\\d\\.\\,]+$/
+    THEME     /^[\\w\\.]+$/
+  # NOTE:
+  # Assuming site is in ~/vimwiki,
+  # when ~/vimwiki/.valid-id is set with a sha256sum of a password,
+  # that password will restrict the site.
+  # Allowed IPs bypass the need for site password
+  # when the site is accessed from those locations.
 HELP
 begin
   Markita.run!
@@ -41,8 +41,8 @@ rescue LoadError
 rescue RuntimeError
   HelpParser::REDTTY["#{$!.class}: #{$!.message}"]
   exit 65
-rescue Exception
-  $stderr.puts $!.backtrace
+rescue
+  warn $!.backtrace
   HelpParser::REDTTY["#{$!.class}: #{$!.message}"]
   exit 70
 end
