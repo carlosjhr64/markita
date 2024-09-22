@@ -1,6 +1,6 @@
 # Markita
 
-* [VERSION 4.1.230214](https://github.com/carlosjhr64/markita/releases)
+* [VERSION 5.0.230214](https://github.com/carlosjhr64/markita/releases)
 * [github](https://www.github.com/carlosjhr64/markita)
 * [rubygems](https://rubygems.org/gems/markita)
 
@@ -351,7 +351,7 @@ $ GET https://raw.githubusercontent.com/carlosjhr64/markita/main/plug/todotxt.rb
 ```
 ## LICENSE
 
-Copyright (c) 2023 CarlosJHR64
+Copyright (c) 2024 CarlosJHR64
 
 Permission is hereby granted, free of charge,
 to any person obtaining a copy of this software and

@@ -3,18 +3,20 @@ class Base < Sinatra::Base
   set bind: OPTIONS&.bind || '0.0.0.0'
   set port: OPTIONS&.port || '8080'
   set sessions: true
+  set server: 'webrick'
+  if [SSL_CERTIFICATE, SSL_PRIVATE_KEY].all?{File.exist?_1}
+    set server_settings: {
+      SSLEnable: true,
+      SSLVerifyClient: OpenSSL::SSL::VERIFY_NONE,
+      SSLCertificate: OpenSSL::X509::Certificate.new(File.read SSL_CERTIFICATE),
+      SSLPrivateKey:  OpenSSL::PKey::RSA.new(File.read SSL_PRIVATE_KEY)
+    }
+  end
 
   def self.run!
-    puts "#{$0}-#{VERSION}"
     super do |server|
-      if ['.cert.crt', '.pkey.pem'].all?{ File.exist? File.join(ROOT, _1)}
-        server.ssl = true
-        server.ssl_options = {
-          :cert_chain_file  => File.join(ROOT, '.cert.crt'),
-          :private_key_file => File.join(ROOT, '.pkey.pem'),
-          :verify_peer      => false,
-        }
-      end
+      puts "#{$0}-#{VERSION}"
+      puts "Sinatra-#{Sinatra::VERSION} using #{server.class}"
     end
   end
 

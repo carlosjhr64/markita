@@ -1,14 +1,15 @@
 module Markita
-  VERSION = '4.1.230214'
+  VERSION = '5.0.240922'
 
   def self.run!
     # Standard libraries
     require 'digest'
     require 'cgi'
+    require 'openssl'
     # Gems
     require 'rouge'
+    require 'webrick/https'
     require 'sinatra/base'
-    require 'thin'
     # Local
     require_relative 'markita/config'
     require_relative 'markita/html'
