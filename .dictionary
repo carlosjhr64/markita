@@ -44,6 +44,9 @@ regx
 rubygems
 sitepasswordhere
 src
+sslcertificate
+sslprivatekey
+sslverifyclient
 todotxt
 tsv
 upcase

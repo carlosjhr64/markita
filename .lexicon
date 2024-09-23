@@ -27,7 +27,7 @@ BLOCKQS
 Bx
 call
 cell
-cert_chain_file
+Certificate
 CGI
 chomp
 class
@@ -164,6 +164,7 @@ NotFound
 NOT_FOUND
 now
 open
+OpenSSL
 options
 OPTIONS
 ordered
@@ -179,6 +180,7 @@ pass
 path
 PATH
 path_info
+PKey
 port
 post
 post_match
@@ -186,7 +188,6 @@ preforms
 PREFORMS
 pre_match
 Preprocess
-private_key_file
 puts
 pwd
 raise
@@ -206,7 +207,8 @@ Rouge
 ROUGE
 route
 routes
-Ruby32
+RSA
+Ruby33
 run
 RuntimeError
 S
@@ -217,6 +219,7 @@ SCRIPT
 send_file
 SEND_FILE
 server
+server_settings
 session
 sessions
 set
@@ -226,8 +229,13 @@ split
 splits
 SPLITS
 src
-ssl
-ssl_options
+SSL
+SSLCertificate
+SSL_CERTIFICATE
+SSLEnable
+SSLPrivateKey
+SSL_PRIVATE_KEY
+SSLVerifyClient
 start
 START_TIME
 start_with
@@ -259,7 +267,8 @@ URLx
 Ux
 value
 values
-verify_peer
+VERIFY_NONE
 VERSION
 warn
 x
+X509
