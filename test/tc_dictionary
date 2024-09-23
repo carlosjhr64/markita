@@ -6,7 +6,7 @@ require 'zlib'
 class TestDictionary < Test::Unit::TestCase
   GLOB  = (Dir.glob('bin/*') + Dir.glob('lib/**/*.rb')).join(' ')
   WORDS = "egrep -i -o '[a-z]+' | tr '[:upper:]' '[:lower:]' | sort -u"
-  VALID = Zlib::GzipReader.open('test/cons.gz').readlines.map(&:strip).to_set
+  VALID = Zlib::GzipReader.open('test/cons.gz').readlines.to_set(&:strip)
 
   def test_dictionary
     unrecognized = `cat README.md #{GLOB}| #{WORDS}`.lines.map(&:strip)

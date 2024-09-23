@@ -23,7 +23,7 @@ def step_thru_script(fh=$stdin)
     end
     next unless is_ruby
     # Build up script
-    script << line  unless line.match? /^\s*#/
+    script << line unless line.match? /^\s*#/
     # Ready to do something?
     case line
     when DECLARATION
@@ -41,7 +41,7 @@ def step_thru_script(fh=$stdin)
     # OK, do it!
     begin
       actual = BINDING.eval(script)
-    rescue
+    rescue StandardError
       actual = $!.message
     ensure
       script = ''

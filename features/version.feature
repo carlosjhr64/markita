@@ -2,7 +2,7 @@
 Feature: Testing markita version
 
   Background:
-    * Given command "markita"
+    * Given command "./bin/markita"
 
   Scenario: --version
     * Given option "--version"

@@ -2,7 +2,7 @@
 Feature: Testing markita help
 
   Background:
-    * Given command "markita"
+    * Given command "./bin/markita"
 
   Scenario: --help
     * Given option "--help"
