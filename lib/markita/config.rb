@@ -20,6 +20,5 @@ module Markita
   PAGE_KEY  = %r{/(\w[\w/-]*\w)}
   SEND_FILE = %r{/(\w[\w/-]*\w\.\w+)}
 
-
   START_TIME = Time.now
 end
