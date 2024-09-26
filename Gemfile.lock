@@ -4,7 +4,7 @@ GEM
     ast (2.4.2)
     base64 (0.2.0)
     colorize (1.1.0)
-    help_parser (8.2.230210)
+    help_parser (9.0.240926)
     json (2.7.2)
     language_server-protocol (3.17.0.3)
     mustermann (3.0.3)
@@ -60,7 +60,7 @@ GEM
       power_assert
     tilt (2.4.0)
     unicode-display_width (2.6.0)
-    webrick (1.8.1)
+    webrick (1.8.2)
 
 PLATFORMS
   aarch64-linux
@@ -84,4 +84,4 @@ RUBY VERSION
    ruby 3.3.5p100
 
 BUNDLED WITH
-   2.5.19
+   2.5.20
