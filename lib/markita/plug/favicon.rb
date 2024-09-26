@@ -1,7 +1,7 @@
 module Markita
 class Base
   HEADER_LINKS <<
-    %(  <link rel="icon" type="image/x-icon" href="/favicon.ico">\n)
+    %(\n<link rel="icon" type="image/x-icon" href="/favicon.ico">)
 
   module Favicon
     ICO = File.read PATH['favicon.ico']

@@ -1,7 +1,8 @@
 module Markita
 class Base
   HEADER_LINKS <<
-    %(  <link rel="stylesheet" href="/highlight.css" type="text/css">\n)
+    %(\n<link rel="stylesheet" href="/highlight.css" type="text/css">)
+
   module Highlight
     theme = OPTIONS.theme || 'base16.light'
     CSS = Rouge::Theme.find(theme)&.render(scope: '.highlight')

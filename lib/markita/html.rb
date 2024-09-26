@@ -1,12 +1,12 @@
 module Markita
 module HTML
-  def self.header(key)
+  def self.header(title)
     <<~HEADER
       <!DOCTYPE html>
       <html>
       <head>
-        <title>#{key}</title>
-      #{HEADER_LINKS}</head>
+      <title>#{title}</title>#{HEADER_LINKS}
+      </head>
       <body>
     HEADER
   end
