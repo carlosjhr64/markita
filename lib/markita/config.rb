@@ -1,10 +1,8 @@
 module Markita
-  OPTIONS ||= nil
-
   HEADER_LINKS = ''
   NAVIGATION = ''
 
-  ROOT = File.expand_path OPTIONS&.root || '~/vimwiki'
+  ROOT = File.expand_path OPTIONS.root || '~/vimwiki'
   raise 'Missing site root directory: '+ROOT unless File.directory? ROOT
   SSL_CERTIFICATE = File.join(ROOT, '.cert.crt')
   SSL_PRIVATE_KEY = File.join(ROOT, '.pkey.pem')

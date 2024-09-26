@@ -4,7 +4,7 @@ class Base
     ID = File.exist?(_=File.join(ROOT, '.valid-id')) ?
          File.read(_).strip :
          nil
-    IPS = (_=OPTIONS&.allowed)? _.split(',') : []
+    IPS = (_=OPTIONS.allowed)? _.split(',') : []
     if !IPS.empty? && !ID
       raise 'Allowed ips without site password does not make sense.'
     end

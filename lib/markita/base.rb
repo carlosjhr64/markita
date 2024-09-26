@@ -1,7 +1,7 @@
 module Markita
 class Base < Sinatra::Base
-  set bind: OPTIONS&.bind || '0.0.0.0'
-  set port: OPTIONS&.port || '8080'
+  set bind: OPTIONS.bind || '0.0.0.0'
+  set port: OPTIONS.port || '8080'
   set sessions: true
   set server: 'webrick'
   if [SSL_CERTIFICATE, SSL_PRIVATE_KEY].all?{File.exist?_1}
@@ -38,7 +38,7 @@ class Base < Sinatra::Base
     if File.exist? filepath
       Markdown.new('index').filepath filepath
     else
-      redirect '/about.html' unless OPTIONS&.no_about
+      redirect '/about.html' unless OPTIONS.no_about
       raise Sinatra::NotFound
     end
   end
