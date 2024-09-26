@@ -1,16 +1,24 @@
 module Markita
   HEADER_LINKS = ''
-  NAVIGATION = ''
+  NAVIGATION   = ''
+
+  BIND   = '0.0.0.0'
+  PORT   = '8080'
+  SERVER = 'webrick'
 
   ROOT = File.expand_path OPTIONS.root || '~/vimwiki'
   raise 'Missing site root directory: '+ROOT unless File.directory? ROOT
+
   SSL_CERTIFICATE = File.join(ROOT, '.cert.crt')
   SSL_PRIVATE_KEY = File.join(ROOT, '.pkey.pem')
-  APPDIR = File.dirname __dir__, 2
+
+  APPDIR  = File.dirname __dir__, 2
   APPDATA = File.join APPDIR, 'data'
+
   PATH = lambda do |basename|
     [ROOT, APPDATA].map{ File.join _1, basename}.detect{ File.exist? _1}
   end
+
   NOT_FOUND = File.read PATH['not_found.html']
 
   EMOJIS = Hash[*File.read(PATH['emojis.tsv']).split(/\s+/)]

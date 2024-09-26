@@ -1,9 +1,9 @@
 module Markita
 class Base < Sinatra::Base
-  set bind: OPTIONS.bind || '0.0.0.0'
-  set port: OPTIONS.port || '8080'
   set sessions: true
-  set server: 'webrick'
+  set bind: OPTIONS.bind || BIND
+  set port: OPTIONS.port || PORT
+  set server: SERVER
   if [SSL_CERTIFICATE, SSL_PRIVATE_KEY].all?{File.exist?_1}
     set server_settings: {
       SSLEnable: true,

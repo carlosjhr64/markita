@@ -21,6 +21,7 @@ Base
 basename
 before
 bind
+BIND
 block
 blockqs
 BLOCKQS
@@ -182,6 +183,7 @@ PATH
 path_info
 PKey
 port
+PORT
 post
 post_match
 preforms
@@ -219,6 +221,7 @@ SCRIPT
 send_file
 SEND_FILE
 server
+SERVER
 server_settings
 session
 sessions
