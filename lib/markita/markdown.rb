@@ -494,7 +494,7 @@ class Markdown
   end
 
   # Attributes
-  ATTRIBUTES = /^\{:( .*)\}/
+  ATTRIBUTES = /^\{:( [^\{\}]+)\}/
   PARSERS << :attributes
   def attributes
     md = ATTRIBUTES.match(@line) or return false
