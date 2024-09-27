@@ -111,6 +111,7 @@ ID
 images
 IMAGES
 include
+INDEX
 init
 initialize
 inline
@@ -141,6 +142,7 @@ Markdown
 Markita
 match
 md
+MDX
 message
 metadata
 METADATAS
@@ -222,6 +224,7 @@ send_file
 SEND_FILE
 server
 SERVER
+SERVER_CONFIG
 server_settings
 SERVER_SETTINGS
 session
