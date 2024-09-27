@@ -6,6 +6,9 @@ module Markita
   PORT   = '8080'
   SERVER = 'webrick'
 
+  MDX = '.md'
+  INDEX = 'index'
+
   ROOT = File.expand_path OPTIONS.root || '~/vimwiki'
   raise 'Missing site root directory: '+ROOT unless File.directory? ROOT
 
@@ -17,6 +20,11 @@ module Markita
       SSLVerifyClient: OpenSSL::SSL::VERIFY_NONE,
       SSLCertificate: OpenSSL::X509::Certificate.new(File.read SSL_CERTIFICATE),
       SSLPrivateKey:  OpenSSL::PKey::RSA.new(File.read SSL_PRIVATE_KEY) } : nil
+
+  SERVER_CONFIG = lambda do |server|
+    puts "#{$0}-#{VERSION}"
+    puts "Sinatra-#{Sinatra::VERSION} using #{server.class}"
+  end
 
   APPDIR  = File.dirname __dir__, 2
   APPDATA = File.join APPDIR, 'data'

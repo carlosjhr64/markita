@@ -7,14 +7,11 @@ class Base < Sinatra::Base
   set server_settings: SERVER_SETTINGS if SERVER_SETTINGS
 
   def self.run!
-    super do |server|
-      puts "#{$0}-#{VERSION}"
-      puts "Sinatra-#{Sinatra::VERSION} using #{server.class}"
-    end
+    super {SERVER_CONFIG[_1]}
   end
 
   get PAGE_KEY do |key|
-    filepath = File.join ROOT, key+'.md'
+    filepath = File.join ROOT, key+MDX
     raise Sinatra::NotFound unless File.exist? filepath
     Markdown.new(key).filepath filepath
   end
@@ -27,9 +24,9 @@ class Base < Sinatra::Base
   end
 
   get '/' do
-    filepath = File.join ROOT, 'index.md'
+    filepath = File.join ROOT, INDEX+MDX
     if File.exist? filepath
-      Markdown.new('index').filepath filepath
+      Markdown.new(INDEX).filepath filepath
     else
       redirect '/about.html' unless OPTIONS.no_about
       raise Sinatra::NotFound
