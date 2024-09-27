@@ -41,7 +41,6 @@ CSS
 default
 definitions
 DEFINITIONS
-delete
 detect
 Digest
 __dir__
@@ -192,6 +191,7 @@ preforms
 PREFORMS
 pre_match
 Preprocess
+push
 puts
 pwd
 raise
@@ -231,6 +231,7 @@ session
 sessions
 set
 SHA256
+shift
 Sinatra
 split
 splits
