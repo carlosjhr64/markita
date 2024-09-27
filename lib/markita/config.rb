@@ -12,6 +12,13 @@ module Markita
   SSL_CERTIFICATE = File.join(ROOT, '.cert.crt')
   SSL_PRIVATE_KEY = File.join(ROOT, '.pkey.pem')
 
+  SERVER_SETTINGS = [SSL_CERTIFICATE, SSL_PRIVATE_KEY].all?{File.exist?_1} ? {
+      SSLEnable: true,
+      SSLVerifyClient: OpenSSL::SSL::VERIFY_NONE,
+      SSLCertificate: OpenSSL::X509::Certificate.new(File.read SSL_CERTIFICATE),
+      SSLPrivateKey:  OpenSSL::PKey::RSA.new(File.read SSL_PRIVATE_KEY)
+    } : nil
+
   APPDIR  = File.dirname __dir__, 2
   APPDATA = File.join APPDIR, 'data'
 

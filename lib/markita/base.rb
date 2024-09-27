@@ -4,14 +4,7 @@ class Base < Sinatra::Base
   set bind: OPTIONS.bind || BIND
   set port: OPTIONS.port || PORT
   set server: SERVER
-  if [SSL_CERTIFICATE, SSL_PRIVATE_KEY].all?{File.exist?_1}
-    set server_settings: {
-      SSLEnable: true,
-      SSLVerifyClient: OpenSSL::SSL::VERIFY_NONE,
-      SSLCertificate: OpenSSL::X509::Certificate.new(File.read SSL_CERTIFICATE),
-      SSLPrivateKey:  OpenSSL::PKey::RSA.new(File.read SSL_PRIVATE_KEY)
-    }
-  end
+  set server_settings: SERVER_SETTINGS if SERVER_SETTINGS
 
   def self.run!
     super do |server|

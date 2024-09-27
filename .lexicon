@@ -223,6 +223,7 @@ SEND_FILE
 server
 SERVER
 server_settings
+SERVER_SETTINGS
 session
 sessions
 set
