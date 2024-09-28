@@ -120,41 +120,23 @@ Note: on upcased keys, value is CGI escaped.
 ### Split table
 
 <table><tr><td>
-<p>
-Top left
-</p>
+<p>Top left</p>
 </td><td>
-<p>
-Top center
-</p>
+<p>Top center</p>
 </td><td>
-<p>
-Top right
-</p>
+<p>Top right</p>
 </td></tr><tr><td>
-<p>
-Middle left
-</p>
+<p>Middle left</p>
 </td><td>
-<p>
-Middle center
-</p>
+<p>Middle center</p>
 </td><td>
-<p>
-Middle left
-</p>
+<p>Middle left</p>
 </td></tr><tr><td>
-<p>
-Bottom left
-</p>
+<p>Bottom left</p>
 </td><td>
-<p>
-Bottom center
-</p>
+<p>Bottom center</p>
 </td><td>
-<p>
-Bottom right
-</p>
+<p>Bottom right</p>
 </td></tr></table>
 
 Markdown:
@@ -181,18 +163,15 @@ Markdown:
 
 ### Inline links, code, bold, italic, strikes, and underline
 
-<p>
-The <b>bold</b> and <i>italics</i> <s>strikes</s> at <u>underlined</u>, while a
-<a href="#Markita">link to #Markita</a>
-sees the <code>~ code ~ "a*b*c"</code> to
-<a href="https://github.com">https://github.com</a>.
-</p>
+The <b>bold</b> and <i>italics</i> <s>strikes</s> at <u>underlined</u>,
+while a [link to #Markita](#Markita)
+sees the `~ code ~ "a*b*c"` to https://github.com.
 
 Markdown:
 
     The *bold* and "italics" ~strikes~ at _underlined_,
     while a [link to #Markita](#Markita)
-    sees the `~ code ~ "a*b*c"` to [https://github.com].
+    sees the `~ code ~ "a*b*c"` to https://github.com.
 
 ### Lists: ordered, un-ordered, definitions
 
