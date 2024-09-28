@@ -235,20 +235,6 @@ class Markdown
     true
   end
 
-  # Script
-  SCRIPT = /^<script/
-  PARSERS << :script
-  def script
-    SCRIPT.match(@line) or return false
-    @html << @line
-    while (@line=@file.gets)
-      @html << @line
-      break if %r{^</script>}.match?(@line)
-    end
-    @line = @file.gets if @line
-    true
-  end
-
   # Preform
   PREFORMS = /^ {4}(.*)$/
   PARSERS << :preforms
@@ -419,6 +405,30 @@ class Markdown
     md = ATTRIBUTES.match(@line) or return false
     @attributes.push md[1]
     @line = md.post_match
+    true
+  end
+
+  # Script
+  SCRIPT = /^<script/
+  PARSERS << :script
+  def script
+    SCRIPT.match(@line) or return false
+    @html << @line
+    while (@line=@file.gets)
+      @html << @line
+      break if %r{^</script>}.match?(@line)
+    end
+    @line = @file.gets if @line
+    true
+  end
+
+  # Html
+  HTML_MARKUP = /^ {0,3}<.*>$/
+  PARSERS << :html_markup
+  def html_markup
+    HTML_MARKUP.match(@line) or return false
+    @html << @line
+    @line = @file.gets
     true
   end
 

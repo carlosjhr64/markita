@@ -100,7 +100,10 @@ Highlight
 href
 hrs
 HRS
+html
 HTML
+html_markup
+HTML_MARKUP
 i
 I
 ICO
@@ -172,8 +175,6 @@ options
 OPTIONS
 page
 PAGE_KEY
-paragraphs
-PARAGRAPHS
 params
 parse
 PARSERS
@@ -246,7 +247,6 @@ SSL_PRIVATE_KEY
 SSLVerifyClient
 start
 START_TIME
-start_with
 string
 String
 StringIO
