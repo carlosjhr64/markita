@@ -225,23 +225,6 @@ class Markdown
     true
   end
 
-  # Paragraph
-  PARAGRAPHS = /^[\[(*`'"~_]?:?\w/
-  PARSERS << :paragraphs
-  def paragraphs
-    md = PARAGRAPHS.match(@line) or return false
-    @html << "<p#{@attributes.shift}>\n"
-    while md
-      @html << inline(@line)
-      while (@line=@file.gets)&.start_with?('<')
-        @html << @line # Exceptional HTML injection into the paragraph
-      end
-      md = @line&.match PARAGRAPHS
-    end
-    @html << "</p>\n"
-    true
-  end
-
   # Script
   SCRIPT = /^<script/
   PARSERS << :script
@@ -304,7 +287,7 @@ class Markdown
   def tables
     TABLES.match? @line or return false
     @html << "<table#{@attributes.shift}>\n"
-    @html << '<thead><tr><th>'
+    @html << "<thead#{@attributes.shift}><tr><th>"
     @html << @line[1...-1].split('|').map{inline(_1.strip)}.join('</th><th>')
     @html << "</th></tr></thead>\n"
     align = []
@@ -347,6 +330,23 @@ class Markdown
       @html << %(</td></tr></table>\n)
     end
     @line = @file.gets
+    true
+  end
+
+  # Paragraph
+  PARAGRAPHS = /^[\[(*`'"~_]?:?\w/
+  PARSERS << :paragraphs
+  def paragraphs
+    md = PARAGRAPHS.match(@line) or return false
+    @html << "<p#{@attributes.shift}>\n"
+    while md
+      @html << inline(@line)
+      while (@line=@file.gets)&.start_with?('<')
+        @html << @line # Exceptional HTML injection into the paragraph
+      end
+      md = @line&.match PARAGRAPHS
+    end
+    @html << "</p>\n"
     true
   end
 
