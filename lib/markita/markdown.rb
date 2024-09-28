@@ -22,11 +22,6 @@ class Markdown
     @line = nil
   end
 
-  def default
-    @html << @line
-    @line = @file.gets
-  end
-
   def init(fh)
     @file,@html = Preprocess.new(fh),''
   end
@@ -36,6 +31,21 @@ class Markdown
     start
     PARSERS.detect{method(_1).call} or default while @line
     finish
+  end
+
+  def default
+    # Defaults to paragraph
+    # Let html take the original @html object and set @html to ''
+    html,@html = @html,''
+    html << "<p#{@attributes.shift}>\n"
+    loop do
+      html << inline(@line)
+      break if (@line=@file.gets).nil? || PARSERS.detect{method(_1).call}
+    end
+    html << "</p>\n"
+    html << @html
+    # Give back the original object to @html
+    @html = html
   end
 
   def markdown(string)
@@ -461,23 +471,6 @@ class Markdown
       @html << %(  <input type="submit" value="#{submit}">\n)
     end
     @html << %(</form>\n)
-    true
-  end
-
-  # Paragraph
-  PARAGRAPHS = /^[\[(*`'"~_]?:?\w/
-  PARSERS << :paragraphs
-  def paragraphs
-    md = PARAGRAPHS.match(@line) or return false
-    @html << "<p#{@attributes.shift}>\n"
-    while md
-      @html << inline(@line)
-      while (@line=@file.gets)&.start_with?('<')
-        @html << @line # Exceptional HTML injection into the paragraph
-      end
-      md = @line&.match PARAGRAPHS
-    end
-    @html << "</p>\n"
     true
   end
 end
