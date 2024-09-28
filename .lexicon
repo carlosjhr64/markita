@@ -15,8 +15,6 @@ ATTRIBUTES
 Ax
 B
 backtrace
-ballots
-BALLOTS
 Base
 basename
 before
@@ -25,6 +23,7 @@ BIND
 block
 blockqs
 BLOCKQS
+bullet
 Bx
 call
 cell
@@ -129,10 +128,12 @@ length
 level
 lex
 Lexer
-li
 line
+list
+LIST
 LoadError
 Login
+loop
 m
 m2string
 map
@@ -169,8 +170,6 @@ open
 OpenSSL
 options
 OPTIONS
-ordered
-ORDERED
 page
 PAGE_KEY
 paragraphs
@@ -233,6 +232,7 @@ set
 SHA256
 shift
 Sinatra
+spaces
 split
 splits
 SPLITS
@@ -255,7 +255,6 @@ style
 sub
 submit
 Sx
-t
 tables
 TABLES
 tag
@@ -267,8 +266,6 @@ title
 to_s
 type
 U
-unordered
-UNORDERED
 upcase
 URL
 URLx
@@ -278,5 +275,4 @@ values
 VERIFY_NONE
 VERSION
 warn
-x
 X509

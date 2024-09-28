@@ -125,37 +125,33 @@ class Markdown
     true
   end
 
-  # Unordered list
-  UNORDERED = /^( {0,3})[*] (\S.*)$/
-  PARSERS << :unordered
-  def unordered(md=nil)
-    md ||= UNORDERED.match(@line) or return false
-    level = md[1].length
-    @html << "<ul#{@attributes.shift}>\n"
-    while md && level==md[1].length
-      @html << "  <li>#{inline(md[2])}</li>\n"
-      next unless (md=(@line=@file.gets)&.match UNORDERED) && level<md[1].length
-      unordered(md)
-      md = @line&.match(UNORDERED)
+  # List
+  LIST = /^(?<spaces> {0,3})(?<bullet>[*]|(\d+\.)|(- \[( |x)\])) (?<text>\S.*)$/
+  PARSERS << :list
+  def list(md=nil)
+    md ||= LIST.match(@line) or return false
+    level = md[:spaces].length
+    list = md[:bullet][0]=~/\d/ ? 'ol' : 'ul'
+    @html << "<#{list}#{@attributes.shift}>\n"
+    loop do
+      style = case md[:bullet][3]
+              when ' '
+                %q( style="list-style-type: '&#9744; '")
+              when 'x'
+                %q( style="list-style-type: '&#9745; '")
+              else
+                ''
+              end
+      @html << "  <li#{style}>#{inline(md[:text])}</li>\n"
+      if (md=(@line=@file.gets)&.match LIST) && level<md[:spaces].length
+        list(md)
+        md = @line&.match(LIST)
+      end
+      break unless md &&
+                   (level == md[:spaces].length) &&
+                   (list == (md[:bullet][0]=~/\d/ ? 'ol' : 'ul'))
     end
-    @html << "</ul>\n"
-    true
-  end
-
-  # Ordered list
-  ORDERED = /^( {0,3})\d+\. (\S.*)$/
-  PARSERS << :ordered
-  def ordered(md=nil)
-    md ||= ORDERED.match(@line) or return false
-    level = md[1].length
-    @html << "<ol#{@attributes.shift}>\n"
-    while md && level==md[1].length
-      @html << "  <li>#{inline(md[2])}</li>\n"
-      next unless (md=(@line=@file.gets)&.match ORDERED) && level<md[1].length
-      ordered(md)
-      md = @line&.match(ORDERED)
-    end
-    @html << "</ol>\n"
+    @html << "</#{list}>\n"
     true
   end
 
@@ -173,24 +169,6 @@ class Markdown
       md = @line&.match PARAGRAPHS
     end
     @html << "</p>\n"
-    true
-  end
-
-  # Ballot box
-  BALLOTS = /^- \[(x| )\] (.*)$/
-  PARSERS << :ballots
-  def ballots
-    md = BALLOTS.match(@line) or return false
-    @html << "<ul#{@attributes.shift}>\n"
-    while md
-      x,t = md[1],md[2]
-      li = x=='x' ?
-        %q(<li style="list-style-type: '&#9745; '">) :
-        %q(<li style="list-style-type: '&#9744; '">)
-      @html << "  #{li}#{inline(t)}</li>\n"
-      md = (@line=@file.gets)&.match BALLOTS
-    end
-    @html << "</ul>\n"
     true
   end
 
