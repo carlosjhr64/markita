@@ -333,23 +333,6 @@ class Markdown
     true
   end
 
-  # Paragraph
-  PARAGRAPHS = /^[\[(*`'"~_]?:?\w/
-  PARSERS << :paragraphs
-  def paragraphs
-    md = PARAGRAPHS.match(@line) or return false
-    @html << "<p#{@attributes.shift}>\n"
-    while md
-      @html << inline(@line)
-      while (@line=@file.gets)&.start_with?('<')
-        @html << @line # Exceptional HTML injection into the paragraph
-      end
-      md = @line&.match PARAGRAPHS
-    end
-    @html << "</p>\n"
-    true
-  end
-
   # Image
   IMAGES = /^!\[([^\[\]]+)\]\(([^()]+)\)$/
   PARSERS << :images
@@ -478,6 +461,23 @@ class Markdown
     md = ATTRIBUTES.match(@line) or return false
     @attributes.push md[1]
     @line = md.post_match
+    true
+  end
+
+  # Paragraph
+  PARAGRAPHS = /^[\[(*`'"~_]?:?\w/
+  PARSERS << :paragraphs
+  def paragraphs
+    md = PARAGRAPHS.match(@line) or return false
+    @html << "<p#{@attributes.shift}>\n"
+    while md
+      @html << inline(@line)
+      while (@line=@file.gets)&.start_with?('<')
+        @html << @line # Exceptional HTML injection into the paragraph
+      end
+      md = @line&.match PARAGRAPHS
+    end
+    @html << "</p>\n"
     true
   end
 end
