@@ -360,58 +360,6 @@ class Markdown
     true
   end
 
-  # Forms
-  FIELD = '(\w+:)?\[(\*)?(\w+)(=("[^"]+")(,"[^"]+")*)?\]'
-  FIELDS = Regexp.new FIELD
-  FORMS = Regexp.new "^!( #{FIELD})+"
-  PARSERS << :forms
-  def forms
-    md = FORMS.match(@line) or return false
-    fields,nl,submit = 0,false,nil
-    action = (_=/\(([^()]*)\)!?$/.match(@line))? %( action="#{_[1]}") : nil
-    method = @line.match?(/!$/) ? ' method="post"' : nil
-    @html << %(<form#{action}#{method}#{@attributes.shift}>\n)
-    while md
-      @html << "  <br>\n" if nl
-      @line.scan(FIELDS).each do |field, pwd, name, value|
-        field &&= field[0...-1]
-        value &&= value[2...-1]
-        if field
-          type = pwd ? 'password' : 'text'
-          if value
-            if (values = value.split('","')).length > 1
-              @html << %(#{field}:<select name="#{name}">\n)
-              values.each do |value|
-                fields += 1
-                @html << %(  <option value="#{value}">#{value}</option>\n)
-              end
-              @html << "</select>\n"
-            else
-              fields += 1
-              @html << %(  #{field}:<input type="#{type}" name="#{name}")
-              @html << %( value="#{value}">\n)
-            end
-          else
-            fields += 1
-            @html << %(  #{field}:<input type="#{type}" name="#{name}">\n)
-          end
-        elsif name=='submit'
-          submit = value
-        else
-          @html << %(  <input type="hidden" name="#{name}" value="#{value}">\n)
-        end
-      end
-      md=(@line=@file.gets)&.match(FORMS) and nl=true
-    end
-    if submit || fields!=1
-      submit ||= 'Submit'
-      @html << "  <br>\n" if nl
-      @html << %(  <input type="submit" value="#{submit}">\n)
-    end
-    @html << %(</form>\n)
-    true
-  end
-
   # Embed text
   EMBED_TEXTS = /^!> (#{PAGE_KEY}\.\w+)$/
   PARSERS << :embed_texts
@@ -461,6 +409,58 @@ class Markdown
     md = ATTRIBUTES.match(@line) or return false
     @attributes.push md[1]
     @line = md.post_match
+    true
+  end
+
+  # Forms
+  FIELD = '(\w+:)?\[(\*)?(\w+)(=("[^"]+")(,"[^"]+")*)?\]'
+  FIELDS = Regexp.new FIELD
+  FORMS = Regexp.new "^!( #{FIELD})+"
+  PARSERS << :forms
+  def forms
+    md = FORMS.match(@line) or return false
+    fields,nl,submit = 0,false,nil
+    action = (_=/\(([^()]*)\)!?$/.match(@line))? %( action="#{_[1]}") : nil
+    method = @line.match?(/!$/) ? ' method="post"' : nil
+    @html << %(<form#{action}#{method}#{@attributes.shift}>\n)
+    while md
+      @html << "  <br>\n" if nl
+      @line.scan(FIELDS).each do |field, pwd, name, value|
+        field &&= field[0...-1]
+        value &&= value[2...-1]
+        if field
+          type = pwd ? 'password' : 'text'
+          if value
+            if (values = value.split('","')).length > 1
+              @html << %(#{field}:<select name="#{name}">\n)
+              values.each do |value|
+                fields += 1
+                @html << %(  <option value="#{value}">#{value}</option>\n)
+              end
+              @html << "</select>\n"
+            else
+              fields += 1
+              @html << %(  #{field}:<input type="#{type}" name="#{name}")
+              @html << %( value="#{value}">\n)
+            end
+          else
+            fields += 1
+            @html << %(  #{field}:<input type="#{type}" name="#{name}">\n)
+          end
+        elsif name=='submit'
+          submit = value
+        else
+          @html << %(  <input type="hidden" name="#{name}" value="#{value}">\n)
+        end
+      end
+      md=(@line=@file.gets)&.match(FORMS) and nl=true
+    end
+    if submit || fields!=1
+      submit ||= 'Submit'
+      @html << "  <br>\n" if nl
+      @html << %(  <input type="submit" value="#{submit}">\n)
+    end
+    @html << %(</form>\n)
     true
   end
 
