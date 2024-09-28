@@ -155,23 +155,6 @@ class Markdown
     true
   end
 
-  # Paragraph
-  PARAGRAPHS = /^[\[(*`'"~_]?:?\w/
-  PARSERS << :paragraphs
-  def paragraphs
-    md = PARAGRAPHS.match(@line) or return false
-    @html << "<p#{@attributes.shift}>\n"
-    while md
-      @html << inline(@line)
-      while (@line=@file.gets)&.start_with?('<')
-        @html << @line # Exceptional HTML injection into the paragraph
-      end
-      md = @line&.match PARAGRAPHS
-    end
-    @html << "</p>\n"
-    true
-  end
-
   # Definition list
   DEFINITIONS = /^[+] (.*)$/
   PARSERS << :definitions
@@ -227,7 +210,7 @@ class Markdown
   end
 
   # Code
-  CODES = /^[`~]{3}\s*(\w+)?$/
+  CODES = /^[`]{3}\s*(\w+)?$/
   PARSERS << :codes
   def codes
     md = CODES.match(@line) or return false
@@ -239,6 +222,23 @@ class Markdown
     @html << (lang ? ROUGE.format(lang.new.lex(code)) : code)
     @html << "</code></pre>\n"
     @line = @file.gets if @line # then it's code close and thus need next @line.
+    true
+  end
+
+  # Paragraph
+  PARAGRAPHS = /^[\[(*`'"~_]?:?\w/
+  PARSERS << :paragraphs
+  def paragraphs
+    md = PARAGRAPHS.match(@line) or return false
+    @html << "<p#{@attributes.shift}>\n"
+    while md
+      @html << inline(@line)
+      while (@line=@file.gets)&.start_with?('<')
+        @html << @line # Exceptional HTML injection into the paragraph
+      end
+      md = @line&.match PARAGRAPHS
+    end
+    @html << "</p>\n"
     true
   end
 
