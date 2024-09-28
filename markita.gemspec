@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   ## INFO ##
   s.name     = 'markita'
-  s.version  = '5.0.240927'
+  s.version  = '5.0.240928'
   s.homepage = 'https://github.com/carlosjhr64/markita'
   s.author   = 'CarlosJHR64'
   s.email    = 'carlosjhr64@gmail.com'
-  s.date     = '2024-09-27'
+  s.date     = '2024-09-28'
   s.licenses = ['MIT']
   ## DESCRIPTION ##
   s.summary  = <<~SUMMARY

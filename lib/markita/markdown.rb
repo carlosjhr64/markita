@@ -125,6 +125,23 @@ class Markdown
     true
   end
 
+  # Unordered list
+  UNORDERED = /^( {0,3})[*] (\S.*)$/
+  PARSERS << :unordered
+  def unordered(md=nil)
+    md ||= UNORDERED.match(@line) or return false
+    level = md[1].length
+    @html << "<ul#{@attributes.shift}>\n"
+    while md && level==md[1].length
+      @html << "  <li>#{inline(md[2])}</li>\n"
+      next unless (md=(@line=@file.gets)&.match UNORDERED) && level<md[1].length
+      unordered(md)
+      md = @line&.match(UNORDERED)
+    end
+    @html << "</ul>\n"
+    true
+  end
+
   # Ordered list
   ORDERED = /^( {0,3})\d+\. (\S.*)$/
   PARSERS << :ordered
@@ -156,23 +173,6 @@ class Markdown
       md = @line&.match PARAGRAPHS
     end
     @html << "</p>\n"
-    true
-  end
-
-  # Unordered list
-  UNORDERED = /^( {0,3})[*] (\S.*)$/
-  PARSERS << :unordered
-  def unordered(md=nil)
-    md ||= UNORDERED.match(@line) or return false
-    level = md[1].length
-    @html << "<ul#{@attributes.shift}>\n"
-    while md && level==md[1].length
-      @html << "  <li>#{inline(md[2])}</li>\n"
-      next unless (md=(@line=@file.gets)&.match UNORDERED) && level<md[1].length
-      unordered(md)
-      md = @line&.match(UNORDERED)
-    end
-    @html << "</ul>\n"
     true
   end
 
