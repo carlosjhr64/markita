@@ -123,7 +123,7 @@ class Markdown
         end
       end
     end
-    string.sub(/  $/,'<br>')
+    string.sub(/ ?[ \\]$/,'<br>')
   end
 
   # Empty
