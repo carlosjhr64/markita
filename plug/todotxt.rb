@@ -82,9 +82,9 @@ class Base
     end
     text << ":|\n"
     text << <<~VERSION
-      ~~~
+      ```
       #{`todo.sh -V`.strip}
-      ~~~
+      ```
     VERSION
     Markdown.new('Todo.txt').markdown text
   end
