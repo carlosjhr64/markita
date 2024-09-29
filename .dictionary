@@ -48,6 +48,8 @@ src
 sslcertificate
 sslprivatekey
 sslverifyclient
+subscriptx
+superscriptx
 todotxt
 tsv
 upcase

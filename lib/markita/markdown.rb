@@ -95,6 +95,11 @@ class Markdown
     end
   end
 
+  SUPERSCRIPTx = /\\\^\(([^()]+)\)/
+  SUPERSCRIPT = ->(m){"<sup>#{m[1]}</sup>"}
+  SUBSCRIPTx = /\\\(([^()]+)\)/
+  SUBSCRIPT = ->(m){"<sub>#{m[1]}</sub>"}
+
   def self.tag(entry, regx, m2string, &block)
     if (m=regx.match entry)
       string = ''
@@ -119,7 +124,9 @@ class Markdown
           entry = Markdown.tag(entry, Ix, I)
           entry = Markdown.tag(entry, Sx, S)
           entry = Markdown.tag(entry, Ux, U)
-          Markdown.tag(entry, FOOTNOTEx, FOOTNOTE)
+          entry = Markdown.tag(entry, FOOTNOTEx, FOOTNOTE)
+          entry = Markdown.tag(entry, SUPERSCRIPTx, SUPERSCRIPT)
+          Markdown.tag(entry, SUBSCRIPTx, SUBSCRIPT)
         end
       end
     end
