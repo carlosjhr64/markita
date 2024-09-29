@@ -100,6 +100,9 @@ class Markdown
   SUBSCRIPTx = /\\\(([^()]+)\)/
   SUBSCRIPT = ->(m){"<sub>#{m[1]}</sub>"}
 
+  ENTITYx = /\\([<>*"~`_&;:\\])/
+  ENTITY = ->(m){"&##{m[1].ord};"}
+
   def self.tag(entry, regx, m2string, &block)
     if (m=regx.match entry)
       string = ''
@@ -116,6 +119,7 @@ class Markdown
   end
 
   def inline(entry)
+    entry = Markdown.tag(entry, ENTITYx, ENTITY)
     string = Markdown.tag(entry, CODEx, CODE) do |entry|
       Markdown.tag(entry, Ax, method(:anchor)) do |entry|
         Markdown.tag(entry, URLx, URL) do |entry|
