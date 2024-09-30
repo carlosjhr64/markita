@@ -1,10 +1,17 @@
 require 'nokogiri'
 
-# NOTE: Export your bookmarks to
+# Export your bookmarks to
 #     ~/vimwiki/bookmarks.html
+# To view your bookmarks, go to
+#     /bookmarks.html
+# To search your bookmarks, go to
+#     /bookmarks.html?search
+
 module Markita
 class Base
   class Bookmarks
+    MIN_TOPIC_LENGTH = 4
+    SKIP_TOPIC = %w[html http with your]
     KW = /\b\w+\b/
     Bookmark = Struct.new(:href, :title, :tags, :keywords)
 
@@ -17,6 +24,7 @@ class Base
       topics = Hash.new{|h,k| h[k]=0}
       @list.each do |bookmark|
         bookmark.keywords.each do |kw|
+          next if (kw.length<MIN_TOPIC_LENGTH) || SKIP_TOPIC.include?(kw)
           topics[kw] += 1
         end
       end
