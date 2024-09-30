@@ -1,3 +1,5 @@
+# NOTE: Only for password protected personal website
+# as anyone can trigger this.
 module Markita
 class Base
   get '/restart.html' do
