@@ -18,7 +18,7 @@ class Base
         if m > 100
           m = Math.log(m, 100).round
           stars << ' ' if stars.empty?
-          stars << ':star2:'*m
+          stars << ':eight_pointed_black_star:'*m
         end
         if n > 100
           n = Math.log(n, 100).round
