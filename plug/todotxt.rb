@@ -21,7 +21,7 @@ class Base
   end
 
   get '/todotxt.html' do
-    text = "# [Todo.txt](https://todotxt.org)\n"
+    text = "# [Todo.txt](https://github.com/todotxt/todo.txt-cli)\n"
     # Get tasks
     tasks = `todo.sh -p list`.lines.grep(/^\d+ /).map(&:strip)
     # Get projects and contexts
