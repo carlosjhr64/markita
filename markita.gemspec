@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   ## INFO ##
   s.name     = 'markita'
-  s.version  = '5.0.240929'
+  s.version  = '5.0.241001'
   s.homepage = 'https://github.com/carlosjhr64/markita'
   s.author   = 'CarlosJHR64'
   s.email    = 'carlosjhr64@gmail.com'
-  s.date     = '2024-09-29'
+  s.date     = '2024-10-01'
   s.licenses = ['MIT']
   ## DESCRIPTION ##
   s.summary  = <<~SUMMARY
@@ -52,6 +52,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'parser', '~> 3.3', '>= 3.3.5'
   s.add_development_dependency 'rubocop', '~> 1.66', '>= 1.66.1'
   s.add_development_dependency 'test-unit', '~> 3.6', '>= 3.6.2'
+  s.requirements << 'egrep: 3.6'
   s.requirements << 'git: 2.30'
   s.requirements << 'ruby: 3.3'
 end
