@@ -2,13 +2,14 @@ module Markita
 class Base
   get '/search.html' do
     text = "! Search:[keywords] ()\n"
-    if keywords = params['keywords']&.scan(/\w+/) and !keywords.empty?
+    if (keywords=params['keywords']&.scan(/\w+/)) && !keywords.empty?
       text << "+ Keywords:\n"
       text << "+ #{keywords.join(' ')}\n"
 
       section,file,matches = '','',[]
-      primary = keywords.sort_by{_1.length}.last
-      `egrep -r --include='*.md' -A 1 -B 1 -i '\\b#{primary}\\b' #{ROOT}`.each_line do |line|
+      primary = keywords.max_by(&:length)
+      `egrep -r --include='*.md' -A 1 -B 1 -i '\\b#{primary}\\b' #{ROOT}`
+      .each_line do |line|
         if line=~/^-/
           matches.push [file, section]
           section = ''
