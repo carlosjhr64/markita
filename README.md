@@ -49,16 +49,51 @@ Types:
 ```
 ## FEATURES
 
-### Ballot boxes
+### Lists
 
-- [ ] Empty ballot
-- [x] Marked ballot
+One can nest lists up to 3 levels:
+
+<ol>
+<li>One</li>
+<li>Two</li>
+<ul>
+<li>ABC</li>
+<ul>
+<li style="list-style-type: '&#9744; '">Empty ballot</li>
+<li style="list-style-type: '&#9745; '">Marked ballot</li>
+</ul>
+<li>XYZ</li>
+</ul>
+<li>Three</li>
+</ol>
 
 Markdown:
+```markdown
+1. One
+2. Two
+ * ABC
+  - [ ] Empty ballot
+  - [x] Marked ballot
+ * XYZ
+3. Three
+```
+### Definitions
 
-    - [ ] Empty ballot
-    - [x] Marked ballot
+Simple definitions:
 
+<dl>
+<dt>Word</dt>
+<dd>Definition</dd>
+<dt>Slang</dt>
+<dd>Define slang</dd>
+</dl>
+
+Markdown:
+```markdown
++ Word: Definition
++ Slang:
++ Define slang
+```
 ### Image placement
 
 Markdown:
