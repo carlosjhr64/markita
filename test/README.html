@@ -70,38 +70,45 @@ Types:
 <a id="FEATURES">
   <h2>FEATURES</h2>
 </a>
-<p>
-The normal stuff:
-</p>
 <ul>
   <li><code>#</code> Headers with link anchors</li>
   <li><code>></code> Block-quotes nests up to level three</li>
   <li>&#96;&#96;&#96; Code section highlighted by <a href="https://github.com/rouge-ruby/rouge">Rouge</a></li>
   <li>PRE-forms on text starting with four spaces</li>
   <li>Tables</li>
-  <li>Script(JS) sections</li>
-  <li>HTML pass-through</li>
+  <li>Script section pass through starts with <code>^&lt;script</code> and ends with <code>^&lt;/script></code></li>
+  <li>HTML pass through on <code>/^&lt;.*>$/</code> lines</li>
+  <li>And more...</li>
 </ul>
+<a id="Horizontal+rule+with+meta+data">
+  <h3>Horizontal rule with meta-data</h3>
+</a>
+<ul>
+  <li>If <code>Title</code> is set via meta-data, the server will set the page's title to that</li>
+  <li>One can use numbers to reference long URLs</li>
+</ul>
+<pre class="highlight"><code>
+<span class="nn">---</span>
+<span class="na">Title</span><span class="pi">:</span> <span class="s">Markita</span>
+<span class="na">1</span><span class="pi">:</span> <span class="s">https://github.com/carlosjhr64/markita</span>
+<span class="nn">---</span>
+<span class="p">[</span><span class="nv">Markita</span><span class="p">](</span><span class="sx">1</span><span class="p">)</span>
+</code></pre>
+<a id="Attributes">
+  <h3>Attributes</h3>
+</a>
+<pre class="highlight"><code>
+{: style="color: blue;"}
+You can set the attributes for most blocks.
+</code></pre>
 <a id="Lists">
   <h3>Lists</h3>
 </a>
 <p>
 One can nest lists up to 3 levels:
 </p>
-<ol>
-  <li>One</li>
-  <li>Two</li>
-<ul>
-  <li>ABC</li>
-<ul>
-  <li style="list-style-type: '&#9744; '">Empty ballot</li>
-  <li style="list-style-type: '&#9745; '">Marked ballot</li>
-</ul>
-  <li>XYZ</li>
-</ul>
-  <li>Three</li>
-</ol>
 <pre class="highlight"><code>
+{: style="color: red;"}{: style="color: green;"}{: style="color: blue;"}
 <span class="p">1.</span> One
 <span class="p">2.</span> Two
 <span class="p"> *</span> ABC
@@ -113,12 +120,6 @@ One can nest lists up to 3 levels:
 <a id="Definitions">
   <h3>Definitions</h3>
 </a>
-<dl>
-<dt>Word</dt>
-<dd>Definition</dd>
-<dt>Slang</dt>
-<dd>Define slang</dd>
-</dl>
 <pre class="highlight"><code>
 <span class="p">+</span> Word: Definition
 <span class="p">+</span> Slang:
@@ -127,14 +128,6 @@ One can nest lists up to 3 levels:
 <a id="Code">
   <h3>Code</h3>
 </a>
-<pre class="highlight"><code>
-<span class="k">def</span> <span class="nf">wut</span>
-  <span class="nb">puts</span> <span class="s2">"Wut?"</span>
-<span class="k">end</span>
-</code></pre>
-<p>
-Markdown:
-</p>
 <pre>
 ```ruby
 def wut
@@ -142,20 +135,6 @@ def wut
 end
 ```
 </pre>
-<a id="Horizontal+rule+with+meta+data">
-  <h3>Horizontal rule with meta-data</h3>
-</a>
-<ul>
-  <li>If <code>Title</code> is set via meta-data, the server will set the page's title to that given</li>
-  <li>One can use numbers to reference long URLs</li>
-</ul>
-<pre class="highlight"><code>
-<span class="nn">---</span>
-<span class="na">Title</span><span class="pi">:</span> <span class="s">Markita</span>
-<span class="na">1</span><span class="pi">:</span> <span class="s">https://github.com/carlosjhr64/markita</span>
-<span class="nn">---</span>
-<span class="p">[</span><span class="nv">Markita</span><span class="p">](</span><span class="sx">1</span><span class="p">)</span>
-</code></pre>
 <a id="Tables">
   <h3>Tables</h3>
 </a>
@@ -262,13 +241,6 @@ And as for the bucket, Natucket.[^3]
 <span class="p">[</span><span class="ss">^2</span><span class="p">]:</span> <span class="sx">Cash</span> is money in currency.
 <span class="p">[</span><span class="ss">^3</span><span class="p">]:</span> <span class="sx">Read</span> as "Nan took it."
 </code></pre>
-<a id="Attributes">
-  <h3>Attributes</h3>
-</a>
-<pre class="highlight"><code>
-{: style="color: blue;"}
-You can set the attributes for most blocks.
-</code></pre>
 <a id="Forms">
   <h3>Forms</h3>
 </a>
@@ -341,6 +313,12 @@ This is <sup>superscript</sup> and this is <sub>subscript</sub>.
 <pre class="highlight"><code>
 This is <span class="se">\^</span>(superscript) and this is <span class="se">\(</span>subscript).
 </code></pre>
+<a id="It+s+all+Ruby">
+  <h3>It's all Ruby!</h3>
+</a>
+<p>
+Add your own custom features.
+</p>
 <a id="HOW+TOs">
   <h2>HOW-TOs</h2>
 </a>
