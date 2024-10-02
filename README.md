@@ -71,7 +71,6 @@ One can nest lists up to 3 levels:
  * XYZ
 3. Three
 
-Markdown:
 ```markdown
 1. One
 2. Two
@@ -150,8 +149,6 @@ Bottom right
 :|
 ```
 ### Image placement
-
-Markdown:
 ```markdown
 ![:Centered Image:](/img/image.png)
 ![Left Floating:](/img/image.png)
@@ -161,20 +158,14 @@ Image to the left.
 Image to the right.
 ```
 ### Image size
-
-Markdown:
 ```markdown
 ![In alt text say 100x100](/img/image.png)
 ```
 ### Image link
-
-Markdown:
 ```markdown
 ![Alt text](/img/image.png /href_to/page)
 ```
 ### Embed text
-
-Markdown:
 ```markdown
 !> /path-to/ascii_art.txt
 ```
@@ -183,8 +174,6 @@ Unless an `*.html` file, the text is embedded in `pre` tags.
 Further more unless a `*.txt` file, the text is embedded in `code` tags.
 
 ### Footnotes
-
-Markdown:
 ```markdown
 There once was a man from Nantucket[^1]  
 Who kept all his cash[^2] in a bucket.  
@@ -197,15 +186,11 @@ And as for the bucket, Natucket.[^3]
 [^3]: Read as "Nan took it."
 ```
 ### Attributes
-
-Markdown:
 ```markdown
 {: style="color: blue;"}
 You can set the attributes for most blocks.
 ```
 ### Forms
-
-Markdown:
 ```markdown
 A get method form without submit button on single field:
 ! Google:[q] (https://www.google.com/search)
@@ -225,8 +210,6 @@ A selection list:
 ! Color:[color="Red","White","Blue"]
 ```
 ### Template substitutions
-
-Markdown:
 ```markdown
 ! template = "* [&query;](https://www.google.com/search?q=&QUERY;)"
 ! regx = /^\* (?<query>.*)$/
@@ -241,13 +224,11 @@ Note: on upcased keys, value is CGI escaped.
 The <b>bold</b> and <i>italics</i> <s>strikes</s> at <u>underlined</u>,
 while a [link to #Markita](#Markita)
 sees the `~ code ~ "a*b*c"` to https://github.com.
-
-Markdown:
-
-    The *bold* and "italics" ~strikes~ at _underlined_,
-    while a [link to #Markita](#Markita)
-    sees the `~ code ~ "a*b*c"` to https://github.com.
-
+```markdown
+The *bold* and "italics" ~strikes~ at _underlined_,
+while a [link to #Markita](#Markita)
+sees the `~ code ~ "a*b*c"` to https://github.com.
+```
 ### Code
 ```ruby
 def wut
@@ -268,32 +249,26 @@ Markdown:
 | ------: | ----: | :----: | :------------ |
 |       1 |   1.0 |   $    | The word      |
 |    1234 |  12.3 |   &    | On the street |
-
-Markdown:
-
-    | Integer | Float | Symbol | Word          |
-    | ------: | ----: | :----: | :------------ |
-    |       1 |   1.0 |   $    | The word      |
-    |    1234 |  12.3 |   &    | On the street |
-
+```markdown
+| Integer | Float | Symbol | Word          |
+| ------: | ----: | :----: | :------------ |
+|       1 |   1.0 |   $    | The word      |
+|    1234 |  12.3 |   &    | On the street |
+```
 ### Emojis
 
 I :heart: to :laughing:!
-
-Markdown:
-
-    I :heart: to :laughing:!
-
+```markdown
+I :heart: to :laughing:!
+```
 ### Meta-data
-
-Markdown:
-
-    ---
-    Title: The Title You Want For Your Page
-    1: https://way.to/create/ref/links
-    ---
-    You can now [link](1) with a reference number.
-
+```markdown
+---
+Title: The Title You Want For Your Page
+1: https://way.to/create/ref/links
+---
+You can now [link](1) with a reference number.
+```
 ## HOW-TOs
 
 ### Set site password:
