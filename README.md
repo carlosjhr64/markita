@@ -89,7 +89,7 @@ Markdown:
 <dt>Slang</dt>
 <dd>Define slang</dd>
 </dl>
-Markdown:
+
 ```markdown
 + Word: Definition
 + Slang:
