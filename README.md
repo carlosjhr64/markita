@@ -255,11 +255,23 @@ The *bold* and "italics" ~strikes~ at _underlined_,
 while a [link to #Markita](#Markita)
 sees the `~ code ~ "a*b*c"` to https://github.com.
 ```
+### Entity escapes
+
+When you want to escape the inline substitutions or HTML tags, use backslash:
+
+* &#92;&#60; &#92;&#62;  &#92;&#42; &#92;&#34; &#92;&#126; &#92;&#96; &#92;&#38; &#92;&#59; &#92;&#92;
+
 ### Emojis
 
 I :heart: to :laughing:!
 ```markdown
 I :heart: to :laughing:!
+```
+### Superscript and subscript
+
+This is <sup>superscript</sup> and this is <sub>subscript</sub>.
+```markdown
+This is \^(superscript) and this is \(subscript).
 ```
 ## HOW-TOs
 
