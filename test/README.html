@@ -70,123 +70,130 @@ Types:
 <a id="FEATURES">
   <h2>FEATURES</h2>
 </a>
-<a id="Ballot+boxes">
-  <h3>Ballot boxes</h3>
+<p>
+The normal stuff:
+</p>
+<ul>
+  <li><code>#</code> Headers with link anchors</li>
+  <li><code>></code> Block-quotes nests up to level three</li>
+  <li>&#96;&#96;&#96; Code section highlighted by <a href="https://github.com/rouge-ruby/rouge">Rouge</a></li>
+  <li>PRE-forms on text starting with four spaces</li>
+  <li>Tables</li>
+  <li>Script(JS) sections</li>
+  <li>HTML pass-through</li>
+</ul>
+<a id="Lists">
+  <h3>Lists</h3>
 </a>
+<p>
+One can nest lists up to 3 levels:
+</p>
+<ol>
+  <li>One</li>
+  <li>Two</li>
+<ul>
+  <li>ABC</li>
 <ul>
   <li style="list-style-type: '&#9744; '">Empty ballot</li>
   <li style="list-style-type: '&#9745; '">Marked ballot</li>
 </ul>
-<p>
-Markdown:
-</p>
-<pre>
-- [ ] Empty ballot
-- [x] Marked ballot
-</pre>
-<a id="Image+placement">
-  <h3>Image placement</h3>
+  <li>XYZ</li>
+</ul>
+  <li>Three</li>
+</ol>
+<pre class="highlight"><code>
+<span class="p">1.</span> One
+<span class="p">2.</span> Two
+<span class="p"> *</span> ABC
+<span class="p">  -</span> [ ] Empty ballot
+<span class="p">  -</span> [x] Marked ballot
+<span class="p"> *</span> XYZ
+<span class="p">3.</span> Three
+</code></pre>
+<a id="Definitions">
+  <h3>Definitions</h3>
 </a>
-<p>
-Markdown:
-</p>
-<pre>
-![:Centered Image:](/img/image.png)
-![Left Floating:](/img/image.png)
-![:Right Floating](/img/image.png)
-Image  centered above.
-Image to the left.
-Image to the right.
-And set a HR bar below.
----
-</pre>
-<a id="Image+size">
-  <h3>Image size</h3>
+<dl>
+<dt>Word</dt>
+<dd>Definition</dd>
+<dt>Slang</dt>
+<dd>Define slang</dd>
+</dl>
+<pre class="highlight"><code>
+<span class="p">+</span> Word: Definition
+<span class="p">+</span> Slang:
+<span class="p">+</span> Define slang
+</code></pre>
+<a id="Code">
+  <h3>Code</h3>
 </a>
+<pre class="highlight"><code>
+<span class="k">def</span> <span class="nf">wut</span>
+  <span class="nb">puts</span> <span class="s2">"Wut?"</span>
+<span class="k">end</span>
+</code></pre>
 <p>
 Markdown:
 </p>
 <pre>
-![In alt text say 100x100](/img/image.png)
+```ruby
+def wut
+  puts "Wut?"
+end
+```
 </pre>
-<a id="Image+link">
-  <h3>Image link</h3>
+<a id="Horizontal+rule+with+meta+data">
+  <h3>Horizontal rule with meta-data</h3>
 </a>
-<p>
-Markdown:
-</p>
-<pre>
-![Alt text](/img/image.png /href_to/page)
-</pre>
-<a id="Forms">
-  <h3>Forms</h3>
+<ul>
+  <li>If <code>Title</code> is set via meta-data, the server will set the page's title to that given</li>
+  <li>One can use numbers to reference long URLs</li>
+</ul>
+<pre class="highlight"><code>
+<span class="nn">---</span>
+<span class="na">Title</span><span class="pi">:</span> <span class="s">Markita</span>
+<span class="na">1</span><span class="pi">:</span> <span class="s">https://github.com/carlosjhr64/markita</span>
+<span class="nn">---</span>
+<span class="p">[</span><span class="nv">Markita</span><span class="p">](</span><span class="sx">1</span><span class="p">)</span>
+</code></pre>
+<a id="Tables">
+  <h3>Tables</h3>
 </a>
-<p>
-Markdown:
-</p>
-<pre>
-A get method form without submit button on single field:
-! Google:[q] (https://www.google.com/search)
-</pre>
-<pre>
-A post method form with a password field
-and a submit button due to multiple fields.
-Note the `*` in front of `pwd` marking it as a password field,
-and the ending `!` marking the route as a post:
-! Username:[user] Password:[*pwd] (/login.html)!
-</pre>
-<pre>
-A multi-line form with default entry and hidden field:
-! Name:[user] [status="active"] (/register.html)
-! Address:[address]
-! Code:[code="1234"]
-</pre>
-<pre>
-A selection list:
-! Color:[color="Red","White","Blue"]
-</pre>
-<a id="Template+substitutions">
-  <h3>Template substitutions</h3>
-</a>
-<p>
-Markdown:
-</p>
-<pre>
-! template = "* [&query;](https://www.google.com/search?q=&QUERY;)"
-! regx = /^\* (?<query>.*)$/
-* Grumpy Cat
-* It's over 9000!
-</pre>
-<p>
-Template clears after first non-match.
-Note: on upcased keys, value is CGI escaped.
-</p>
-<a id="Split+table">
-  <h3>Split table</h3>
+<table>
+<thead><tr><th>Integer</th><th>Float</th><th>Symbol</th><th>Word</th></tr></thead>
+<tr><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr>
+<tr><td align="right">1</td><td align="right">1.0</td><td align="center">$</td><td align="left">The word</td></tr>
+<tr><td align="right">1234</td><td align="right">12.3</td><td align="center">&</td><td align="left">On the street</td></tr>
+</table>
+<pre class="highlight"><code>
+| Integer | Float | Symbol | Word          |
+| ------: | ----: | :----: | :------------ |
+|       1 |   1.0 |   $    | The word      |
+|    1234 |  12.3 |   &amp;    | On the street |
+</code></pre>
+<a id="Splits+table">
+  <h3>Splits table</h3>
 </a>
 <table><tr><td>
-<p>Top left</p>
+<p> Top left </p>
 </td><td>
-<p>Top center</p>
+<p> Top center </p>
 </td><td>
-<p>Top right</p>
+<p> Top right </p>
 </td></tr><tr><td>
-<p>Middle left</p>
+<p> Middle left </p>
 </td><td>
-<p>Middle center</p>
+<p> Middle center </p>
 </td><td>
-<p>Middle left</p>
+<p> Middle left </p>
 </td></tr><tr><td>
-<p>Bottom left</p>
+<p> Bottom left </p>
 </td><td>
-<p>Bottom center</p>
+<p> Bottom center </p>
 </td><td>
-<p>Bottom right</p>
+<p> Bottom right </p>
 </td></tr></table>
-<p>
-Markdown:
-</p>
-<pre>
+<pre class="highlight"><code>
 |:
 Top left
 |
@@ -206,7 +213,94 @@ Bottom center
 |
 Bottom right
 :|
-</pre>
+</code></pre>
+<a id="Image+placement">
+  <h3>Image placement</h3>
+</a>
+<pre class="highlight"><code>
+<span class="p">![</span><span class="nv">:Centered Image:</span><span class="p">](</span><span class="sx">/img/image.png</span><span class="p">)</span>
+<span class="p">![</span><span class="nv">Left Floating:</span><span class="p">](</span><span class="sx">/img/image.png</span><span class="p">)</span>
+<span class="p">![</span><span class="nv">:Right Floating</span><span class="p">](</span><span class="sx">/img/image.png</span><span class="p">)</span>
+Image  centered above.
+Image to the left.
+Image to the right.
+</code></pre>
+<a id="Image+size">
+  <h3>Image size</h3>
+</a>
+<pre class="highlight"><code>
+<span class="p">![</span><span class="nv">In alt text say 100x100</span><span class="p">](</span><span class="sx">/img/image.png</span><span class="p">)</span>
+</code></pre>
+<a id="Image+link">
+  <h3>Image link</h3>
+</a>
+<pre class="highlight"><code>
+<span class="p">![</span><span class="nv">Alt text</span><span class="p">](</span><span class="sx">/img/image.png</span> /href_to/page)
+</code></pre>
+<a id="Embed+text">
+  <h3>Embed text</h3>
+</a>
+<pre class="highlight"><code>
+!&gt; /path-to/ascii_art.txt
+</code></pre>
+<p>
+Useful for ASCII art.
+Unless an <code>*.html</code> file, the text is embedded in <code>pre</code> tags.
+Further more unless a <code>*.txt</code> file, the text is embedded in <code>code</code> tags.
+</p>
+<a id="Footnotes">
+  <h3>Footnotes</h3>
+</a>
+<pre class="highlight"><code>
+There once was a man from Nantucket[^1]  
+Who kept all his cash[^2] in a bucket.  
+But his daughter, named Nan,  
+Ran away with a man  
+And as for the bucket, Natucket.[^3]
+
+<span class="p">[</span><span class="ss">^1</span><span class="p">]:</span> <span class="sx">Nantucket</span> is an island in the U.S. state of Massachusetts.
+<span class="p">[</span><span class="ss">^2</span><span class="p">]:</span> <span class="sx">Cash</span> is money in currency.
+<span class="p">[</span><span class="ss">^3</span><span class="p">]:</span> <span class="sx">Read</span> as "Nan took it."
+</code></pre>
+<a id="Attributes">
+  <h3>Attributes</h3>
+</a>
+<pre class="highlight"><code>
+{: style="color: blue;"}
+You can set the attributes for most blocks.
+</code></pre>
+<a id="Forms">
+  <h3>Forms</h3>
+</a>
+<pre class="highlight"><code>
+A get method form without submit button on single field:
+! Google:[q] (https://www.google.com/search)
+
+A post method form with a password field
+and a submit button due to multiple fields.
+Note the <span class="sb">`*`</span> in front of <span class="sb">`pwd`</span> marking it as a password field,
+and the ending <span class="sb">`!`</span> marking the route as a post:
+! Username:[user] Password:[<span class="err">*</span>pwd] (/login.html)!
+
+A multi-line form with default entry and hidden field:
+! Name:[user] [status="active"] (/register.html)
+! Address:[address]
+! Code:[code="1234"]
+
+A selection list:
+! Color:[color="Red","White","Blue"]
+</code></pre>
+<a id="Template+substitutions">
+  <h3>Template substitutions</h3>
+</a>
+<pre class="highlight"><code>
+<span class="p">*</span> <span class="p">[</span><span class="nv">Grumpy Cat</span><span class="p">](</span><span class="sx">https://www.google.com/search?q=Grumpy+Cat</span><span class="p">)</span>
+<span class="p">*</span> <span class="p">[</span><span class="nv">It's over 9000!</span><span class="p">](</span><span class="sx">https://www.google.com/search?q=It%27s+over+9000%21</span><span class="p">)</span>
+</code></pre>
+<p>
+Template clears after first non-match.
+Note: on upcased keys, value is CGI escaped.
+</p>
 <a id="Inline+links+code+bold+italic+strikes+and+underline">
   <h3>Inline links, code, bold, italic, strikes, and underline</h3>
 </a>
@@ -215,168 +309,38 @@ The <b>bold</b> and <i>italics</i> <s>strikes</s> at <u>underlined</u>,
 while a <a href="#Markita">link to #Markita</a>
 sees the <code>~ code ~ "a*b*c"</code> to <a href="https://github.com.">https://github.com.</a>
 </p>
-<p>
-Markdown:
-</p>
-<pre>
-The *bold* and "italics" ~strikes~ at _underlined_,
-while a [link to #Markita](#Markita)
-sees the `~ code ~ "a*b*c"` to https://github.com.
-</pre>
-<a id="Lists+ordered+un+ordered+definitions">
-  <h3>Lists: ordered, un-ordered, definitions</h3>
-</a>
-<ol>
-  <li>One</li>
-  <li>Two</li>
-</ol>
-<ul>
-  <li>Point A</li>
-  <li>Point B</li>
-</ul>
-<dl>
-<dt>Word</dt>
-<dd>Definition of the word</dd>
-<dt>Symbol</dt>
-<dd>Usage for the symbol</dd>
-</dl>
-<p>
-Markdown:
-</p>
-<pre>
-1. One
-2. Two
-</pre>
-<pre>
-* Point A
-* Point B
-</pre>
-<pre>
-+ Word: Definition of the word
-+ Symbol:
-+   Usage for the symbol
-</pre>
-<a id="Block+quote">
-  <h3>Block-quote</h3>
-</a>
-<p>
-Like Hamlet says...
-</p>
-<blockquote>
-To be or not to be...
-That is the question!
-</blockquote>
-<p>
-Markdown:
-</p>
-<pre>
-Like Hamlet says...
-> To be or not to be...
-> That is the question!
-</pre>
-<a id="Code">
-  <h3>Code</h3>
-</a>
 <pre class="highlight"><code>
-<span class="k">def</span> <span class="nf">wut</span>
-  <span class="nb">puts</span> <span class="s2">"Wut?"</span>
-<span class="k">end</span>
+The <span class="ge">*bold*</span> and "italics" ~strikes~ at _underlined_,
+while a <span class="p">[</span><span class="nv">link to #Markita</span><span class="p">](</span><span class="sx">#Markita</span><span class="p">)</span>
+sees the <span class="sb">`~ code ~ "a*b*c"`</span> to https://github.com.
 </code></pre>
-<p>
-Markdown:
-</p>
-<pre>
-```ruby
-def wut
-  puts "Wut?"
-end
-```
-</pre>
-<a id="Tables">
-  <h3>Tables</h3>
-</a>
-<table>
-<thead><tr><th>Integer</th><th>Float</th><th>Symbol</th><th>Word</th></tr></thead>
-<tr><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr>
-<tr><td align="right">1</td><td align="right">1.0</td><td align="center">$</td><td align="left">The word</td></tr>
-<tr><td align="right">1234</td><td align="right">12.3</td><td align="center">&</td><td align="left">On the street</td></tr>
-</table>
-<p>
-Markdown:
-</p>
-<pre>
-| Integer | Float | Symbol | Word          |
-| ------: | ----: | :----: | :------------ |
-|       1 |   1.0 |   $    | The word      |
-|    1234 |  12.3 |   &    | On the street |
-</pre>
-<a id="Attributes">
-  <h3>Attributes</h3>
+<a id="Entity+escapes">
+  <h3>Entity escapes</h3>
 </a>
 <p>
-Markdown:
+When you want to escape the inline substitutions or HTML tags, use backslash:
 </p>
-<pre>
-{: style="color: blue;"}
-You can set the attributes for most blocks.
-</pre>
-<a id="Embed+text">
-  <h3>Embed text</h3>
-</a>
-<p>
-Markdown:
-</p>
-<pre>
-!> /path-to/ascii_art.txt
-</pre>
-<p>
-Useful for ASCII art.
-Unless an <code>*.html</code> file, the text is embedded in <code>pre</code> tags.
-Further more unless a <code>*.txt</code> file, the text is embedded in <code>code</code> tags.
-</p>
+<ul>
+  <li>&#92;&#60; &#92;&#62;  &#92;&#42; &#92;&#34; &#92;&#126; &#92;&#96; &#92;&#38; &#92;&#59; &#92;&#92;</li>
+</ul>
 <a id="Emojis">
   <h3>Emojis</h3>
 </a>
 <p>
 I &#x2764; to &#x1f606;!
 </p>
-<p>
-Markdown:
-</p>
-<pre>
+<pre class="highlight"><code>
 I :heart: to :laughing:!
-</pre>
-<a id="Footnotes">
-  <h3>Footnotes</h3>
+</code></pre>
+<a id="Superscript+and+subscript">
+  <h3>Superscript and subscript</h3>
 </a>
 <p>
-Markdown:
+This is <sup>superscript</sup> and this is <sub>subscript</sub>.
 </p>
-<pre>
-There once was a man from Nantucket[^1]  
-Who kept all his cash[^2] in a bucket.  
-But his daughter, named Nan,  
-Ran away with a man  
-And as for the bucket, Natucket.[^3]
-</pre>
-<pre>
-[^1]: Nantucket is an island in the U.S. state of Massachusetts.
-[^2]: Cash is money in currency.
-[^3]: Read as "Nan took it."
-</pre>
-<a id="Meta+data">
-  <h3>Meta-data</h3>
-</a>
-<p>
-Markdown:
-</p>
-<pre>
----
-Title: The Title You Want For Your Page
-1: https://way.to/create/ref/links
----
-You can now [link](1) with a reference number.
-</pre>
+<pre class="highlight"><code>
+This is <span class="se">\^</span>(superscript) and this is <span class="se">\(</span>subscript).
+</code></pre>
 <a id="HOW+TOs">
   <h2>HOW-TOs</h2>
 </a>
