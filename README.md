@@ -119,6 +119,18 @@ Title: Markita
 ---
 [Markita](1)
 ```
+### Tables
+
+| Integer | Float | Symbol | Word          |
+| ------: | ----: | :----: | :------------ |
+|       1 |   1.0 |   $    | The word      |
+|    1234 |  12.3 |   &    | On the street |
+```markdown
+| Integer | Float | Symbol | Word          |
+| ------: | ----: | :----: | :------------ |
+|       1 |   1.0 |   $    | The word      |
+|    1234 |  12.3 |   &    | On the street |
+```
 ### Splits table
 
 <table><tr><td>
@@ -140,7 +152,6 @@ Title: Markita
 </td><td>
 <p> Bottom right </p>
 </td></tr></table>
-
 ```markdown
 |:
 Top left
@@ -243,31 +254,11 @@ The *bold* and "italics" ~strikes~ at _underlined_,
 while a [link to #Markita](#Markita)
 sees the `~ code ~ "a*b*c"` to https://github.com.
 ```
-### Tables
-
-| Integer | Float | Symbol | Word          |
-| ------: | ----: | :----: | :------------ |
-|       1 |   1.0 |   $    | The word      |
-|    1234 |  12.3 |   &    | On the street |
-```markdown
-| Integer | Float | Symbol | Word          |
-| ------: | ----: | :----: | :------------ |
-|       1 |   1.0 |   $    | The word      |
-|    1234 |  12.3 |   &    | On the street |
-```
 ### Emojis
 
 I :heart: to :laughing:!
 ```markdown
 I :heart: to :laughing:!
-```
-### Meta-data
-```markdown
----
-Title: The Title You Want For Your Page
-1: https://way.to/create/ref/links
----
-You can now [link](1) with a reference number.
 ```
 ## HOW-TOs
 
