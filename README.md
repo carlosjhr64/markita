@@ -250,6 +250,10 @@ This is <sup>superscript</sup> and this is <sub>subscript</sub>.
 ```markdown
 This is \^(superscript) and this is \(subscript).
 ```
+### It's all Ruby!
+
+Add your own custom features.
+
 ## HOW-TOs
 
 ### Set site password:
@@ -289,10 +293,6 @@ $ # Then copy (or create) your plug there.
 $ # For example:
 $ GET https://raw.githubusercontent.com/carlosjhr64/markita/main/plug/todotxt.rb > ~/vimwiki/plug/todotxt.rb
 ```
-### It's all Ruby!
-
-Add your own custom features.
-
 ## LICENSE
 
 Copyright (c) 2024 CarlosJHR64
