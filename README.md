@@ -49,19 +49,18 @@ Types:
 ```
 ## FEATURES
 
-The normal stuff:
-
 * `#` Headers with link anchors
 * `>` Block-quotes nests up to level three
 * &#96;&#96;&#96; Code section highlighted by [Rouge](https://github.com/rouge-ruby/rouge)
 * PRE-forms on text starting with four spaces
 * Tables
-* Script(JS) sections
-* HTML pass-through
+* Script section pass through starts with `^<script` and ends with `^</script>`
+* HTML pass through on `/^<.*>$/` lines
+* And more...
 
 ### Horizontal rule with meta-data
 
-* If `Title` is set via meta-data, the server will set the page's title to that given
+* If `Title` is set via meta-data, the server will set the page's title to that
 * One can use numbers to reference long URLs
 ```markdown
 ---
@@ -95,7 +94,6 @@ One can nest lists up to 3 levels:
 + Define slang
 ```
 ### Code
-Markdown:
 
     ```ruby
     def wut
@@ -291,6 +289,10 @@ $ # Then copy (or create) your plug there.
 $ # For example:
 $ GET https://raw.githubusercontent.com/carlosjhr64/markita/main/plug/todotxt.rb > ~/vimwiki/plug/todotxt.rb
 ```
+### It's all Ruby!
+
+Add your own custom features.
+
 ## LICENSE
 
 Copyright (c) 2024 CarlosJHR64
