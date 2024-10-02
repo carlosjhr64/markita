@@ -94,6 +94,20 @@ One can nest lists up to 3 levels:
 + Slang:
 + Define slang
 ```
+### Code
+```ruby
+def wut
+  puts "Wut?"
+end
+```
+Markdown:
+
+    ```ruby
+    def wut
+      puts "Wut?"
+    end
+    ```
+
 ### Horizontal rule with meta-data
 
 * If `Title` is set via meta-data, the server will set the page's title to that given
@@ -229,20 +243,6 @@ The *bold* and "italics" ~strikes~ at _underlined_,
 while a [link to #Markita](#Markita)
 sees the `~ code ~ "a*b*c"` to https://github.com.
 ```
-### Code
-```ruby
-def wut
-  puts "Wut?"
-end
-```
-Markdown:
-
-    ```ruby
-    def wut
-      puts "Wut?"
-    end
-    ```
-
 ### Tables
 
 | Integer | Float | Symbol | Word          |
