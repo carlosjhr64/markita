@@ -59,55 +59,6 @@ The normal stuff:
 * Script(JS) sections
 * HTML pass-through
 
-### Lists
-
-One can nest lists up to 3 levels:
-
-1. One
-2. Two
- * ABC
-  - [ ] Empty ballot
-  - [x] Marked ballot
- * XYZ
-3. Three
-
-```markdown
-1. One
-2. Two
- * ABC
-  - [ ] Empty ballot
-  - [x] Marked ballot
- * XYZ
-3. Three
-```
-### Definitions
-
-<dl>
-<dt>Word</dt>
-<dd>Definition</dd>
-<dt>Slang</dt>
-<dd>Define slang</dd>
-</dl>
-
-```markdown
-+ Word: Definition
-+ Slang:
-+ Define slang
-```
-### Code
-```ruby
-def wut
-  puts "Wut?"
-end
-```
-Markdown:
-
-    ```ruby
-    def wut
-      puts "Wut?"
-    end
-    ```
-
 ### Horizontal rule with meta-data
 
 * If `Title` is set via meta-data, the server will set the page's title to that given
@@ -119,6 +70,39 @@ Title: Markita
 ---
 [Markita](1)
 ```
+### Attributes
+```markdown
+{: style="color: blue;"}
+You can set the attributes for most blocks.
+```
+### Lists
+
+One can nest lists up to 3 levels:
+```markdown
+{: style="color: red;"}{: style="color: green;"}{: style="color: blue;"}
+1. One
+2. Two
+ * ABC
+  - [ ] Empty ballot
+  - [x] Marked ballot
+ * XYZ
+3. Three
+```
+### Definitions
+```markdown
++ Word: Definition
++ Slang:
++ Define slang
+```
+### Code
+Markdown:
+
+    ```ruby
+    def wut
+      puts "Wut?"
+    end
+    ```
+
 ### Tables
 
 | Integer | Float | Symbol | Word          |
@@ -210,11 +194,6 @@ And as for the bucket, Natucket.[^3]
 [^1]: Nantucket is an island in the U.S. state of Massachusetts.
 [^2]: Cash is money in currency.
 [^3]: Read as "Nan took it."
-```
-### Attributes
-```markdown
-{: style="color: blue;"}
-You can set the attributes for most blocks.
 ```
 ### Forms
 ```markdown
