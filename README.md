@@ -49,10 +49,19 @@ Types:
 ```
 ## FEATURES
 
+The normal stuff:
+
+* `#` Headers with link anchors
+* `>` Block-quotes nests up to level three
+* &#96;&#96;&#96; Code section highlighted by [Rouge](https://github.com/rouge-ruby/rouge)
+* PRE-forms on text starting with four spaces
+* Tables
+* Script(JS) sections
+* HTML pass-through
+
 ### Lists
 
 One can nest lists up to 3 levels:
-
 <ol>
 <li>One</li>
 <li>Two</li>
@@ -66,7 +75,6 @@ One can nest lists up to 3 levels:
 </ul>
 <li>Three</li>
 </ol>
-
 Markdown:
 ```markdown
 1. One
@@ -79,122 +87,158 @@ Markdown:
 ```
 ### Definitions
 
-Simple definitions:
-
 <dl>
 <dt>Word</dt>
 <dd>Definition</dd>
 <dt>Slang</dt>
 <dd>Define slang</dd>
 </dl>
-
 Markdown:
 ```markdown
 + Word: Definition
 + Slang:
 + Define slang
 ```
+### Horizontal rule with meta-data
+
+* If `Title` is set via meta-data, the server will set the page's title to that given
+* One can use numbers to reference long URLs
+```markdown
+---
+Title: Markita
+1: https://github.com/carlosjhr64/markita
+---
+[Markita](1)
+```
+### Splits table
+
+<table><tr><td>
+<p> Top left </p>
+</td><td>
+<p> Top center </p>
+</td><td>
+<p> Top right </p>
+</td></tr><tr><td>
+<p> Middle left </p>
+</td><td>
+<p> Middle center </p>
+</td><td>
+<p> Middle left </p>
+</td></tr><tr><td>
+<p> Bottom left </p>
+</td><td>
+<p> Bottom center </p>
+</td><td>
+<p> Bottom right </p>
+</td></tr></table>
+Markdown:
+```markdown
+|:
+Top left
+|
+Top center
+|
+Top right
+:|:
+Middle left
+|
+Middle center
+|
+Middle left
+:|:
+Bottom left
+|
+Bottom center
+|
+Bottom right
+:|
+```
 ### Image placement
 
 Markdown:
-
-    ![:Centered Image:](/img/image.png)
-    ![Left Floating:](/img/image.png)
-    ![:Right Floating](/img/image.png)
-    Image  centered above.
-    Image to the left.
-    Image to the right.
-    And set a HR bar below.
-    ---
-
+```markdown
+![:Centered Image:](/img/image.png)
+![Left Floating:](/img/image.png)
+![:Right Floating](/img/image.png)
+Image  centered above.
+Image to the left.
+Image to the right.
+```
 ### Image size
 
 Markdown:
-
-    ![In alt text say 100x100](/img/image.png)
-
+```markdown
+![In alt text say 100x100](/img/image.png)
+```
 ### Image link
 
 Markdown:
+```markdown
+![Alt text](/img/image.png /href_to/page)
+```
+### Embed text
 
-    ![Alt text](/img/image.png /href_to/page)
+Markdown:
+```markdown
+!> /path-to/ascii_art.txt
+```
+Useful for ASCII art.
+Unless an `*.html` file, the text is embedded in `pre` tags.
+Further more unless a `*.txt` file, the text is embedded in `code` tags.
 
+### Footnotes
+
+Markdown:
+```markdown
+There once was a man from Nantucket[^1]  
+Who kept all his cash[^2] in a bucket.  
+But his daughter, named Nan,  
+Ran away with a man  
+And as for the bucket, Natucket.[^3]
+
+[^1]: Nantucket is an island in the U.S. state of Massachusetts.
+[^2]: Cash is money in currency.
+[^3]: Read as "Nan took it."
+```
+### Attributes
+
+Markdown:
+```markdown
+{: style="color: blue;"}
+You can set the attributes for most blocks.
+```
 ### Forms
 
 Markdown:
+```markdown
+A get method form without submit button on single field:
+! Google:[q] (https://www.google.com/search)
 
-    A get method form without submit button on single field:
-    ! Google:[q] (https://www.google.com/search)
+A post method form with a password field
+and a submit button due to multiple fields.
+Note the `*` in front of `pwd` marking it as a password field,
+and the ending `!` marking the route as a post:
+! Username:[user] Password:[*pwd] (/login.html)!
 
-    A post method form with a password field
-    and a submit button due to multiple fields.
-    Note the `*` in front of `pwd` marking it as a password field,
-    and the ending `!` marking the route as a post:
-    ! Username:[user] Password:[*pwd] (/login.html)!
+A multi-line form with default entry and hidden field:
+! Name:[user] [status="active"] (/register.html)
+! Address:[address]
+! Code:[code="1234"]
 
-    A multi-line form with default entry and hidden field:
-    ! Name:[user] [status="active"] (/register.html)
-    ! Address:[address]
-    ! Code:[code="1234"]
-
-    A selection list:
-    ! Color:[color="Red","White","Blue"]
-
+A selection list:
+! Color:[color="Red","White","Blue"]
+```
 ### Template substitutions
 
 Markdown:
-
-    ! template = "* [&query;](https://www.google.com/search?q=&QUERY;)"
-    ! regx = /^\* (?<query>.*)$/
-    * Grumpy Cat
-    * It's over 9000!
-
+```markdown
+! template = "* [&query;](https://www.google.com/search?q=&QUERY;)"
+! regx = /^\* (?<query>.*)$/
+* Grumpy Cat
+* It's over 9000!
+```
 Template clears after first non-match.
 Note: on upcased keys, value is CGI escaped.
-
-### Split table
-
-<table><tr><td>
-<p>Top left</p>
-</td><td>
-<p>Top center</p>
-</td><td>
-<p>Top right</p>
-</td></tr><tr><td>
-<p>Middle left</p>
-</td><td>
-<p>Middle center</p>
-</td><td>
-<p>Middle left</p>
-</td></tr><tr><td>
-<p>Bottom left</p>
-</td><td>
-<p>Bottom center</p>
-</td><td>
-<p>Bottom right</p>
-</td></tr></table>
-
-Markdown:
-
-    |:
-    Top left
-    |
-    Top center
-    |
-    Top right
-    :|:
-    Middle left
-    |
-    Middle center
-    |
-    Middle left
-    :|:
-    Bottom left
-    |
-    Bottom center
-    |
-    Bottom right
-    :|
 
 ### Inline links, code, bold, italic, strikes, and underline
 
@@ -207,45 +251,6 @@ Markdown:
     The *bold* and "italics" ~strikes~ at _underlined_,
     while a [link to #Markita](#Markita)
     sees the `~ code ~ "a*b*c"` to https://github.com.
-
-### Lists: ordered, un-ordered, definitions
-
-1. One
-2. Two
-
-* Point A
-* Point B
-
-<dl>
-<dt>Word</dt>
-<dd>Definition of the word</dd>
-<dt>Symbol</dt>
-<dd>Usage for the symbol</dd>
-</dl>
-
-Markdown:
-
-    1. One
-    2. Two
-
-    * Point A
-    * Point B
-
-    + Word: Definition of the word
-    + Symbol:
-    +   Usage for the symbol
-
-### Block-quote
-
-Like Hamlet says...
-> To be or not to be...
-> That is the question!
-
-Markdown:
-
-    Like Hamlet says...
-    > To be or not to be...
-    > That is the question!
 
 ### Code
 ```ruby
@@ -275,23 +280,6 @@ Markdown:
     |       1 |   1.0 |   $    | The word      |
     |    1234 |  12.3 |   &    | On the street |
 
-### Attributes
-
-Markdown:
-
-    {: style="color: blue;"}
-    You can set the attributes for most blocks.
-
-### Embed text
-
-Markdown:
-
-    !> /path-to/ascii_art.txt
-
-Useful for ASCII art.
-Unless an `*.html` file, the text is embedded in `pre` tags.
-Further more unless a `*.txt` file, the text is embedded in `code` tags.
-
 ### Emojis
 
 I :heart: to :laughing:!
@@ -299,20 +287,6 @@ I :heart: to :laughing:!
 Markdown:
 
     I :heart: to :laughing:!
-
-### Footnotes
-
-Markdown:
-
-    There once was a man from Nantucket[^1]  
-    Who kept all his cash[^2] in a bucket.  
-    But his daughter, named Nan,  
-    Ran away with a man  
-    And as for the bucket, Natucket.[^3]
-
-    [^1]: Nantucket is an island in the U.S. state of Massachusetts.
-    [^2]: Cash is money in currency.
-    [^3]: Read as "Nan took it."
 
 ### Meta-data
 
