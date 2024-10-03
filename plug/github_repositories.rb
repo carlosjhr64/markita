@@ -44,7 +44,7 @@ class Base
       text << "+ #{repo['language']} project created " \
               "#{Date.parse(repo['created_at'])} "
       date = Date.parse repo['pushed_at']
-      text << (today-date>365 ? %(last pushed <mark>#{date}</mark>\n) :
+      text << (today-date>365 || !issues.empty? ? %(last pushed <mark>#{date}</mark>\n) :
                                %(last pushed #{date}\n))
     end
 
