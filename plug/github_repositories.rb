@@ -36,8 +36,11 @@ class Base
         break
       end
       name = repo['name']
-      stars,issues = '',''
-      if (n=repo['watchers'].to_i).positive?
+      stars,issues,n = '','',0
+      n += repo['watchers_count'].to_i
+      n += repo['stargazers_count'].to_i
+      n += repo['forks'].to_i
+      if n.positive?
         n = Math.log(n+1, 2).round
         stars = ' ' + ':star:'*n
       end
