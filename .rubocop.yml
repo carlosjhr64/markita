@@ -42,15 +42,21 @@ Layout/SpaceInsideBlockBraces:
   Enabled: false
 Layout/SpaceInsideHashLiteralBraces:
   Enabled: false
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: false
 Lint/AmbiguousBlockAssociation:
   Enabled: false
 Lint/AmbiguousOperatorPrecedence:
   Enabled: false
 Lint/AmbiguousRegexpLiteral:
   Enabled: false
+Lint/BinaryOperatorWithIdenticalOperands:
+  Enabled: false
 Lint/Debugger:
   Enabled: false
 Lint/FloatComparison:
+  Enabled: false
+Lint/InheritException:
   Enabled: false
 Lint/MixedRegexpCaptureTypes:
   Enabled: false
@@ -58,7 +64,7 @@ Lint/NestedMethodDefinition:
   Enabled: false
 Lint/OrAssignmentToConstant:
   Enabled: false
-Lint/InheritException:
+Lint/RedundantCopDisableDirective:
   Enabled: false
 Lint/ShadowingOuterLocalVariable:
   Enabled: false
@@ -88,6 +94,8 @@ Naming/MethodParameterName:
   Enabled: false
 Naming/MemoizedInstanceVariableName:
   Enabled: false
+Security/MarshalLoad:
+  Enabled: false
 Security/Open:
   Enabled: false
 Style/AccessModifierDeclarations:
@@ -99,6 +107,8 @@ Style/CaseEquality:
 Style/ClassVars:
   Enabled: false
 Style/Documentation:
+  Enabled: false
+Style/FormatString:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
@@ -116,6 +126,8 @@ Style/NestedParenthesizedCalls:
   Enabled: false
 Style/NestedTernaryOperator:
   Enabled: false
+Style/OpenStructUse:
+  Enabled: false
 Style/ParallelAssignment:
   Enabled: false
 Style/PerlBackrefs:
@@ -123,6 +135,8 @@ Style/PerlBackrefs:
 Style/RegexpLiteral:
   Enabled: false
 Style/RescueStandardError:
+  Enabled: false
+Style/ReturnNilInPredicateMethodDefinition:
   Enabled: false
 Style/Semicolon:
   Enabled: false

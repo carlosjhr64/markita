@@ -295,7 +295,7 @@ $ GET https://raw.githubusercontent.com/carlosjhr64/markita/main/plug/todotxt.rb
 ```
 ## LICENSE
 
-Copyright (c) 2024 CarlosJHR64
+Copyright (c) 2025 CarlosJHR64
 
 Permission is hereby granted, free of charge,
 to any person obtaining a copy of this software and
