@@ -215,7 +215,7 @@ ROUGE
 route
 routes
 RSA
-Ruby33
+Ruby34
 run
 RuntimeError
 S
@@ -265,6 +265,7 @@ Sx
 tables
 TABLES
 tag
+template
 text
 theme
 Theme
