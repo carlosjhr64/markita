@@ -17,6 +17,7 @@ html
 https
 img
 jhr
+mdt
 mdx
 mkdir
 newkey
@@ -25,6 +26,7 @@ pwd
 redtty
 regexp
 regx
+rgx
 src
 sslcertificate
 sslprivate

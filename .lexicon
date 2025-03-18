@@ -48,6 +48,7 @@ Dir
 directory
 dirname
 downcase
+e
 each
 each_with_index
 embed_texts
@@ -122,6 +123,7 @@ inline
 ip
 IPS
 is_a
+it
 Ix
 join
 key
@@ -149,6 +151,7 @@ Markdown
 Markita
 match
 md
+mdt
 MDX
 message
 metadata
@@ -195,6 +198,7 @@ post_match
 preforms
 PREFORMS
 pre_match
+preprocess
 Preprocess
 push
 puts
@@ -209,6 +213,8 @@ render
 request
 require
 require_relative
+rgx
+rgx_set
 right
 root
 ROOT
@@ -250,6 +256,7 @@ SSLEnable
 SSLPrivateKey
 SSL_PRIVATE_KEY
 SSLVerifyClient
+StandardError
 start
 START_TIME
 string
@@ -268,6 +275,8 @@ tables
 TABLES
 tag
 template
+template_line
+template_set
 text
 theme
 Theme
