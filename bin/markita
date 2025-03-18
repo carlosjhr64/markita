@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 require 'help_parser'
 require 'markita'
 
@@ -35,14 +37,14 @@ OPTIONS = HelpParser[Markita::VERSION, <<~HELP]
 HELP
 begin
   Markita.run!
-rescue LoadError
-  HelpParser::REDTTY["#{$!.class}: #{$!.message}"]
-  exit 72
-rescue RuntimeError
-  HelpParser::REDTTY["#{$!.class}: #{$!.message}"]
-  exit 65
-rescue
-  warn $!.backtrace
-  HelpParser::REDTTY["#{$!.class}: #{$!.message}"]
-  exit 70
+rescue LoadError => e
+  HelpParser::REDTTY["#{e.class}: #{e.message}"]
+  exit 72 # EX_OSFILE
+rescue RuntimeError => e
+  HelpParser::REDTTY["#{e.class}: #{e.message}"]
+  exit 65 # EX_DATAERR: generic runtime error raised, usually due to user error.
+rescue StandardError => e
+  warn e.backtrace
+  HelpParser::REDTTY["#{e.class}: #{e.message}"]
+  exit 70 # EX_SOFTWARE
 end
