@@ -23,6 +23,7 @@ BIND
 block
 blockqs
 BLOCKQS
+blue
 bullet
 Bx
 call
@@ -141,6 +142,7 @@ Login
 loop
 m
 m2string
+magenta
 map
 markdown
 Markdown
