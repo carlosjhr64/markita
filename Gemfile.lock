@@ -12,6 +12,7 @@ GEM
     mini_portile2 (2.8.8)
     mustermann (3.0.3)
       ruby2_keywords (~> 0.0.1)
+    nio4r (2.7.4)
     nokogiri (1.18.4)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
@@ -30,6 +31,8 @@ GEM
       ast (~> 2.4.1)
       racc
     power_assert (2.0.5)
+    puma (6.6.0)
+      nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.1.12)
     rack-protection (4.1.1)
@@ -39,6 +42,8 @@ GEM
     rack-session (2.1.0)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
+    rackup (2.2.1)
+      rack (>= 3)
     rainbow (3.1.1)
     regexp_parser (2.10.0)
     rouge (4.5.1)
@@ -70,7 +75,6 @@ GEM
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
-    webrick (1.9.1)
 
 PLATFORMS
   aarch64-linux
@@ -84,11 +88,12 @@ DEPENDENCIES
   colorize
   help_parser
   nokogiri
+  puma (~> 6.6)
+  rackup (~> 2.2)
   rouge
   rubocop
   sinatra
   test-unit
-  webrick
 
 RUBY VERSION
    ruby 3.4.2p28
