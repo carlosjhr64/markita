@@ -23,7 +23,7 @@ class Base
         redirect '/login.html' unless request.path_info == '/login.html'
       end
     end
-    puts "#{request.ip} #{request.path_info}"
+    puts "#{request.ip} #{request.path_info}".magenta
   end
 
   get '/login.html' do

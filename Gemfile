@@ -3,9 +3,8 @@ ruby '3.4.2'
 ## runtime ##
 gem 'help_parser'
 gem 'rouge'
+gem 'webrick'
 gem 'sinatra'
-gem "rackup", "~> 2.2"
-gem "puma", "~> 6.6"
 ## development ##
 gem 'colorize'
 gem 'nokogiri'

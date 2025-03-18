@@ -22,8 +22,8 @@ module Markita
       SSLPrivateKey:  OpenSSL::PKey::RSA.new(File.read SSL_PRIVATE_KEY) } : nil
 
   SERVER_CONFIG = lambda do |server|
-    puts "#{$0}-#{VERSION}"
-    puts "Sinatra-#{Sinatra::VERSION} using #{server.class}"
+    puts "#{$0}-#{VERSION}".blue
+    puts "Sinatra-#{Sinatra::VERSION} using #{server.class}".blue
   end
 
   APPDIR  = File.dirname __dir__, 2
