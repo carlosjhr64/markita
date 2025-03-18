@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 require 'test/unit'
 
 class TestGET < Test::Unit::TestCase
@@ -14,8 +16,8 @@ class TestGET < Test::Unit::TestCase
     system "kill #{pid}"
     Process.wait pid
     error = `git diff #{TEST_FILES}`.chomp
-    unless error==''
-      flunk "Run 'git diff #{TEST_FILES}'"
-    end
+    return if error == ''
+
+    flunk "Run 'git diff #{TEST_FILES}'"
   end
 end
