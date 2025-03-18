@@ -54,5 +54,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'test-unit', '~> 3.6', '>= 3.6.2'
   s.requirements << 'egrep: 3.6'
   s.requirements << 'git: 2.30'
-  s.required_ruby_version = '>= 3.3'
+  s.required_ruby_version = '>= 3.4'
 end
