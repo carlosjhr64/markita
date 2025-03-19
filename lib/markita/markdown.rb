@@ -22,6 +22,7 @@ class Markdown
     @line = nil
   end
 
+  # init(fh: String || File) -> void
   def init(fh)
     @file,@html = Preprocess.new(fh),''
   end

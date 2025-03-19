@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   ## INFO ##
   s.name     = 'markita'
-  s.version  = '5.0.250318'
+  s.version  = '5.0.250319'
   s.homepage = 'https://github.com/carlosjhr64/markita'
   s.author   = 'CarlosJHR64'
   s.email    = 'carlosjhr64@gmail.com'
