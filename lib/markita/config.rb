@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # Markita namespace
+# :reek:TooManyConstants because it's a configuration file!
 module Markita
   HEADER_LINKS = String.new
   NAVIGATION   = String.new

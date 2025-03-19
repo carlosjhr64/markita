@@ -11,6 +11,7 @@ require 'rouge'
 require 'webrick/https'
 require 'sinatra/base'
 # Local
+require_relative 'refinement'
 require_relative 'config'
 require_relative 'html'
 require_relative 'preprocess'

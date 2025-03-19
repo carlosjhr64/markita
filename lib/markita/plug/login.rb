@@ -20,10 +20,10 @@ class Base
       if session[:id] == Login::ID
         redirect '/' if request.path_info == '/login.html'
       else
+        puts "#{request.ip} #{request.path_info}".magenta
         redirect '/login.html' unless request.path_info == '/login.html'
       end
     end
-    puts "#{request.ip} #{request.path_info}".magenta
   end
 
   get '/login.html' do

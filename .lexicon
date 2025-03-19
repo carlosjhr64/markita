@@ -27,6 +27,7 @@ blue
 bullet
 Bx
 call
+captures
 cell
 Certificate
 CGI
@@ -48,6 +49,7 @@ Dir
 directory
 dirname
 downcase
+dup
 e
 each
 each_with_index
@@ -122,8 +124,9 @@ initialize
 inline
 ip
 IPS
-is_a
 it
+IterationVariables
+iv
 Ix
 join
 key
@@ -137,6 +140,9 @@ level
 lex
 Lexer
 line
+line2captures
+line2rgx
+line2template
 list
 LIST
 LoadError
@@ -163,6 +169,7 @@ navigation
 Navigation
 NAVIGATION
 new
+next
 nil
 nl
 no_about
@@ -198,7 +205,6 @@ post_match
 preforms
 PREFORMS
 pre_match
-preprocess
 Preprocess
 push
 puts
@@ -207,6 +213,8 @@ raise
 read
 redirect
 REDTTY
+refine
+Refinement
 Regexp
 regx
 render
@@ -214,7 +222,6 @@ request
 require
 require_relative
 rgx
-rgx_set
 right
 root
 ROOT
@@ -261,8 +268,10 @@ start
 START_TIME
 string
 String
+string_getter
 StringIO
 strip
+Struct
 style
 sub
 submit
@@ -275,8 +284,6 @@ tables
 TABLES
 tag
 template
-template_line
-template_set
 text
 theme
 Theme
@@ -288,6 +295,7 @@ U
 upcase
 URL
 URLx
+using
 Ux
 value
 values
