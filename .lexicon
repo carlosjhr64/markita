@@ -1,6 +1,7 @@
 _
 _1
 About
+ABOUT_TEXT
 action
 align
 all
@@ -91,6 +92,7 @@ format
 Formatters
 forms
 FORMS
+freeze
 get
 gets
 glob
@@ -198,6 +200,7 @@ path
 PATH
 path_info
 PKey
+plugs
 port
 PORT
 post
