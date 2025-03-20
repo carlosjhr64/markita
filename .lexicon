@@ -83,7 +83,7 @@ filepath
 find
 finish
 fold
-FOLD
+Fold
 footer
 FOOTNOTE
 footnotes
@@ -107,9 +107,9 @@ HEADERS
 HelpParser
 hexdigest
 Highlight
+horizontal_rule
+HorizontalRule
 href
-hrs
-HRS
 html
 HTML
 html_markup
@@ -229,6 +229,7 @@ request
 require
 require_relative
 rgx
+RGX
 right
 root
 ROOT
@@ -243,6 +244,7 @@ RuntimeError
 S
 scan
 scope
+scrape4metadata
 script
 SCRIPT
 send_file

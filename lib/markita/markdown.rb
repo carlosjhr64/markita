@@ -262,34 +262,6 @@ class Markdown
     true
   end
 
-  # Fold with optional metadata
-  FOLD = /^[-.]{3} #/
-  PARSERS << :fold
-  METADATA = /^(\w+): (.*)$/
-  def fold
-    FOLD.match? @line or return false
-    @line = @file.gets
-    until FOLD.match?(@line)
-      if (md = METADATA.match(@line))
-        @metadata[md[1]] = md[2]
-      end
-      @line = @file.gets
-    end
-    @line = @file.gets
-    true
-  end
-
-  # Horizontal rule
-  HRS = /^---+$/
-  PARSERS << :hrs
-  def hrs
-    HRS.match? @line or return false
-    @line = @file.gets
-    # Display HR
-    @html << "<hr#{@attributes.shift}>\n"
-    true
-  end
-
   # Table
   TABLES = /^\|.+\|$/
   PARSERS << :tables
