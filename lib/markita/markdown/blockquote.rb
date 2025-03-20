@@ -9,8 +9,9 @@ module Markita
     class Blockquote
       RGX = /^( {0,3})> (.*)$/
 
-      def self.level_quote(mdt)
-        [mdt[1].length, mdt[2]] if mdt.is_a?(MatchData)
+      def self.level_quote(line)
+        mdt = RGX.match(line)
+        [mdt[1].length, mdt[2]] if mdt
       end
     end
 
@@ -18,23 +19,21 @@ module Markita
 
     # :reek:DuplicateMethodCall :reek:TooManyStatements
     # rubocop:disable Metrics/MethodLength
-    def blockquote(mdt = Blockquote::RGX.match(@line))
-      mdt or return false
+    def blockquote
+      return false unless (level, quote = Blockquote.level_quote(@line))
+
       @html << "<blockquote#{@attributes.shift}>\n"
-      level, quote = Blockquote.level_quote(mdt)
       current = level
       while current.eql?(level)
         @html << "#{inline(quote)}\n"
-        @line = @file.gets
-        mdt = Blockquote::RGX.match(@line)
-        current, quote = Blockquote.level_quote(mdt)
+        current, quote = Blockquote.level_quote(@line = @file.gets)
         next unless current&.>(level)
 
-        mdt = blockquote(mdt)
-        current, quote = Blockquote.level_quote(mdt)
+        blockquote
+        level, quote = Blockquote.level_quote(@line)
       end
       @html << "</blockquote>\n"
-      mdt || true
+      true
     end
     # rubocop:enable Metrics/MethodLength
   end

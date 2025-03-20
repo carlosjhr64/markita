@@ -134,7 +134,6 @@ inline
 ip
 ips
 IPS
-is_a
 it
 IterationVariables
 iv
@@ -170,7 +169,6 @@ markdown
 Markdown
 Markita
 match
-MatchData
 md
 mdt
 MDX
