@@ -7,6 +7,21 @@ module Markita
   class Markdown
     # Module to isolate from Markdown
     module CodeBlock
+      CodeBlock::RGX = /^ {4}(.*)$/
+    end
+
+    PARSERS << :code_block
+    def code_block
+      return false unless (md = CodeBlock::RGX.match(@line))
+
+      @html << "<pre#{@attributes.shift}>\n"
+      while md
+        @html << md[1]
+        @html << "\n"
+        md = CodeBlock::RGX.match(@line = @file.gets)
+      end
+      @html << "</pre>\n"
+      true
     end
   end
 end

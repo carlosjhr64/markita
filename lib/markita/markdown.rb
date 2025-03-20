@@ -229,21 +229,6 @@ class Markdown
     true
   end
 
-  # Preform
-  PREFORMS = /^ {4}(.*)$/
-  PARSERS << :preforms
-  def preforms
-    md = PREFORMS.match(@line) or return false
-    @html << "<pre#{@attributes.shift}>\n"
-    while md
-      @html << md[1]
-      @html << "\n"
-      md = (@line=@file.gets)&.match PREFORMS
-    end
-    @html << "</pre>\n"
-    true
-  end
-
   # Table
   TABLES = /^\|.+\|$/
   PARSERS << :tables

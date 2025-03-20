@@ -36,6 +36,7 @@ chomp
 class
 code
 CODE
+code_block
 CodeBlock
 codes
 CODES
@@ -216,8 +217,6 @@ port
 PORT
 post
 post_match
-preforms
-PREFORMS
 pre_match
 Preprocess
 push
