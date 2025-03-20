@@ -18,10 +18,12 @@ module Markita
     end
 
     PARSERS << :fold
+
     # Fold with optional metadata
     # :reek:DuplicateMethodCall ok here
     def fold
-      Fold::RGX.match?(@line) or return false
+      return false unless Fold::RGX.match?(@line)
+
       @line = @file.gets
       until Fold::RGX.match?(@line)
         @line = Fold.scrape4metadata(@line, @metadata, @file)

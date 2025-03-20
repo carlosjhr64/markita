@@ -13,7 +13,8 @@ module Markita
     # Horizontal rule
     PARSERS << :horizontal_rule
     def horizontal_rule
-      HorizontalRule::RGX.match?(@line) or return false
+      return false unless HorizontalRule::RGX.match?(@line)
+
       @line = @file.gets
       # Display HR
       @html << "<hr#{@attributes.shift}>\n"
