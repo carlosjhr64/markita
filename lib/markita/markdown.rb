@@ -213,24 +213,6 @@ class Markdown
     true
   end
 
-  # Block-quote
-  BLOCKQS = /^( {0,3})> (.*)$/
-  PARSERS << :blockqs
-  def blockqs(md=nil)
-    md ||= BLOCKQS.match(@line) or return false
-    level = md[1].length
-    @html << "<blockquote#{@attributes.shift}>\n"
-    while md && level==md[1].length
-      @html << inline(md[2])
-      @html << "\n"
-      next unless (md=(@line=@file.gets)&.match BLOCKQS) && level<md[1].length
-      blockqs(md)
-      md = @line&.match(BLOCKQS)
-    end
-    @html << "</blockquote>\n"
-    true
-  end
-
   # Code
   CODES = /^[`]{3}\s*(\w+)?$/
   PARSERS << :codes

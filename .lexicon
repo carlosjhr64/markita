@@ -22,8 +22,8 @@ before
 bind
 BIND
 block
-blockqs
-BLOCKQS
+blockquote
+Blockquote
 blue
 bullet
 Bx
@@ -36,10 +36,12 @@ chomp
 class
 code
 CODE
+CodeBlock
 codes
 CODES
 CODEx
 CSS
+current
 default
 definitions
 DEFINITIONS
@@ -64,6 +66,7 @@ EMPTY
 ENTITY
 ENTITYx
 entry
+eql
 escape
 exist
 exit
@@ -104,6 +107,7 @@ header
 HEADER_LINKS
 headers
 HEADERS
+Heading
 HelpParser
 hexdigest
 Highlight
@@ -119,6 +123,7 @@ I
 ICO
 id
 ID
+Image
 images
 IMAGES
 include
@@ -129,6 +134,7 @@ inline
 ip
 ips
 IPS
+is_a
 it
 IterationVariables
 iv
@@ -142,6 +148,7 @@ last
 left
 length
 level
+level_quote
 lex
 Lexer
 line
@@ -150,6 +157,7 @@ line2rgx
 line2template
 line_getter
 list
+List
 LIST
 LoadError
 Login
@@ -162,6 +170,7 @@ markdown
 Markdown
 Markita
 match
+MatchData
 md
 mdt
 MDX
@@ -216,6 +225,7 @@ Preprocess
 push
 puts
 pwd
+quote
 raise
 read
 redirect
