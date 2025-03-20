@@ -43,7 +43,7 @@ module Markita
     end
 
     def gets
-      while (line = @string_getter.gets)
+      while (line = @line_getter.gets)
         next if @iv.next?(line)
 
         return @iv.to_s
@@ -51,8 +51,8 @@ module Markita
       nil
     end
 
-    def initialize(string_getter)
-      @string_getter = string_getter
+    def initialize(line_getter)
+      @line_getter = line_getter
       @iv = IterationVariables.new
     end
   end
