@@ -58,16 +58,20 @@ Types:
 * HTML pass through on `/^<.*>$/` lines
 * And more...
 
-### Horizontal rule with meta-data
+### Meta-data
 
 * If `Title` is set via meta-data, the server will set the page's title to that
 * One can use numbers to reference long URLs
 ```markdown
----
+--- # The hashtag disambiguates the horizontal rule(legal YAML comment).
 Title: Markita
 1: https://github.com/carlosjhr64/markita
----
+... # The end marker is needed to end the fold
 [Markita](1)
+```
+### Horizontal rule
+```markdown
+---
 ```
 ### Attributes
 ```markdown
@@ -214,6 +218,9 @@ A selection list:
 ```
 ### Template substitutions
 ```markdown
+! regx = /^This (?<word>\w+)/
+This cat is a pussy&word;.
+
 ! template = "* [&query;](https://www.google.com/search?q=&QUERY;)"
 ! regx = /^\* (?<query>.*)$/
 * Grumpy Cat

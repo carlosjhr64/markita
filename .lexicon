@@ -82,6 +82,8 @@ filename
 filepath
 find
 finish
+fold
+FOLD
 footer
 FOOTNOTE
 footnotes
@@ -146,6 +148,7 @@ line
 line2captures
 line2rgx
 line2template
+line_getter
 list
 LIST
 LoadError
@@ -164,7 +167,7 @@ mdt
 MDX
 message
 metadata
-METADATAS
+METADATA
 method
 name
 named_captures
@@ -272,7 +275,6 @@ start
 START_TIME
 string
 String
-string_getter
 StringIO
 strip
 Struct

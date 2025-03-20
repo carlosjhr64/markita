@@ -262,30 +262,31 @@ class Markdown
     true
   end
 
-  # Meta-data
-  METADATAS = /^(\w+): (.*)$/
-  def metadata
-    md = METADATAS.match(@line) or return false
-    while md
-      @metadata[md[1]] = md[2]
-      md = (@line=@file.gets)&.match METADATAS
+  # Fold with optional metadata
+  FOLD = /^[-.]{3} #/
+  PARSERS << :fold
+  METADATA = /^(\w+): (.*)$/
+  def fold
+    FOLD.match? @line or return false
+    @line = @file.gets
+    while !FOLD.match?(@line)
+      if (md = METADATA.match(@line))
+        @metadata[md[1]] = md[2]
+      end
+      @line = @file.gets
     end
+    @line = @file.gets
     true
   end
 
-  # Horizontal rule or Meta-data
+  # Horizontal rule
   HRS = /^---+$/
   PARSERS << :hrs
   def hrs
     HRS.match? @line or return false
     @line = @file.gets
-    if metadata
-      # Optional closing HRS
-      @line = @file.gets if @line&.match? HRS
-    else
-      # Display HR
-      @html << "<hr#{@attributes.shift}>\n"
-    end
+    # Display HR
+    @html << "<hr#{@attributes.shift}>\n"
     true
   end
 
