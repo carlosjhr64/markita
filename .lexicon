@@ -107,7 +107,7 @@ Hash
 header
 HEADER_LINKS
 headers
-HEADERS
+heading
 Heading
 HelpParser
 hexdigest
@@ -148,6 +148,7 @@ last
 left
 length
 level
+level_header
 level_quote
 lex
 Lexer
@@ -177,6 +178,7 @@ message
 metadata
 METADATA
 method
+n
 name
 named_captures
 navigation

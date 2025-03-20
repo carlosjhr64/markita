@@ -7,7 +7,7 @@ module Markita
   class Markdown
     # Module to isolate from Markdown
     module CodeBlock
-      CodeBlock::RGX = /^ {4}(.*)$/
+      RGX = /^ {4}(.*)$/
     end
 
     PARSERS << :code_block

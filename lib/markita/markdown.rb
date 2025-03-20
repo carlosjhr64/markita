@@ -199,20 +199,6 @@ class Markdown
     true
   end
 
-  # Headers
-  HEADERS = /^(\#{1,6}) (.*)$/
-  PARSERS << :headers
-  def headers
-    md = HEADERS.match(@line) or return false
-    i,header = md[1].length,md[2]
-    id = header.gsub(/\([^()]*\)/,'').scan(/\w+/).join('+')
-    @html << %(<a id="#{id}">\n)
-    @html << "  <h#{i}#{@attributes.shift}>#{inline(header)}</h#{i}>\n"
-    @html << "</a>\n"
-    @line = @file.gets
-    true
-  end
-
   # Code
   CODES = /^[`]{3}\s*(\w+)?$/
   PARSERS << :codes
