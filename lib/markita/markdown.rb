@@ -267,33 +267,6 @@ class Markdown
     true
   end
 
-  # Image
-  IMAGES = /^!\[([^\[\]]+)\]\(([^()]+)\)$/
-  PARSERS << :images
-  def images
-    md = IMAGES.match(@line) or return false
-    alt,src,href=md[1],*md[2].strip.split(/\s+/,2)
-    style = ' '
-    case alt
-    when /^:.*:$/
-      style =
-      %( style="display: block; margin-left: auto; margin-right: auto;" )
-    when /:$/
-      style = %( style="float:left;" )
-    when /^:/
-      style = %( style="float:right;" )
-    end
-    if /(\d+)x(\d+)/.match alt
-      style << %(width="#{$1}" height="#{$2}" )
-    end
-    @html << %(<a href="#{href}">\n) if href
-    @html <<
-      %(<img src="#{src}"#{style}alt="#{alt.strip}"#{@attributes.shift}>\n)
-    @html << %(</a>\n) if href
-    @line = @file.gets
-    true
-  end
-
   # Embed text
   EMBED_TEXTS = /^!> (#{PAGE_KEY}\.\w+)$/
   PARSERS << :embed_texts
