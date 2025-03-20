@@ -269,7 +269,7 @@ class Markdown
   def fold
     FOLD.match? @line or return false
     @line = @file.gets
-    while !FOLD.match?(@line)
+    until FOLD.match?(@line)
       if (md = METADATA.match(@line))
         @metadata[md[1]] = md[2]
       end
