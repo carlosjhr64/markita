@@ -18,12 +18,12 @@ require_relative 'preprocess'
 require_relative 'markdown'
 require_relative 'base'
 # Plugs
-require_relative 'plug/about'      unless OPTIONS.no_about
-require_relative 'plug/favicon'    unless OPTIONS.no_favicon
-require_relative 'plug/highlight'  unless OPTIONS.no_highlight
-require_relative 'plug/login'      unless OPTIONS.no_login
-require_relative 'plug/navigation' unless OPTIONS.no_navigation
-require_relative 'plug/plugs'      unless OPTIONS.no_plugs
-require_relative 'plug/readme'     unless OPTIONS.no_readme
+require_relative 'plug/about'      unless OPTIONS.no_about?
+require_relative 'plug/favicon'    unless OPTIONS.no_favicon?
+require_relative 'plug/highlight'  unless OPTIONS.no_highlight?
+require_relative 'plug/login'      unless OPTIONS.no_login?
+require_relative 'plug/navigation' unless OPTIONS.no_navigation?
+require_relative 'plug/plugs'      unless OPTIONS.no_plugs?
+require_relative 'plug/readme'     unless OPTIONS.no_readme?
 # Requires:
 # `ruby`
