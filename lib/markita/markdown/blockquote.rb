@@ -17,6 +17,7 @@ module Markita
 
     PARSERS << :blockquote
 
+    # category: method
     # :reek:DuplicateMethodCall :reek:TooManyStatements
     # rubocop:disable Metrics/MethodLength
     def blockquote

@@ -10,8 +10,9 @@ module Markita
       RGX = /^---+$/
     end
 
-    # Horizontal rule
     PARSERS << :horizontal_rule
+
+    # category: method
     def horizontal_rule
       return false unless HorizontalRule::RGX.match?(@line)
 

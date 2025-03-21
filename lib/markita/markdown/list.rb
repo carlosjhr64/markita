@@ -37,6 +37,7 @@ module Markita
 
     PARSERS << :list
 
+    # category: method
     # :reek:DuplicateMethodCall :reek:TooManyStatements
     # rubocop:disable Metrics/MethodLength
     # rubocop:disable Metrics/AbcSize
