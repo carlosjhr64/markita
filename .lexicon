@@ -85,7 +85,6 @@ fh
 field
 FIELD
 fields
-FIELDS
 file
 File
 filename
@@ -101,11 +100,11 @@ FOOTNOTE
 footnotes
 Footnotes
 FOOTNOTEx
+form
+Form
 FORM
 format
 Formatters
-forms
-FORMS
 freeze
 get
 gets
