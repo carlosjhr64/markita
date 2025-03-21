@@ -138,39 +138,6 @@ class Markdown
     string.sub(/ ?[ \\]$/,'<br>')
   end
 
-  # Table
-  TABLES = /^\|.+\|$/
-  PARSERS << :tables
-  def tables
-    TABLES.match? @line or return false
-    @html << "<table#{@attributes.shift}>\n"
-    @html << "<thead#{@attributes.shift}><tr><th>"
-    @html << @line[1...-1].split('|').map{inline(_1.strip)}.join('</th><th>')
-    @html << "</th></tr></thead>\n"
-    align = []
-    while (@line=@file.gets)&.match? TABLES
-      @html << '<tr>'
-      @line[1...-1].split('|').each_with_index do |cell, i|
-        case cell
-        when /^\s*:-+:\s*$/
-          align[i] = ' align="center"'
-          @html << '<td><hr></td>'
-        when /^\s*-+:\s*$/
-          align[i] = ' align="right"'
-          @html << '<td><hr></td>'
-        when /^\s*:-+\s*$/
-          align[i] = ' align="left"'
-          @html << '<td><hr></td>'
-        else
-          @html << "<td#{align[i]}>#{inline(cell.strip)}</td>"
-        end
-      end
-      @html << "</tr>\n"
-    end
-    @html << "</table>\n"
-    true
-  end
-
   # Splits
   SPLITS = /^:?\|:?$/
   PARSERS << :splits
