@@ -138,15 +138,6 @@ class Markdown
     string.sub(/ ?[ \\]$/,'<br>')
   end
 
-  # Empty
-  EMPTY = /^$/
-  PARSERS << :empty
-  def empty
-    EMPTY.match?(@line) or return false
-    @line = @file.gets
-    true
-  end
-
   # Definition list
   DEFINITIONS = /^[+] (.*)$/
   PARSERS << :definitions
