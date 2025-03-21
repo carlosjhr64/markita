@@ -138,25 +138,6 @@ class Markdown
     string.sub(/ ?[ \\]$/,'<br>')
   end
 
-  # Splits
-  SPLITS = /^:?\|:?$/
-  PARSERS << :splits
-  def splits
-    SPLITS.match? @line or return false
-    case @line.chomp
-    when '|:'
-      @html << %(<table><tr><td#{@attributes.shift}>\n)
-    when '|'
-      @html << %(</td><td#{@attributes.shift}>\n)
-    when ':|:'
-      @html << %(</td></tr><tr><td#{@attributes.shift}>\n)
-    when ':|'
-      @html << %(</td></tr></table>\n)
-    end
-    @line = @file.gets
-    true
-  end
-
   # Embed text
   EMBED_TEXTS = /^!> (#{PAGE_KEY}\.\w+)$/
   PARSERS << :embed_texts
