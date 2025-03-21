@@ -3,6 +3,7 @@ _1
 About
 ABOUT_TEXT
 action
+ACTION
 align
 all
 allowed
@@ -44,6 +45,7 @@ code_block
 CodeBlock
 CODEx
 continue
+count
 CSS
 current
 default
@@ -84,7 +86,6 @@ Favicon
 fh
 field
 FIELD
-fields
 file
 File
 filename
@@ -138,6 +139,7 @@ INDEX
 init
 initialize
 inline
+input
 ip
 ips
 IPS
@@ -194,7 +196,6 @@ NAVIGATION
 new
 next
 nil
-nl
 no_about
 no_favicon
 no_highlight
@@ -227,6 +228,7 @@ plugs
 port
 PORT
 post
+POST
 post_match
 pre_match
 Preprocess
@@ -296,6 +298,7 @@ SSLVerifyClient
 StandardError
 start
 START_TIME
+stop
 string
 String
 StringIO
@@ -303,7 +306,6 @@ strip
 Struct
 style
 sub
-submit
 SUBSCRIPT
 SUBSCRIPTx
 SUPERSCRIPT
@@ -312,6 +314,7 @@ Sx
 table
 Table
 tag
+tap
 template
 term
 text
