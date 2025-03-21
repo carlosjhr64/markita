@@ -138,16 +138,6 @@ class Markdown
     string.sub(/ ?[ \\]$/,'<br>')
   end
 
-  # Attributes
-  ATTRIBUTES = /^\{:( [^\{\}]+)\}/
-  PARSERS << :attributes
-  def attributes
-    md = ATTRIBUTES.match(@line) or return false
-    @attributes.push md[1]
-    @line = md.post_match
-    true
-  end
-
   # Script
   SCRIPT = /^<script/
   PARSERS << :script
