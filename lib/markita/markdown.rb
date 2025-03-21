@@ -138,22 +138,6 @@ class Markdown
     string.sub(/ ?[ \\]$/,'<br>')
   end
 
-  # Code
-  CODES = /^[`]{3}\s*(\w+)?$/
-  PARSERS << :codes
-  def codes
-    md = CODES.match(@line) or return false
-    lang = Rouge::Lexer.find md[1]
-    klass = lang ? ' class="highlight"' : nil
-    @html << "<pre#{klass}#{@attributes.shift}><code>\n"
-    code = ''
-    code << @line while (@line=@file.gets) && !CODES.match?(@line)
-    @html << (lang ? ROUGE.format(lang.new.lex(code)) : code)
-    @html << "</code></pre>\n"
-    @line = @file.gets if @line # then it's code close and thus need next @line.
-    true
-  end
-
   # Table
   TABLES = /^\|.+\|$/
   PARSERS << :tables

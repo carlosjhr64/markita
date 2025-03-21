@@ -38,11 +38,10 @@ check
 chomp
 class
 code
+Code
 CODE
 code_block
 CodeBlock
-codes
-CODES
 CODEx
 CSS
 current
@@ -149,6 +148,7 @@ Ix
 join
 key
 klass
+klass_lang
 lambda
 lang
 last
