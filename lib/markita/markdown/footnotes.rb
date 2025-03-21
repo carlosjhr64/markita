@@ -1,0 +1,29 @@
+# frozen_string_literal: true
+
+# Markita top level namespace
+module Markita
+  using Refinement
+  # Markdown namespace
+  # :reek:InstanceVariableAssumption in markdown.rb
+  class Markdown
+    # Module to isolate from Markdown
+    module Footnotes
+      RGX = /^\[\^\d+\]:/
+    end
+
+    PARSERS << :footnotes
+
+    # :reek:TooManyStatements
+    def footnotes
+      return false unless (continue = Footnotes::RGX.match?(@line))
+
+      @html << "<small>\n"
+      while continue
+        @html << "#{inline(@line.chomp)}<br>\n"
+        continue = Footnotes::RGX.match?(@line = @file.gets)
+      end
+      @html << "</small>\n"
+      true
+    end
+  end
+end

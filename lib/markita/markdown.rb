@@ -138,20 +138,6 @@ class Markdown
     string.sub(/ ?[ \\]$/,'<br>')
   end
 
-  # Footnotes
-  FOOTNOTES = /^\[\^\d+\]:/
-  PARSERS << :footnotes
-  def footnotes
-    md = FOOTNOTES.match(@line) or return false
-    @html << "<small>\n"
-    while md
-      @html << inline(@line.chomp)+"<br>\n"
-      md = (@line=@file.gets)&.match FOOTNOTES
-    end
-    @html << "</small>\n"
-    true
-  end
-
   # Attributes
   ATTRIBUTES = /^\{:( [^\{\}]+)\}/
   PARSERS << :attributes
