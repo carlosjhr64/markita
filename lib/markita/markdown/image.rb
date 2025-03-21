@@ -14,6 +14,7 @@ module Markita
         [mdt[1], *mdt[2].strip.split(/\s+/, 2)] if mdt
       end
 
+      # :reek:ControlParameter
       def self.style(alt)
         case alt
         when /^:.*:$/
@@ -44,6 +45,7 @@ module Markita
 
     PARSERS << :images
 
+    # :reek:TooManyStatements
     def images
       return false unless (alt, src, href = Image.attributes(@line))
 

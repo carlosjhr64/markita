@@ -12,6 +12,7 @@ module Markita
 
     PARSERS << :code_block
 
+    # :reek:TooManyStatements
     def code_block
       return false unless (md = CodeBlock::RGX.match(@line))
 

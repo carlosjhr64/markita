@@ -17,6 +17,7 @@ module Markita
 
     PARSERS << :heading
 
+    # :reek:TooManyStatements :reek:UncommunicativeVariableName
     def heading
       return false unless (n, header = Heading.level_header(@line))
 

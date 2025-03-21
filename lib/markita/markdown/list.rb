@@ -7,9 +7,11 @@ module Markita
   class Markdown
     # Module to isolate from Markdown
     module List
+      # rubocop:disable Lint/MixedRegexpCaptureTypes
       RGX = /^(?<spaces>\s{0,3})
               (?<bullet>[*]|(\d+\.)|(-\s\[(\s|x)\]))
               \s(?<text>\S.*)$/x
+      # rubocop:enable Lint/MixedRegexpCaptureTypes
 
       def self.level_bullet_text(line)
         mdt = RGX.match(line)
