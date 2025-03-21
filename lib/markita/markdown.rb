@@ -147,36 +147,6 @@ class Markdown
     true
   end
 
-  # List
-  LIST = /^(?<spaces> {0,3})(?<bullet>[*]|(\d+\.)|(- \[( |x)\])) (?<text>\S.*)$/
-  PARSERS << :list
-  def list(md=nil)
-    md ||= LIST.match(@line) or return false
-    level = md[:spaces].length
-    list = md[:bullet][0]=~/\d/ ? 'ol' : 'ul'
-    @html << "<#{list}#{@attributes.shift}>\n"
-    loop do
-      style = case md[:bullet][3]
-              when ' '
-                %q( style="list-style-type: '&#9744; '")
-              when 'x'
-                %q( style="list-style-type: '&#9745; '")
-              else
-                ''
-              end
-      @html << "  <li#{style}>#{inline(md[:text])}</li>\n"
-      if (md=(@line=@file.gets)&.match LIST) && level<md[:spaces].length
-        list(md)
-        md = @line&.match(LIST)
-      end
-      break unless md &&
-                   (level == md[:spaces].length) &&
-                   (list == (md[:bullet][0]=~/\d/ ? 'ol' : 'ul'))
-    end
-    @html << "</#{list}>\n"
-    true
-  end
-
   # Definition list
   DEFINITIONS = /^[+] (.*)$/
   PARSERS << :definitions

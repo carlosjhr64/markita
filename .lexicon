@@ -11,6 +11,7 @@ anchor
 APPDATA
 APPDIR
 ARGV
+att
 attributes
 ATTRIBUTES
 Ax
@@ -32,6 +33,7 @@ captures
 cell
 Certificate
 CGI
+check
 chomp
 class
 code
@@ -126,7 +128,7 @@ id
 ID
 Image
 images
-IMAGES
+img_src
 include
 INDEX
 init
@@ -148,6 +150,7 @@ last
 left
 length
 level
+level_bullet_text
 level_header
 level_quote
 lex
@@ -159,7 +162,6 @@ line2template
 line_getter
 list
 List
-LIST
 LoadError
 Login
 loop
@@ -269,6 +271,7 @@ set
 SHA256
 shift
 Sinatra
+size
 spaces
 split
 splits
@@ -319,4 +322,5 @@ values
 VERIFY_NONE
 VERSION
 warn
+x
 X509
