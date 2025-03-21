@@ -4,6 +4,19 @@
 module Markita
   # Utility methods as refinements
   module Refinement
+    refine Enumerable do
+      def first_truthy_value
+        each { (truthy = yield it) and return truthy }
+        nil
+      end
+    end
+
+    refine Object do
+      def as
+        yield self
+      end
+    end
+
     refine String do
       def template(named_captures)
         template = dup

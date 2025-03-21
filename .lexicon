@@ -11,6 +11,7 @@ anchor
 APPDATA
 APPDIR
 ARGV
+as
 att
 attributes
 ATTRIBUTES
@@ -46,8 +47,9 @@ CODEx
 CSS
 current
 default
+definition
 definitions
-DEFINITIONS
+Definitions
 detect
 Digest
 __dir__
@@ -65,10 +67,11 @@ EMOJI
 EMOJIS
 EMOJIx
 empty
-EMPTY
+Empty
 ENTITY
 ENTITYx
 entry
+Enumerable
 eql
 escape
 exist
@@ -88,6 +91,8 @@ filename
 filepath
 find
 finish
+first
+first_truthy_value
 fold
 Fold
 footer
@@ -201,6 +206,7 @@ not_found
 NotFound
 NOT_FOUND
 now
+Object
 open
 OpenSSL
 options
@@ -215,6 +221,7 @@ pass
 path
 PATH
 path_info
+phrase
 PKey
 plugs
 port
@@ -258,8 +265,10 @@ scope
 scrape4metadata
 script
 SCRIPT
+second
 send_file
 SEND_FILE
+sep
 server
 SERVER
 SERVER_CONFIG
@@ -304,12 +313,14 @@ tables
 TABLES
 tag
 template
+term
 text
 theme
 Theme
 Time
 title
 to_s
+truthy
 type
 U
 upcase

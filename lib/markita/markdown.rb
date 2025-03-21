@@ -138,28 +138,6 @@ class Markdown
     string.sub(/ ?[ \\]$/,'<br>')
   end
 
-  # Definition list
-  DEFINITIONS = /^[+] (.*)$/
-  PARSERS << :definitions
-  def definitions
-    md = DEFINITIONS.match(@line) or return false
-    @html << "<dl#{@attributes.shift}>\n"
-    while md
-      case md[1]
-      when /(.*): (.*)$/
-        @html << "<dt>#{inline $1.strip}</dt>\n"
-        @html << "<dd>#{inline $2.strip}</dd>\n"
-      when /(.*):$/
-        @html << "<dt>#{inline $1.strip}</dt>\n"
-      else
-        @html << "<dd>#{inline md[1].strip}</dd>\n"
-      end
-      md = (@line=@file.gets)&.match DEFINITIONS
-    end
-    @html << "</dl>\n"
-    true
-  end
-
   # Code
   CODES = /^[`]{3}\s*(\w+)?$/
   PARSERS << :codes
