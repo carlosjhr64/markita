@@ -138,16 +138,6 @@ class Markdown
     string.sub(/ ?[ \\]$/,'<br>')
   end
 
-  # Html
-  HTML_MARKUP = /^ {0,3}<.*>$/
-  PARSERS << :html_markup
-  def html_markup
-    HTML_MARKUP.match(@line) or return false
-    @html << @line
-    @line = @file.gets
-    true
-  end
-
   # Forms
   FIELD = '(\w+:)?\[(\*)?(\w+)(=("[^"]+")(,"[^"]+")*)?\]'
   FIELDS = Regexp.new FIELD
