@@ -138,20 +138,6 @@ class Markdown
     string.sub(/ ?[ \\]$/,'<br>')
   end
 
-  # Script
-  SCRIPT = /^<script/
-  PARSERS << :script
-  def script
-    SCRIPT.match(@line) or return false
-    @html << @line
-    while (@line=@file.gets)
-      @html << @line
-      break if %r{^</script>}.match?(@line)
-    end
-    @line = @file.gets if @line
-    true
-  end
-
   # Html
   HTML_MARKUP = /^ {0,3}<.*>$/
   PARSERS << :html_markup

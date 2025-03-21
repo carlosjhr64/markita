@@ -265,7 +265,7 @@ scan
 scope
 scrape4metadata
 script
-SCRIPT
+Script
 second
 send_file
 SEND_FILE
