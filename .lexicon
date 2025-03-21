@@ -60,8 +60,8 @@ dup
 e
 each
 each_with_index
-embed_texts
-EMBED_TEXTS
+embed
+Embed
 EMOJI
 EMOJIS
 EMOJIx
@@ -77,6 +77,7 @@ exist
 exit
 expand_path
 extension
+ext_klass_lang
 FAILED
 Favicon
 fh
@@ -151,7 +152,6 @@ klass
 klass_lang
 lambda
 lang
-last
 left
 length
 level

@@ -49,7 +49,7 @@ module Markita
 
   EMOJIS = Hash[*File.read(PATH['emojis.tsv']).split(/\s+/)]
 
-  PAGE_KEY  = %r{/(\w[\w/-]*\w)}
+  PAGE_KEY  = %r{/(\w[\w/-]*\w)} # Note that it starts with a slash
   SEND_FILE = %r{/(\w[\w/-]*\w\.\w+)}
 
   START_TIME = Time.now
