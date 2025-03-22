@@ -2,7 +2,6 @@
 
 # Markita top level namespace
 module Markita
-  using Refinement
   # Markdown namespace
   # :reek:InstanceVariableAssumption in markdown.rb
   class Markdown
