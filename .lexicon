@@ -180,6 +180,7 @@ Markdown
 Markita
 Markup
 match
+maybe
 md
 mdt
 MDX
@@ -196,6 +197,8 @@ NAVIGATION
 new
 next
 nil
+no
+NO
 no_about
 no_favicon
 no_highlight
@@ -306,6 +309,7 @@ strip
 Struct
 style
 sub
+submit
 SUBSCRIPT
 SUBSCRIPTx
 SUPERSCRIPT
@@ -338,3 +342,6 @@ VERSION
 warn
 x
 X509
+yes
+YES
+yn

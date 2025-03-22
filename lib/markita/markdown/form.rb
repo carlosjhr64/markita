@@ -24,9 +24,9 @@ module Markita
           elsif values.count > 1
             %(  #{field}:<select name="#{name}">\n).tap do |html|
               values.each do |value|
-                html << %(  <option value="#{value}">#{value}</option>\n)
+                html << %(    <option value="#{value}">#{value}</option>\n)
               end
-              html << "</select>\n"
+              html << "  </select>\n"
             end
           else
             <<-INPUT
@@ -42,6 +42,14 @@ module Markita
       end
 
       def self.match?(line) = RGX.match?(line)
+
+      # :reek:ControlParameter :reek:NilCheck
+      def self.maybe(maybe, field, name)
+        return :NO if maybe == :NO || (field.nil? && name == 'submit')
+        return maybe unless field
+
+        maybe == :yes ? :no : :YES
+      end
 
       # :reek:LongYieldList :reek:TooManyStatements
       def self.scan(line)
@@ -60,6 +68,18 @@ module Markita
       end
 
       def self.stop = %(</form>\n)
+
+      # :reek:ControlParameter
+      def self.submit(maybe)
+        case maybe
+        when :yes
+          %(  <input type="submit">\n)
+        when :YES
+          %(  <br>\n  <input type="submit">\n)
+        else
+          ''
+        end
+      end
     end
 
     PARSERS << :form
@@ -69,15 +89,18 @@ module Markita
     def form
       return false unless Form.match?(@line)
 
+      yn = :yes # Append submit button?
       @html << Form.start(@line, @attributes)
       loop do
         Form.scan(@line) do |field, type, name, values|
+          yn = Form.maybe(yn, field, name)
           @html << Form.input(type, field, name, values)
         end
         break unless Form.match?(@line = @file.gets)
 
         @html << "  <br>\n"
       end
+      @html << Form.submit(yn)
       @html << Form.stop
       true
     end
