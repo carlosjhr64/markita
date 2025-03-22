@@ -140,6 +140,11 @@ init
 initialize
 inline
 input
+input_defaulted
+input_hidden
+input_select
+input_submit
+input_text
 ip
 ips
 IPS

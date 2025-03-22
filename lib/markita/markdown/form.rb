@@ -14,31 +14,47 @@ module Markita
       POST = /!$/
       ACTION = /\(([^()]*)\)!?$/
 
-      # :reek:LongParameterList :reek:DuplicateMethodCall
-      # :reek:TooManyStatements
-      # rubocop:disable Metrics/MethodLength, Metrics/PerceivedComplexity
+      def self.input_select(field, name, values)
+        %(  #{field}:<select name="#{name}">\n).tap do |html|
+          values.each do |value|
+            html << %(    <option value="#{value}">#{value}</option>\n)
+          end
+          html << "  </select>\n"
+        end
+      end
+
+      def self.input_text(field, type, name)
+        %(  #{field}:<input type="#{type}" name="#{name}">\n)
+      end
+
+      # :reek:LongParameterList :reek:TooManyStatements
       def self.input(type, field, name, values)
         if field
-          if values.empty?
-            %(  #{field}:<input type="#{type}" name="#{name}">\n)
-          elsif values.count > 1
-            %(  #{field}:<select name="#{name}">\n).tap do |html|
-              values.each do |value|
-                html << %(    <option value="#{value}">#{value}</option>\n)
-              end
-              html << "  </select>\n"
-            end
+          if values.empty? then input_text(field, type, name)
+          elsif values.count > 1 then input_select(field, name, values)
           else
-            <<-INPUT
+            input_defaulted(field, type, name, values)
+          end
+        elsif name == 'submit' then input_submit(values)
+        else
+          input_hidden(name, values)
+        end
+      end
+
+      def self.input_submit(values)
+        %(  <input type="submit" value="#{values[0] || 'Submit'}">\n)
+      end
+
+      def self.input_hidden(name, values)
+        %(  <input type="hidden" name="#{name}" value="#{values[0]}">\n)
+      end
+
+      # :reek:LongParameterList
+      def self.input_defaulted(field, type, name, values)
+        <<-INPUT
   #{field}:<input type="#{type}" name="#{name}"
     value="#{values[0]}">
-            INPUT
-          end
-        elsif name == 'submit'
-          %(  <input type="submit" value="#{values[0] || 'Submit'}">\n)
-        else
-          %(  <input type="hidden" name="#{name}" value="#{values[0]}">\n)
-        end
+        INPUT
       end
 
       def self.match?(line) = RGX.match?(line)
@@ -86,6 +102,7 @@ module Markita
 
     # category: method
     # :reek:TooManyStatements
+    # rubocop:disable Metrics/MethodLength
     def form
       return false unless Form.match?(@line)
 
@@ -104,6 +121,6 @@ module Markita
       @html << Form.stop
       true
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/PerceivedComplexity
+    # rubocop:enable Metrics/MethodLength
   end
 end
