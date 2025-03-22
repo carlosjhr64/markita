@@ -17,7 +17,7 @@ module Markita
 
       # :reek:TooManyStatements
       def self.ext_klass_lang(filename, lang = nil)
-        extension = filename.split('.')
+        extension = filename.split('.').last
         unless extension == 'html'
           lang = Rouge::Lexer.find(extension) unless extension == 'txt'
           klass = lang ? ' class="highlight"' : ''
