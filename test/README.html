@@ -13,7 +13,7 @@
   <h1>Markita</h1>
 </a>
 <ul>
-  <li><a href="https://github.com/carlosjhr64/markita/releases">VERSION 5.0.250319</a></li>
+  <li><a href="https://github.com/carlosjhr64/markita/releases">VERSION 6.0.250321</a></li>
   <li><a href="https://www.github.com/carlosjhr64/markita">github</a></li>
   <li><a href="https://rubygems.org/gems/markita">rubygems</a></li>
 </ul>
@@ -80,20 +80,26 @@ Types:
   <li>HTML pass through on <code>/^&lt;.*>$/</code> lines</li>
   <li>And more...</li>
 </ul>
-<a id="Horizontal+rule+with+meta+data">
-  <h3>Horizontal rule with meta-data</h3>
+<a id="Meta+data">
+  <h3>Meta-data</h3>
 </a>
 <ul>
   <li>If <code>Title</code> is set via meta-data, the server will set the page's title to that</li>
   <li>One can use numbers to reference long URLs</li>
 </ul>
 <pre class="highlight"><code>
-<span class="nn">---</span>
-<span class="na">Title</span><span class="pi">:</span> <span class="s">Markita</span>
-<span class="na">1</span><span class="pi">:</span> <span class="s">https://github.com/carlosjhr64/markita</span>
-<span class="nn">---</span>
+--- # The hashtag disambiguates the horizontal rule(legal YAML comment).
+Title: Markita
+1: https://github.com/carlosjhr64/markita
+... # The end marker is needed to end the fold
 <span class="p">[</span><span class="nv">Markita</span><span class="p">](</span><span class="sx">1</span><span class="p">)</span>
 </code></pre>
+<a id="Horizontal+rule">
+  <h3>Horizontal rule</h3>
+</a>
+<pre class="highlight"><code>
+<span class="p">---
+</span></code></pre>
 <a id="Attributes">
   <h3>Attributes</h3>
 </a>
@@ -266,7 +272,9 @@ A selection list:
   <h3>Template substitutions</h3>
 </a>
 <pre class="highlight"><code>
-<span class="p">*</span> <span class="p">[</span><span class="nv">Grumpy Cat</span><span class="p">](</span><span class="sx">https://www.google.com/search?q=Grumpy+Cat</span><span class="p">)</span>
+This cat is a pussycat.
+<span class="p">
+*</span> <span class="p">[</span><span class="nv">Grumpy Cat</span><span class="p">](</span><span class="sx">https://www.google.com/search?q=Grumpy+Cat</span><span class="p">)</span>
 <span class="p">*</span> <span class="p">[</span><span class="nv">It's over 9000!</span><span class="p">](</span><span class="sx">https://www.google.com/search?q=It%27s+over+9000%21</span><span class="p">)</span>
 </code></pre>
 <p>

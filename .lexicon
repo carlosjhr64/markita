@@ -153,6 +153,7 @@ klass
 klass_lang
 lambda
 lang
+last
 left
 length
 level
@@ -344,4 +345,4 @@ x
 X509
 yes
 YES
-yn
+yon

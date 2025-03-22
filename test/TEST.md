@@ -1,7 +1,7 @@
----
+--- #
 Title: Testing
 1: https://www.yahoo.com
----
+... #
 # [Test](1)
 |:
 1. One
@@ -52,7 +52,8 @@ end
 ! Username:[user] Password:[*pwd](/login.html)!
 
 ! Name:[name] (/register.html)!
-! Address:[address] [*submit="Register!"]
+! Address:[address]
+! [submit="Register!"]
 {: style="color: blue;"}
 Am I blue?
 Oh so blue!!!

@@ -43,12 +43,12 @@ module Markita
 
       def self.match?(line) = RGX.match?(line)
 
-      # :reek:ControlParameter :reek:NilCheck
-      def self.maybe(maybe, field, name)
-        return :NO if maybe == :NO || (field.nil? && name == 'submit')
-        return maybe unless field
+      # :reek:ControlParameter :reek:NilCheck :reek:LongParameterList
+      def self.maybe(yon, name, field, values)
+        return :NO if yon == :NO || (field.nil? && name == 'submit')
+        return yon unless field && values.count < 2
 
-        maybe == :yes ? :no : :YES
+        yon == :yes ? :no : :YES
       end
 
       # :reek:LongYieldList :reek:TooManyStatements
@@ -70,8 +70,8 @@ module Markita
       def self.stop = %(</form>\n)
 
       # :reek:ControlParameter
-      def self.submit(maybe)
-        case maybe
+      def self.submit(yon)
+        case yon
         when :yes
           %(  <input type="submit">\n)
         when :YES
@@ -89,18 +89,18 @@ module Markita
     def form
       return false unless Form.match?(@line)
 
-      yn = :yes # Append submit button?
+      yon = :yes # Append submit button?
       @html << Form.start(@line, @attributes)
       loop do
         Form.scan(@line) do |field, type, name, values|
-          yn = Form.maybe(yn, field, name)
+          yon = Form.maybe(yon, name, field, values)
           @html << Form.input(type, field, name, values)
         end
         break unless Form.match?(@line = @file.gets)
 
         @html << "  <br>\n"
       end
-      @html << Form.submit(yn)
+      @html << Form.submit(yon)
       @html << Form.stop
       true
     end
