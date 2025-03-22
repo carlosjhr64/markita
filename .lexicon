@@ -12,7 +12,6 @@ anchor
 APPDATA
 APPDIR
 ARGV
-as
 att
 attributes
 Attributes
@@ -73,7 +72,6 @@ Empty
 ENTITY
 ENTITYx
 entry
-Enumerable
 eql
 escape
 exist
@@ -93,7 +91,6 @@ filepath
 find
 finish
 first
-first_truthy_value
 fold
 Fold
 footer
@@ -139,6 +136,7 @@ INDEX
 init
 initialize
 inline
+Inline
 input
 input_defaulted
 input_hidden
@@ -216,7 +214,6 @@ not_found
 NotFound
 NOT_FOUND
 now
-Object
 open
 OpenSSL
 options
@@ -333,7 +330,6 @@ Theme
 Time
 title
 to_s
-truthy
 type
 U
 upcase
