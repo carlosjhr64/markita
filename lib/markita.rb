@@ -2,7 +2,7 @@
 
 # Markita top level namespace
 module Markita
-  VERSION = '6.0.250322'
+  VERSION = '6.0.250323'
 
   def self.run!
     require_relative 'markita/requires'
