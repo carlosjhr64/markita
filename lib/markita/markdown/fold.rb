@@ -25,11 +25,11 @@ module Markita
       return false unless Fold::RGX.match?(@line)
 
       # Fold with optional metadata
-      @line = @file.gets
+      @line = @string_getter.gets
       until Fold::RGX.match?(@line)
-        @line = Fold.scrape4metadata(@line, @metadata, @file)
+        @line = Fold.scrape4metadata(@line, @metadata, @string_getter)
       end
-      @line = @file.gets
+      @line = @string_getter.gets
       true
     end
   end

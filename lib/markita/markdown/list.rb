@@ -49,7 +49,7 @@ module Markita
       loop do
         style = List.style(bullet[3])
         @html << "  <li#{style}>#{inline(text)}</li>\n"
-        current, bullet, text = List.level_bullet_text(@line = @file.gets)
+        current, bullet, text = List.level_bullet_text(line_gets)
         if current&.>(level)
           list
           current, bullet, text = List.level_bullet_text(@line)

@@ -16,7 +16,7 @@ module Markita
     def horizontal_rule
       return false unless HorizontalRule::RGX.match?(@line)
 
-      @line = @file.gets
+      @line = @string_getter.gets
       # Display HR
       @html << "<hr#{@attributes.shift}>\n"
       true

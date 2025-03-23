@@ -53,7 +53,7 @@ module Markita
       @html << %(<a href="#{href}">\n) if href
       @html << Image.img_src(src, alt, @attributes)
       @html << %(</a>\n) if href
-      @line = @file.gets
+      @line = @string_getter.gets
       true
     end
   end

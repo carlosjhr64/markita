@@ -35,9 +35,9 @@ module Markita
       return false unless (klass, lang = Code.klass_lang(@line))
 
       @html << "<pre#{klass}#{@attributes.shift}><code>\n"
-      @html << Code.code(@file, lang)
+      @html << Code.code(@string_getter, lang)
       @html << "</code></pre>\n"
-      @line = @file.gets
+      @line = @string_getter.gets
       true
     end
   end

@@ -310,6 +310,7 @@ strike
 STRIKE
 string
 String
+string_getter
 StringIO
 strip
 Struct

@@ -27,7 +27,7 @@ module Markita
       current = level
       while current.eql?(level)
         @html << "#{inline(quote)}\n"
-        current, quote = Blockquote.level_quote(@line = @file.gets)
+        current, quote = Blockquote.level_quote(@line = @string_getter.gets)
         next unless current&.>(level)
 
         blockquote

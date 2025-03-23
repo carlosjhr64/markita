@@ -16,7 +16,7 @@ module Markita
       return false unless Markup::RGX.match(@line)
 
       @html << @line
-      @line = @file.gets
+      @line = @string_getter.gets
       true
     end
   end

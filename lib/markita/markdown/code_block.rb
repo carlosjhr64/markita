@@ -20,7 +20,7 @@ module Markita
       @html << "<pre#{@attributes.shift}>\n"
       while md
         @html << "#{md[1]}\n"
-        md = CodeBlock::RGX.match(@line = @file.gets)
+        md = CodeBlock::RGX.match(@line = @string_getter.gets)
       end
       @html << "</pre>\n"
       true

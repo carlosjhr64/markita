@@ -31,7 +31,7 @@ module Markita
         term, definition = Definitions.split(phrase)
         @html << "<dt>#{inline term}</dt>\n" if term
         @html << "<dd>#{inline definition}</dd>\n" if definition
-        phrase = Definitions.phrase(@line = @file.gets)
+        phrase = Definitions.phrase(@line = @string_getter.gets)
       end
       @html << "</dl>\n"
       true

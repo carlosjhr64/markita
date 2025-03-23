@@ -24,7 +24,7 @@ module Markita
       @html << @line[1...-1].split('|').map { inline(it.strip) }.join('</th><th>')
       @html << "</th></tr></thead>\n"
       align = []
-      while (@line = @file.gets)&.match? Table::RGX
+      while (@line = @string_getter.gets)&.match? Table::RGX
         @html << '<tr>'
         @line[1...-1].split('|').each_with_index do |cell, i|
           case cell

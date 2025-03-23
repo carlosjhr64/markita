@@ -31,7 +31,7 @@ module Markita
       return false unless Split::RGX.match? @line
 
       @html << Split.table(@line.chomp, @attributes)
-      @line = @file.gets
+      @line = @string_getter.gets
       true
     end
   end
