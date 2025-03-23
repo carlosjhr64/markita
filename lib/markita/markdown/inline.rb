@@ -10,6 +10,9 @@ module Markita
     module Inline
       # category: details
 
+      # When the writer does not mean to invoke a substitutions caused by a
+      # special character, that character can be escaped with a backslash.
+      # This is then replaced with its HTML entity.
       ENTITY = /\\([<>*"~`_&;:\\])/
       def self.entity(mdt) = "&##{mdt[1].ord};"
 
@@ -39,6 +42,7 @@ module Markita
       def self.code(mdt) = "<code>#{mdt[1].gsub('<', '&lt;')}</code>"
 
       EMOJI = /:(\w+):/
+      EMOJIS = Hash[*File.read(PATH['emojis.tsv']).split(/\s+/)]
       def self.emoji(mdt) = (emj = EMOJIS[mdt[1]]) ? "&#x#{emj};" : mdt[0]
 
       ITALIC = /"([^"]+)"/
@@ -52,8 +56,6 @@ module Markita
 
       ANCHOR = /\[([^\[\]]+)\]\(([^()]+)\)/
       def self.anchor(mdt)
-        # TODO: metadata
-        # href = (((_ = mdt[2]).match?(/^\d+$/) and @metadata[_]) or _)
         href = mdt[2]
         text = tag(mdt[1], EMOJI, method(:emoji))
         %(<a href="#{href}">#{text}</a>)
@@ -84,7 +86,7 @@ module Markita
       def self.tags(line)
         line = tag(line, ENTITY, method(:entity))
         line = tag(line, CODE, method(:code)) do |string|
-          tag(string, ANCHOR, method(:anchor)) do |str| # TODO: anchor issue
+          tag(string, ANCHOR, method(:anchor)) do |str|
             tag(str, URL, method(:url)) do |s|
               s = tag(s, EMOJI,       method(:emoji))
               s = tag(s, BOLD,        method(:bold))
@@ -105,7 +107,12 @@ module Markita
 
     # category: method
 
-    # :reek:UtilityFunction
-    def inline(line) = Inline.tags(line)
+    def inline(line)
+      line = Inline.tags(line)
+      Inline.tag(line, /<a href="(\d+)">/, lambda do |mdt|
+        key = mdt[1]
+        %(<a href="#{@metadata[key] || key}">)
+      end)
+    end
   end
 end

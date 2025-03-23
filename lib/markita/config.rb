@@ -47,8 +47,6 @@ module Markita
 
   NOT_FOUND = File.read PATH['not_found.html']
 
-  EMOJIS = Hash[*File.read(PATH['emojis.tsv']).split(/\s+/)]
-
   PAGE_KEY  = %r{/(\w[\w/-]*\w)} # Note that it starts with a slash
   SEND_FILE = %r{/(\w[\w/-]*\w\.\w+)}
 
