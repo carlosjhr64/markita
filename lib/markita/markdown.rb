@@ -17,11 +17,6 @@ module Markita
       @attributes = []
     end
 
-    def start
-      @html << HTML.header(@title)
-      @line = HTML.navigation
-    end
-
     def finish
       if (title = @metadata['Title'])
         @html << %(<script> document.title = "#{title}" </script>\n)
@@ -36,7 +31,10 @@ module Markita
       @html = String.new
     end
 
-    def parsers_detect = @@parsers.detect { method(it).call }
+    def start
+      @html << HTML.header(@title)
+      @line = HTML.navigation
+    end
 
     def parse(line_getter)
       init(line_getter)
@@ -45,7 +43,17 @@ module Markita
       finish
     end
 
-    def line_gets = @line = @file.gets
+    def filepath(filepath)
+      File.open(filepath, 'r') { parse it }
+      @html
+    end
+
+    def markdown(string)
+      parse StringIO.new string
+      @html
+    end
+
+    def parsers_detect = @@parsers.detect { method(it).call }
 
     # Defaults to paragraph
     # :reek:DuplicateMethodCall :reek:TooManyStatements
@@ -60,15 +68,7 @@ module Markita
       @html = html # Give back the original String to @html
     end
 
-    def markdown(string)
-      parse StringIO.new string
-      @html
-    end
-
-    def filepath(filepath)
-      File.open(filepath, 'r') { parse it }
-      @html
-    end
+    def line_gets = @line = @file.gets
   end
   # rubocop:enable Style/ClassVars
 end
