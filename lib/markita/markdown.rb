@@ -12,7 +12,7 @@ module Markita
 
     def initialize(title)
       @title = title
-      @line = @html = @string_getter = nil
+      @line = @html = @line_getter = nil
       @metadata = {}
       @attributes = []
     end
@@ -27,7 +27,7 @@ module Markita
 
     # init(fh: String || File) -> void
     def init(line_getter)
-      @string_getter = Preprocess.new(line_getter)
+      @line_getter = Preprocess.new(line_getter)
       @html = String.new
     end
 
@@ -68,7 +68,7 @@ module Markita
       @html = html # Give back the original String to @html
     end
 
-    def line_gets = @line = @string_getter.gets
+    def line_gets = @line = @line_getter.gets
   end
   # rubocop:enable Style/ClassVars
 end

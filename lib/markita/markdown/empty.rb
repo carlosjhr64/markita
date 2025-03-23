@@ -15,7 +15,7 @@ module Markita
     def empty
       return false unless Empty::RGX.match?(@line)
 
-      @line = @string_getter.gets
+      line_gets
       true
     end
   end

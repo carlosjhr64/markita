@@ -19,7 +19,7 @@ module Markita
       @html << "<small>\n"
       while continue
         @html << "#{inline(@line.chomp)}<br>\n"
-        continue = Footnotes::RGX.match?(@line = @string_getter.gets)
+        continue = Footnotes::RGX.match?(line_gets)
       end
       @html << "</small>\n"
       true

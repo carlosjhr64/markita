@@ -112,7 +112,7 @@ module Markita
           yon = Form.maybe(yon, name, field, values)
           @html << Form.input(type, field, name, values)
         end
-        break unless Form.match?(@line = @string_getter.gets)
+        break unless Form.match?(line_gets)
 
         @html << "  <br>\n"
       end

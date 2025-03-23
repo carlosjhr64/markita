@@ -55,7 +55,7 @@ module Markita
       else
         @html << @line
       end
-      @line = @string_getter.gets
+      line_gets
       true
     end
     # rubocop:enable Metrics/MethodLength

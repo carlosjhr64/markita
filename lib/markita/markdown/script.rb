@@ -17,11 +17,11 @@ module Markita
       return false unless Script::RGX.match(@line)
 
       @html << @line
-      while (@line = @string_getter.gets)
+      while line_gets
         @html << @line
         break if %r{^</script>}.match?(@line)
       end
-      @line = @string_getter.gets if @line
+      line_gets if @line
       true
     end
   end

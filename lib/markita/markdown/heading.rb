@@ -26,7 +26,7 @@ module Markita
       @html << %(<a id="#{id}">\n)
       @html << "  <h#{n}#{@attributes.shift}>#{inline(header)}</h#{n}>\n"
       @html << "</a>\n"
-      @line = @string_getter.gets
+      line_gets
       true
     end
   end
