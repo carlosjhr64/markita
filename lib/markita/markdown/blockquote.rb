@@ -5,8 +5,8 @@ module Markita
   # Markdown namespace
   # :reek:InstanceVariableAssumption :reek:ClassVariable
   class Markdown
-    # Class to isolate from Markdown
-    class Blockquote
+    # Module to isolate from Markdown
+    module Blockquote
       RGX = /^( {0,3})> (.*)$/
 
       def self.level_quote(line)
