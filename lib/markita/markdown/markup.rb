@@ -3,14 +3,14 @@
 # Markita top level namespace
 module Markita
   # Markdown namespace
-  # :reek:InstanceVariableAssumption in markdown.rb
+  # :reek:InstanceVariableAssumption :reek:ClassVariable
   class Markdown
     # Module to isolate from Markdown
     module Markup
       RGX = /^ {0,3}<.*>$/
     end
 
-    PARSERS << :html_markup
+    @@parsers << :html_markup
 
     def html_markup
       return false unless Markup::RGX.match(@line)

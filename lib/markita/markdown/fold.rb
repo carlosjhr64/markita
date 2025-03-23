@@ -3,7 +3,7 @@
 # Markita top level namespace
 module Markita
   # Markdown namespace
-  # :reek:InstanceVariableAssumption in markdown.rb
+  # :reek:InstanceVariableAssumption :reek:ClassVariable
   class Markdown
     # Module to isolate from Markdown
     module Fold
@@ -17,7 +17,7 @@ module Markita
       end
     end
 
-    PARSERS << :fold
+    @@parsers << :fold
 
     # category: method
     # :reek:DuplicateMethodCall ok here

@@ -3,7 +3,7 @@
 # Markita top level namespace
 module Markita
   # Markdown namespace
-  # :reek:InstanceVariableAssumption in markdown.rb
+  # :reek:InstanceVariableAssumption :reek:ClassVariable
   class Markdown
     # Class to isolate from Markdown
     class Blockquote
@@ -15,7 +15,7 @@ module Markita
       end
     end
 
-    PARSERS << :blockquote
+    @@parsers << :blockquote
 
     # category: method
     # :reek:DuplicateMethodCall :reek:TooManyStatements

@@ -3,14 +3,14 @@
 # Markita top level namespace
 module Markita
   # Markdown namespace
-  # :reek:InstanceVariableAssumption variables in markdown.rb
+  # :reek:InstanceVariableAssumption :reek:ClassVariable
   class Markdown
     # Module to isolate from Markdown
     module HorizontalRule
       RGX = /^---+$/
     end
 
-    PARSERS << :horizontal_rule
+    @@parsers << :horizontal_rule
 
     # category: method
     def horizontal_rule

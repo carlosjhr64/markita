@@ -1,62 +1,74 @@
+# frozen_string_literal: true
+
+# Markita top level namespace
 module Markita
-class Markdown
-  ROUGE = Rouge::Formatters::HTML.new
-  PARSERS = []
+  # The markdown parser.
+  # :reek:ClassVariable :reek:TooManyInstanceVariables
+  # rubocop:disable Style/ClassVars
+  class Markdown
+    ROUGE = Rouge::Formatters::HTML.new
 
-  def initialize(title)
-    @title = title
-    @line=@html=@file=nil
-    @metadata,@attributes = {},[]
-  end
+    @@parsers = []
 
-  def start
-    @html << HTML.header(@title)
-    @line = HTML.navigation
-  end
-
-  def finish
-    if (title=@metadata['Title'])
-      @html << %(<script> document.title = "#{title}" </script>\n)
+    def initialize(title)
+      @title = title
+      @line = @html = @file = nil
+      @metadata = {}
+      @attributes = []
     end
-    @html << HTML.footer
-    @line = nil
-  end
 
-  # init(fh: String || File) -> void
-  def init(fh)
-    @file,@html = Preprocess.new(fh),''
-  end
+    def start
+      @html << HTML.header(@title)
+      @line = HTML.navigation
+    end
 
-  def parse(fh)
-    init(fh)
-    start
-    PARSERS.detect{method(_1).call} or default while @line
-    finish
-  end
+    def finish
+      if (title = @metadata['Title'])
+        @html << %(<script> document.title = "#{title}" </script>\n)
+      end
+      @html << HTML.footer
+      @line = nil
+    end
 
-  def default
+    # init(fh: String || File) -> void
+    def init(line_getter)
+      @file = Preprocess.new(line_getter)
+      @html = String.new
+    end
+
+    def parsers_detect = @@parsers.detect { method(it).call }
+
+    def parse(line_getter)
+      init(line_getter)
+      start
+      parsers_detect or default while @line
+      finish
+    end
+
+    def line_gets = @line = @file.gets
+
     # Defaults to paragraph
-    # Let html take the original @html object and set @html to ''
-    html,@html = @html,''
-    html << "<p#{@attributes.shift}>\n"
-    loop do
+    # :reek:DuplicateMethodCall :reek:TooManyStatements
+    def default
+      # Let html take the original @html String and set @html to String.new('')
+      html = @html
+      @html = String.new
+      html << "<p#{@attributes.shift}>\n"
       html << inline(@line)
-      break if (@line=@file.gets).nil? || PARSERS.detect{method(_1).call}
+      html << inline(@line) while line_gets && !parsers_detect
+      html << "</p>\n#{@html}"
+      @html = html # Give back the original String to @html
     end
-    html << "</p>\n"
-    html << @html
-    # Give back the original object to @html
-    @html = html
-  end
 
-  def markdown(string)
-    parse StringIO.new string
-    @html
-  end
+    def markdown(string)
+      parse StringIO.new string
+      @html
+    end
 
-  def filepath(filepath)
-    File.open(filepath, 'r'){|fh| parse fh}
-    @html
+    def filepath(filepath)
+      File.open(filepath, 'r') { parse it }
+      @html
+    end
   end
-end
+  # rubocop:enable Style/ClassVars
 end

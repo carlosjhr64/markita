@@ -3,7 +3,7 @@
 # Markita top level namespace
 module Markita
   # Markdown namespace
-  # :reek:InstanceVariableAssumption in markdown.rb
+  # :reek:InstanceVariableAssumption :reek:ClassVariable
   class Markdown
     # Module to isolate from Markdown
     module Heading
@@ -15,7 +15,7 @@ module Markita
       end
     end
 
-    PARSERS << :heading
+    @@parsers << :heading
 
     # category: method
     # :reek:TooManyStatements :reek:UncommunicativeVariableName

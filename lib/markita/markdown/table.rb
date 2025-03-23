@@ -3,14 +3,14 @@
 # Markita top level namespace
 module Markita
   # Markdown namespace
-  # :reek:InstanceVariableAssumption in markdown.rb
+  # :reek:InstanceVariableAssumption :reek:ClassVariable
   class Markdown
     # Module to isolate from Markdown
     module Table
       RGX = /^\|.+\|$/
     end
 
-    PARSERS << :table
+    @@parsers << :table
 
     # :reek:DuplicateMethodCall :reek:TooManyStatements
     # :reek:UncommunicativeVariableName

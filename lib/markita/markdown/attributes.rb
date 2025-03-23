@@ -3,14 +3,14 @@
 # Markita top level namespace
 module Markita
   # Markdown namespace
-  # :reek:InstanceVariableAssumption in markdown.rb
+  # :reek:InstanceVariableAssumption :reek:ClassVariable
   class Markdown
     # Module to isolate from Markdown
     module Attributes
       RGX = /^\{:( [^\{\}]+)\}/
     end
 
-    PARSERS << :attributes
+    @@parsers << :attributes
 
     def attributes
       return false unless (md = Attributes::RGX.match(@line))

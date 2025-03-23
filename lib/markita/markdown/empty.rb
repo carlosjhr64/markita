@@ -3,14 +3,14 @@
 # Markita top level namespace
 module Markita
   # Markdown namespace
-  # :reek:InstanceVariableAssumption in markdown.rb
+  # :reek:InstanceVariableAssumption :reek:ClassVariable
   class Markdown
     # Module to isolate from Markdown
     module Empty
       RGX = /^$/
     end
 
-    PARSERS << :empty
+    @@parsers << :empty
 
     def empty
       return false unless Empty::RGX.match?(@line)
