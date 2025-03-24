@@ -215,6 +215,9 @@ A multi-line form with default entry and hidden field:
 
 A selection list:
 ! Color:[color="Red","White","Blue"]
+
+A submit button:
+! [submit="Go!"]
 ```
 ### Template substitutions
 ```markdown
