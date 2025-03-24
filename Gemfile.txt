@@ -1,0 +1,32 @@
+## runtime ##
+colorize     1.1.0
+help_parser  9.0.240926
+rouge        4.5.1
+sinatra      4.1.1
+webrick      1.9.1
+## development ##
+colorize     1.1.0
+cucumber     9.2.1
+nokogiri     1.18.5
+parser       3.3.7
+rubocop      1.74.0
+test-unit    3.6.7
+## system-run ##
+ruby         3.4
+## system-dev ##
+GET          6.52
+cat          8.32
+clear        6.2
+colordiff    3.7
+cucumber     9.2
+egrep        3.6
+git          2.30
+kill         2020
+ls           8.32
+ncal         2019
+rubocop      1.74
+ruby         3.4
+ruby-parse   3.3
+tmux         3.1
+todo.sh      2.12
+wile         0.0
