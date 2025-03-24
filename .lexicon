@@ -295,11 +295,11 @@ Split
 splits
 src
 SSL
+ssl_certificate
 SSLCertificate
-SSL_CERTIFICATE
 SSLEnable
+ssl_private_key
 SSLPrivateKey
-SSL_PRIVATE_KEY
 SSLVerifyClient
 StandardError
 start

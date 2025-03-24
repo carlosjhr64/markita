@@ -16,20 +16,19 @@ module Markita
   ROOT = File.expand_path OPTIONS.root || '~/vimwiki'
   raise "Missing site root directory: #{ROOT}" unless File.directory? ROOT
 
-  SSL_CERTIFICATE = File.join(ROOT, '.cert.crt')
-  SSL_PRIVATE_KEY = File.join(ROOT, '.pkey.pem')
-
+  ssl_certificate = File.join(ROOT, '.cert.crt')
+  ssl_private_key = File.join(ROOT, '.pkey.pem')
   SERVER_SETTINGS =
-    if [SSL_CERTIFICATE, SSL_PRIVATE_KEY].all? { File.exist? it }
+    if [ssl_certificate, ssl_private_key].all? { File.exist? it }
       {
         SSLEnable:
           true,
         SSLVerifyClient:
           OpenSSL::SSL::VERIFY_NONE,
         SSLCertificate:
-          OpenSSL::X509::Certificate.new(File.read(SSL_CERTIFICATE)),
+          OpenSSL::X509::Certificate.new(File.read(ssl_certificate)),
         SSLPrivateKey:
-          OpenSSL::PKey::RSA.new(File.read(SSL_PRIVATE_KEY))
+          OpenSSL::PKey::RSA.new(File.read(ssl_private_key))
       }
     end
 
