@@ -21,6 +21,8 @@ module Markita
       Markdown.new(key).filepath filepath
     end
 
+    # For the server to send a static file, the request may only specify a path
+    # (no query string) and the file must exist... Else, it passes.
     get SEND_FILE do |path|
       pass unless params.length == 1 &&
                   (filepath = File.join ROOT, path) &&
