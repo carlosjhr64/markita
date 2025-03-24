@@ -21,7 +21,7 @@ module Markita
       if (title = @metadata['Title'])
         @html << %(<script> document.title = "#{title}" </script>\n)
       end
-      @html << HTML.footer
+      @html << Html.footer
       @line = nil
     end
 
@@ -32,8 +32,8 @@ module Markita
     end
 
     def start
-      @html << HTML.header(@title)
-      @line = HTML.navigation
+      @html << Html.header(@title)
+      @line = Html.navigation
     end
 
     def parse(line_getter)

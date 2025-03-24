@@ -107,6 +107,7 @@ glob
 gsub
 Hash
 header
+header_links
 HEADER_LINKS
 headers
 heading
@@ -119,6 +120,7 @@ HorizontalRule
 href
 hrf
 html
+Html
 HTML
 html_markup
 i

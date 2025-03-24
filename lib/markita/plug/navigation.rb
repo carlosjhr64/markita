@@ -2,5 +2,5 @@
 
 # Markita namespace
 module Markita
-  NAVIGATION << %(![:Navigation](/favicon.ico /index)\n)
+  Html.navigation << %(![:Navigation](/favicon.ico /index)\n)
 end

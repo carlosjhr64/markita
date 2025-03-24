@@ -2,11 +2,11 @@
 
 # Markita namespace
 module Markita
+  Html.header_links <<
+    %(<link rel="icon" type="image/x-icon" href="/favicon.ico">\n)
+
   # Base class of the Sinatra Markita application
   class Base
-    HEADER_LINKS <<
-      %(\n<link rel="icon" type="image/x-icon" href="/favicon.ico">)
-
     module Favicon
       ICO = File.read PATH['favicon.ico']
     end

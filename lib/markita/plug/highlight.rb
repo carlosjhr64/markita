@@ -2,8 +2,9 @@
 
 # Markita namespace
 module Markita
-  HEADER_LINKS <<
-    %(\n<link rel="stylesheet" href="/highlight.css" type="text/css">)
+  Html.header_links <<
+    %(<link rel="stylesheet" href="/highlight.css" type="text/css">\n)
+
   # Base class of the Sinatra Markita application
   class Base
     # Highlight namespace to support the /highlight.css route

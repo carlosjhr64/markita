@@ -3,8 +3,8 @@
 # Markita namespace
 # :reek:TooManyConstants because it's a configuration file!
 module Markita
-  HEADER_LINKS = String.new
-  NAVIGATION   = String.new
+  HEADER_LINKS = ''
+  NAVIGATION   = ''
 
   BIND   = '0.0.0.0'
   PORT   = '8080'
