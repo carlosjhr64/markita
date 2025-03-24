@@ -4,6 +4,7 @@
 module Markita
   # HTML template
   module HTML
+    # category: header
     def self.header(title)
       <<~HEADER
         <!DOCTYPE html>
@@ -15,10 +16,12 @@ module Markita
       HEADER
     end
 
+    # category: body
     def self.navigation
       NAVIGATION
     end
 
+    # category: footer
     def self.footer
       <<~FOOTER
         </body>
