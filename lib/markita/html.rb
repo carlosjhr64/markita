@@ -6,9 +6,6 @@ module Markita
   module Html
     # category: header
 
-    @@header_links = String.new(HEADER_LINKS)
-    def self.header_links = @@header_links
-
     def self.header(title)
       <<~HEADER
         <!DOCTYPE html>
@@ -19,6 +16,9 @@ module Markita
         <body>
       HEADER
     end
+
+    @@header_links = String.new(HEADER_LINKS)
+    def self.header_links = @@header_links
 
     # category: body
 
