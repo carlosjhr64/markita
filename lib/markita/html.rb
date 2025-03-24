@@ -3,6 +3,8 @@
 # Markita namespace
 module Markita
   # HTML template
+  # :reek:ClassVariable
+  # rubocop:disable Style/ClassVars
   module Html
     # category: header
 
@@ -34,4 +36,5 @@ module Markita
       FOOTER
     end
   end
+  # rubocop:enable Style/ClassVars
 end
