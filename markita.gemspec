@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/carlosjhr64/markita'
   s.author   = 'CarlosJHR64'
   s.email    = 'carlosjhr64@gmail.com'
-  s.date     = '2024-10-02'
+  s.date     = '2025-03-24'
   s.licenses = ['MIT']
   ## DESCRIPTION ##
   s.summary  = <<~SUMMARY
@@ -31,6 +31,25 @@ Gem::Specification.new do |s|
     lib/markita/config.rb
     lib/markita/html.rb
     lib/markita/markdown.rb
+    lib/markita/markdown/attributes.rb
+    lib/markita/markdown/blockquote.rb
+    lib/markita/markdown/code.rb
+    lib/markita/markdown/code_block.rb
+    lib/markita/markdown/definitions.rb
+    lib/markita/markdown/embed.rb
+    lib/markita/markdown/empty.rb
+    lib/markita/markdown/fold.rb
+    lib/markita/markdown/footnotes.rb
+    lib/markita/markdown/form.rb
+    lib/markita/markdown/heading.rb
+    lib/markita/markdown/horizontal_rule.rb
+    lib/markita/markdown/image.rb
+    lib/markita/markdown/inline.rb
+    lib/markita/markdown/list.rb
+    lib/markita/markdown/markup.rb
+    lib/markita/markdown/script.rb
+    lib/markita/markdown/split.rb
+    lib/markita/markdown/table.rb
     lib/markita/plug/about.rb
     lib/markita/plug/favicon.rb
     lib/markita/plug/highlight.rb
@@ -39,20 +58,15 @@ Gem::Specification.new do |s|
     lib/markita/plug/plugs.rb
     lib/markita/plug/readme.rb
     lib/markita/preprocess.rb
+    lib/markita/refinement.rb
+    lib/markita/requires.rb
   ]
     s.executables << 'markita'
   ## REQUIREMENTS ##
+  s.add_runtime_dependency 'colorize', '~> 1.1', '>= 1.1.0'
   s.add_runtime_dependency 'help_parser', '~> 9.0', '>= 9.0.240926'
-  s.add_runtime_dependency 'rouge', '~> 4.4', '>= 4.4.0'
-  s.add_runtime_dependency 'sinatra', '~> 4.0', '>= 4.0.0'
-  s.add_runtime_dependency 'webrick', '~> 1.8', '>= 1.8.2'
-  s.add_development_dependency 'colorize', '~> 1.1', '>= 1.1.0'
-  s.add_development_dependency 'cucumber', '~> 9.2', '>= 9.2.0'
-  s.add_development_dependency 'nokogiri', '~> 1.16', '>= 1.16.7'
-  s.add_development_dependency 'parser', '~> 3.3', '>= 3.3.5'
-  s.add_development_dependency 'rubocop', '~> 1.66', '>= 1.66.1'
-  s.add_development_dependency 'test-unit', '~> 3.6', '>= 3.6.2'
-  s.requirements << 'egrep: 3.6'
-  s.requirements << 'git: 2.30'
+  s.add_runtime_dependency 'rouge', '~> 4.5', '>= 4.5.1'
+  s.add_runtime_dependency 'sinatra', '~> 4.1', '>= 4.1.1'
+  s.add_runtime_dependency 'webrick', '~> 1.9', '>= 1.9.1'
   s.required_ruby_version = '>= 3.4'
 end
