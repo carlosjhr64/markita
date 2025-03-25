@@ -34,6 +34,7 @@ Certificate
 CGI
 check
 chomp
+chop
 class
 code
 Code
@@ -87,7 +88,6 @@ filename
 filepath
 find
 finish
-first
 fold
 Fold
 footer
@@ -275,10 +275,8 @@ scope
 scrape4metadata
 script
 Script
-second
 send_file
 SEND_FILE
-sep
 server
 SERVER
 SERVER_CONFIG

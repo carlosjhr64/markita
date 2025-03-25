@@ -7,15 +7,17 @@ module Markita
   class Markdown
     # Module to isolate from Markdown
     module Definitions
-      RGX = /^[+] (.+)$/
+      RGX = /^[+] (\S.+)$/
       def self.phrase(line)
         mdt = RGX.match(line)
         mdt[1] if mdt
       end
 
       def self.split(phrase)
-        first, sep, second = phrase.split(/(:)/, 2).map(&:strip)
-        sep ? [first, second] : [nil, first]
+        return [phrase.chop, nil] if /:$/.match?(phrase)
+        return [nil, phrase] unless (mdt = /^(.*): +(\S.*)$/.match(phrase))
+
+        [mdt[1], mdt[2]]
       end
     end
 
