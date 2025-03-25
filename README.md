@@ -60,7 +60,8 @@ Types:
 
 ### Meta-data
 
-* If `Title` is set via meta-data, the server will set the page's title to that
+* `$key` substitution to its metadata value in text
+* If `Title` is set via meta-data, Javascript will set the page's title to that
 * One can use numbers to reference long URLs
 ```markdown
 --- # The hashtag disambiguates the horizontal rule(legal YAML comment).

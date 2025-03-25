@@ -108,8 +108,12 @@ module Markita
 
     # category: method
 
+    # :reek:DuplicateMethodCall :reek:TooManyStatements
     def inline(line)
       line = Inline.tags(line)
+      line = Inline.tag(line, /[$](\w+)/, lambda do |mdt|
+        @metadata[mdt[1]] || mdt[0]
+      end)
       Inline.tag(line, /<a href="(\d+)">/, lambda do |mdt|
         key = mdt[1]
         %(<a href="#{@metadata[key] || key}">)
