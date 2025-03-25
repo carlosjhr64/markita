@@ -8,9 +8,17 @@ module Markita
   class Base
     # Github repositories reports
     # :reek:TooManyInstanceVariables
+    # rubocop: disable Metrics, Layout/LineLength
     class GithubRepositories
+      def initialize(sort, direction, username)
+        @sort = sort
+        @direction = direction
+        @username = username
+        @text = String.new
+        @today = Date.today
+      end
+
       # :reek:TooManyStatements
-      # rubocop: disable Metrics/MethodLength, Layout/LineLength
       def intro
         @text << "# Github Repositories\n"
 
@@ -31,9 +39,21 @@ module Markita
         @text << "## Repo #{@username} sorted by #{@sort}(#{@direction}.)\n"
       end
 
+      # :reek:TooManyStatements
+      def text
+        url = "https://api.github.com/users/#{@username}/repos?per_page=100&"
+        repos = JSON.parse Net::HTTP.get(
+          URI("#{url}?&sort=#{@sort}&direction=#{@direction}")
+        )
+        return repos['message'] if repos.is_a?(Hash)
+
+        intro
+        repos.each { report(it) }
+        @text
+      end
+
       # :reek:DuplicateMethodCall :reek:TooManyStatements
       # :reek:UncommunicativeVariableName
-      # rubocop: disable Metrics/AbcSize, Metrics/PerceivedComplexity
       def report(repo)
         name = repo['name']
         stars = ''
@@ -72,29 +92,7 @@ module Markita
           end
         end
       end
-      # rubocop: enable Metrics/AbcSize, Metrics/PerceivedComplexity
-
-      # :reek:TooManyStatements
-      def text
-        url = "https://api.github.com/users/#{@username}/repos?per_page=100&"
-        repos = JSON.parse Net::HTTP.get(
-          URI("#{url}?&sort=#{@sort}&direction=#{@direction}")
-        )
-        return repos['message'] if repos.is_a?(Hash)
-
-        intro
-        repos.each { report(it) }
-        @text
-      end
-      # rubocop: enable Metrics/MethodLength, Layout/LineLength
-
-      def initialize(sort, direction, username)
-        @sort = sort
-        @direction = direction
-        @username = username
-        @text = String.new
-        @today = Date.today
-      end
+      # rubocop: enable Metrics, Layout/LineLength
     end
 
     get '/github_repositories.html' do

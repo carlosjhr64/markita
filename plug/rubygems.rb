@@ -8,47 +8,9 @@ module Markita
   # rubocop:disable Metrics
   class Base
     # RubyGems report
+    # :reek:DuplicateMethodCall :reek:NilCheck :reek:UncommunicativeVariableName
     module RubyGems
-      def self.by_username(username)
-        gems = JSON.parse Net::HTTP.get URI(
-          "https://rubygems.org/api/v1/owners/#{username}/gems.json"
-        )
-        today = Date.today
-        text = String.new
-        text << "# Ruby gems\n"
-        text << %(! Username:[username="#{username}"])
-        text << %([submit="Go!"]()\n)
-        text << "## Gems by #{username}\n"
-        gems.sort! { |a, b| b['version_downloads'] <=> a['version_downloads'] }
-        gems.each do |project|
-          stars = String.new
-          m = project['downloads'].to_i
-          n = project['version_downloads'].to_i
-          m -= n
-          if m > 100
-            m = Math.log(m, 100).round
-            stars << ' ' if stars.empty?
-            stars << (':eight_pointed_black_star:' * m)
-          end
-          if n > 100
-            n = Math.log(n, 100).round
-            stars << ' ' if stars.empty?
-            stars << (':star:' * n)
-          end
-          name = project['name']
-          text << "+ [#{name}](?gemname=#{name})#{stars}:\n"
-          text << "+ #{project['info'].gsub(/\s+/, ' ').gsub(':', '&#58;')}\n"
-          text << "+ Version #{project['version']} created at "
-          date = Date.parse project['version_created_at']
-          text << if today - date > 365
-                    "<mark>#{date}</mark>.\n"
-                  else
-                    "#{date}.\n"
-                  end
-        end
-        text
-      end
-
+      # :reek:TooManyStatements
       def self.about_gem(gemname)
         today = Date.today
         about = nil
@@ -123,6 +85,47 @@ module Markita
           value = 'N/A' if value.nil?
           value = value.to_s if value.is_a? Numeric
           text << (value.is_a?(String) ? "+ #{value}\n" : "+ `#{value}`\n")
+        end
+        text
+      end
+
+      # :reek:TooManyStatements
+      def self.by_username(username)
+        gems = JSON.parse Net::HTTP.get URI(
+          "https://rubygems.org/api/v1/owners/#{username}/gems.json"
+        )
+        today = Date.today
+        text = String.new
+        text << "# Ruby gems\n"
+        text << %(! Username:[username="#{username}"])
+        text << %([submit="Go!"]()\n)
+        text << "## Gems by #{username}\n"
+        gems.sort! { |a, b| b['version_downloads'] <=> a['version_downloads'] }
+        gems.each do |project|
+          stars = String.new
+          m = project['downloads'].to_i
+          n = project['version_downloads'].to_i
+          m -= n
+          if m > 100
+            m = Math.log(m, 100).round
+            stars << ' ' if stars.empty?
+            stars << (':eight_pointed_black_star:' * m)
+          end
+          if n > 100
+            n = Math.log(n, 100).round
+            stars << ' ' if stars.empty?
+            stars << (':star:' * n)
+          end
+          name = project['name']
+          text << "+ [#{name}](?gemname=#{name})#{stars}:\n"
+          text << "+ #{project['info'].gsub(/\s+/, ' ').gsub(':', '&#58;')}\n"
+          text << "+ Version #{project['version']} created at "
+          date = Date.parse project['version_created_at']
+          text << if today - date > 365
+                    "<mark>#{date}</mark>.\n"
+                  else
+                    "#{date}.\n"
+                  end
         end
         text
       end
