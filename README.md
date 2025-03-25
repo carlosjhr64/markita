@@ -67,8 +67,10 @@ Types:
 --- # The hashtag disambiguates the horizontal rule(legal YAML comment).
 Title: Markita
 1: https://github.com/carlosjhr64/markita
+name: Don Quixote de la Mancha
 ... # The end marker is needed to end the fold
 [Markita](1)
+Your name is $name.
 ```
 ### Horizontal rule
 ```markdown
