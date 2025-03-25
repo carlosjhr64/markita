@@ -54,11 +54,12 @@ module Markita
       UNDERLINE = /_([^_]+)_/
       def self.underline(mdt) = "<u>#{mdt[1]}</u>"
 
-      ANCHOR = /\[([^\[\]]+)\]\(([^()]+)\)/
+      ANCHOR = /\[([^\[\]]+)\]\(([^(")]+)\)/
       def self.anchor(mdt)
-        href = mdt[2]
+        href, title = mdt[2].split(/\s+/, 2).map(&:strip)
+        title = %( title="#{title}") if title
         text = tag(mdt[1], EMOJI, method(:emoji))
-        %(<a href="#{href}">#{text}</a>)
+        %(<a href="#{href}"#{title}>#{text}</a>)
       end
 
       # category: algorithm

@@ -1,6 +1,6 @@
 # Markita
 
-* [VERSION 6.0.250324](https://github.com/carlosjhr64/markita/releases)
+* [VERSION 6.0.250325](https://github.com/carlosjhr64/markita/releases)
 * [github](https://www.github.com/carlosjhr64/markita)
 * [rubygems](https://rubygems.org/gems/markita)
 
@@ -241,6 +241,10 @@ sees the `~ code ~ "a*b*c"` to https://github.com.
 The *bold* and "italics" ~strikes~ at _underlined_,
 while a [link to #Markita](#Markita)
 sees the `~ code ~ "a*b*c"` to https://github.com.
+```
+The inline links with optional title have the following syntax(with no double quotes):
+```markdown
+[link text](link title)
 ```
 ### Entity escapes
 
