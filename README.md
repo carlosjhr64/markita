@@ -25,27 +25,21 @@ Options:
   --port=PORT      	 8080
   --theme=THEME    	 base16.light
   --allowed=IPS
-  --no_about
-  --no_favicon
-  --no_highlight
-  --no_login
-  --no_navigation
-  --no_plugs
-  --no_readme
-Exclusive:
-  no_login allowed
+  --no=PLUGS
 Types:
   DIRECTORY /^~?[\/\w\.]+$/
   BIND      /^[\w\.]+$/
   PORT      /^\d+$/
   IPS       /^[\d\.\,]+$/
   THEME     /^[\w\.]+$/
+  PLUGS    /^[\w\,]+$/
 # NOTE:
 # Assuming site is in ~/vimwiki,
 # when ~/vimwiki/.valid-id is set with a sha256sum of a password,
 # that password will restrict the site.
 # Allowed IPs bypass the need for site password
 # when the site is accessed from those locations.
+# You can use the --no option to list plugins to disable.
 ```
 ## FEATURES
 
