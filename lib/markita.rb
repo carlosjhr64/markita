@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
 # Markita top level namespace
+# :reek:ClassVariable
+# rubocop:disable Style/ClassVars
 module Markita
   VERSION = '6.0.250326'
+
+  @@no = []
+  def self.no = @@no
 
   def self.run!
     require_relative 'markita/requires'
@@ -13,3 +18,4 @@ module Markita
     Base.run!
   end
 end
+# rubocop:enable Style/ClassVars

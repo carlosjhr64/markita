@@ -1,3 +1,4 @@
+about
 About
 ABOUT_TEXT
 action
@@ -41,6 +42,7 @@ Code
 CODE
 code_block
 CodeBlock
+concat
 continue
 count
 CSS
@@ -79,6 +81,7 @@ expand_path
 extension
 ext_klass_lang
 FAILED
+favicon
 Favicon
 field
 FIELD
@@ -114,6 +117,7 @@ heading
 Heading
 HelpParser
 hexdigest
+highlight
 Highlight
 horizontal_rule
 HorizontalRule
@@ -174,6 +178,7 @@ line_getter
 list
 List
 LoadError
+login
 Login
 loop
 m2string
@@ -204,12 +209,6 @@ nil
 no
 NO
 no_about
-no_favicon
-no_highlight
-no_login
-no_navigation
-no_plugs
-no_readme
 not_found
 NotFound
 NOT_FOUND
@@ -245,6 +244,7 @@ pwd
 quote
 raise
 read
+readme
 redirect
 REDTTY
 ref
@@ -333,6 +333,7 @@ Theme
 Time
 title
 to_s
+to_sym
 type
 underline
 UNDERLINE
