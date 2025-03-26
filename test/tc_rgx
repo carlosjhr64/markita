@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'colorize'
+require 'test/unit'
+
+# This is a heuristical test of RGX to try to ensure each markdown element is
+# defined without collisions.
+class TestRgx < Test::Unit::TestCase
+  EGREP = %(egrep ' RGX = ' lib/markita/markdown/*.rb)
+  NOMATCH = %(egrep -L ' RGX = ' lib/markita/markdown/*.rb)
+
+  def test_nomatch
+    `#{NOMATCH}`.lines.each do |line|
+      name = File.basename(line.strip, '.rb')
+      next if name == 'inline' # inline exception
+
+      flunk "#{name} is missng RGX"
+    end
+  end
+
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def test_rgx
+    seen = Set.new
+    `#{EGREP}`.lines.each do |line|
+      file, code = line.split(':', 2).map(&:strip)
+      name = File.basename(file, '.rb')
+      rgx = %r{= (/.+)$}.match(code)&.[](1)
+      refute rgx.nil?
+      print "#{name}:".ljust(20).blue
+      puts rgx
+      assert_equal rgx[1], '^'
+      refute seen.include?(rgx)
+      seen.add rgx
+      refute seen.include?(rgx[2..5])
+      seen.add rgx[2..5]
+    end
+  end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+end

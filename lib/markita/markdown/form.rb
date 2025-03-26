@@ -8,8 +8,8 @@ module Markita
     # Module to isolate from Markdown
     module Form
       field = '(\w+:)?\[(\*)?(\w+)(=("[^"]+")(,"[^"]+")*)?\]'
-      RGX = Regexp.new "^!( #{field})+"
       FIELD = Regexp.new field
+      RGX = /^!( #{field})+/
       POST = /!$/
       ACTION = /\(([^()]*)\)!?$/
 
