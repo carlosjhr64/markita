@@ -5,8 +5,8 @@ module Markita
   # Base class of the Sinatra Markita application
   class Base < Sinatra::Base
     set sessions: true
-    set bind: OPTIONS.bind || BIND
-    set port: OPTIONS.port || PORT
+    set bind: BIND
+    set port: PORT
     set server: SERVER
     set server_settings: SERVER_SETTINGS if SERVER_SETTINGS
 
@@ -35,7 +35,7 @@ module Markita
       if File.exist? filepath
         Markdown.new(INDEX).filepath filepath
       else
-        redirect '/about.html' unless OPTIONS.no_about
+        redirect '/about.html' unless Markita.no.include? :about
         raise Sinatra::NotFound
       end
     end

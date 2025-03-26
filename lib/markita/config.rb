@@ -6,8 +6,8 @@ module Markita
   HEADER_LINKS = ''
   NAVIGATION   = ''
 
-  BIND   = '0.0.0.0'
-  PORT   = '8080'
+  BIND   = OPTIONS.bind || '0.0.0.0'
+  PORT   = OPTIONS.PORT || '8080'
   SERVER = 'webrick'
 
   MDX = '.md'
