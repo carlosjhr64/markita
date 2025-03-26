@@ -40,10 +40,10 @@ module Markita
         if (matches = Search.matches(keywords)).empty?
           text << "* No matches for primary keyword: <mark>#{primary}</mark>\n"
         else
-          keywords = keywords.map { /\b(#{_1})\b/i }
-          max = matches.map { |fs| keywords.count { _1.match?(fs[1]) } }.max
+          keywords = keywords.map { /\b(#{it})\b/i }
+          max = matches.map { |fs| keywords.count { it.match?(fs[1]) } }.max
           matches.each do |file, section|
-            next if keywords.count { _1.match?(section) } < max
+            next if keywords.count { it.match?(section) } < max
 
             text << %(<a href="#{file}">#{file}:</a>\n)
             text << "```\n"
