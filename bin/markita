@@ -30,7 +30,7 @@ OPTIONS = HelpParser[Markita::VERSION, <<~HELP]
   # You can use the --no option to list plugins to disable.
 HELP
 begin
-  Markita.no.concat OPTIONS.no.split(',').map(:to_sym) if OPTIONS.no?
+  Markita.no.concat OPTIONS.no.split(',').map(&:to_sym) if OPTIONS.no?
   Markita.run!
 rescue LoadError => e
   HelpParser::REDTTY["#{e.class}: #{e.message}"]
