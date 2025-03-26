@@ -45,27 +45,21 @@ Options:
   --port=PORT      	 8080
   --theme=THEME    	 base16.light
   --allowed=IPS
-  --no_about
-  --no_favicon
-  --no_highlight
-  --no_login
-  --no_navigation
-  --no_plugs
-  --no_readme
-Exclusive:
-  no_login allowed
+  --no=PLUGS
 Types:
 </span><span class="gp">  DIRECTORY /^~?[\/\w\.]+$</span>/
 <span class="gp">  BIND      /^[\w\.]+$</span>/
 <span class="gp">  PORT      /^\d+$</span>/
 <span class="gp">  IPS       /^[\d\.\,]+$</span>/
 <span class="gp">  THEME     /^[\w\.]+$</span>/
+<span class="gp">  PLUGS    /^[\w\,]+$</span>/
 <span class="gp">#</span><span class="w"> </span>NOTE:
 <span class="gp">#</span><span class="w"> </span>Assuming site is <span class="k">in</span> ~/vimwiki,
 <span class="gp">#</span><span class="w"> </span>when ~/vimwiki/.valid-id is <span class="nb">set </span>with a <span class="nb">sha256sum </span>of a password,
 <span class="gp">#</span><span class="w"> </span>that password will restrict the site.
 <span class="gp">#</span><span class="w"> </span>Allowed IPs bypass the need <span class="k">for </span>site password
 <span class="gp">#</span><span class="w"> </span>when the site is accessed from those locations.
+<span class="gp">#</span><span class="w"> </span>You can use the <span class="nt">--no</span> option to list plugins to disable.
 </code></pre>
 <a id="FEATURES">
   <h2>FEATURES</h2>

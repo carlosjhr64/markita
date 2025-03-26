@@ -7,7 +7,7 @@ module Markita
   NAVIGATION   = ''
 
   BIND   = OPTIONS.bind || '0.0.0.0'
-  PORT   = OPTIONS.PORT || '8080'
+  PORT   = OPTIONS.port || '8080'
   SERVER = 'webrick'
 
   MDX = '.md'
