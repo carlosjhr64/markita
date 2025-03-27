@@ -7,9 +7,9 @@ webrick      1.9.1
 ## development ##
 colorize     1.1.0
 cucumber     9.2.1
-nokogiri     1.18.5
+nokogiri     1.18.6
 parser       3.3.7
-rubocop      1.74.0
+rubocop      1.75.1
 test-unit    3.6.7
 ## system-run ##
 ruby         3.4
@@ -24,7 +24,7 @@ git          2.30
 kill         2020
 ls           8.32
 ncal         2019
-rubocop      1.74
+rubocop      1.75
 ruby         3.4
 ruby-parse   3.3
 tmux         3.1
