@@ -62,6 +62,8 @@ Types:
 Title: Markita
 1: https://github.com/carlosjhr64/markita
 name: Don Quixote de la Mancha
+# You can also add to attributes here:
+attributes: style="color: darkgreen;"
 ... # The end marker is needed to end the fold
 [Markita](1)
 Your name is $name.
