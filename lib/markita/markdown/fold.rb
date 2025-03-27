@@ -6,14 +6,18 @@ module Markita
   # :reek:InstanceVariableAssumption :reek:ClassVariable
   class Markdown
     # Module to isolate from Markdown
+    # :reek:DuplicateMethodCall
     module Fold
       RGX = /^[-.]{3} #/
       METADATA = /^(\w+): (.*)$/
-      def self.scrape4metadata(line, metadata, file)
+      def self.scrape4metadata(line, metadata, attributes)
         if (md = Fold::METADATA.match(line))
-          metadata[md[1]] = md[2]
+          if (key = md[1]) == 'attributes'
+            attributes.push " #{md[2]}"
+          else
+            metadata[key] = md[2]
+          end
         end
-        file.gets
       end
     end
 
@@ -25,9 +29,8 @@ module Markita
       return false unless Fold::RGX.match?(@line)
 
       # Fold with optional metadata
-      line_gets
-      until Fold::RGX.match?(@line)
-        @line = Fold.scrape4metadata(@line, @metadata, @line_getter)
+      until Fold::RGX.match?(line_gets)
+        Fold.scrape4metadata(@line, @metadata, @attributes)
       end
       line_gets
       true

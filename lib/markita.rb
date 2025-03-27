@@ -4,7 +4,7 @@
 # :reek:ClassVariable
 # rubocop:disable Style/ClassVars
 module Markita
-  VERSION = '6.0.250326'
+  VERSION = '6.0.250327'
 
   @@no = []
   def self.no = @@no
