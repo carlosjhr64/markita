@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/carlosjhr64/markita'
   s.author   = 'CarlosJHR64'
   s.email    = 'carlosjhr64@gmail.com'
-  s.date     = '2025-03-27'
+  s.date     = '2025-03-28'
   s.licenses = ['MIT']
   ## DESCRIPTION ##
   s.summary  = <<~SUMMARY
