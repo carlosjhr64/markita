@@ -17,7 +17,7 @@ clear
 case pane
 when 1
   blue '# Git Diff:'
-  system('git diff -w --ignore-blank-lines')
+  system('colora')
 when 2
   blue '# Git Status:'
   system('git status')
@@ -30,6 +30,8 @@ when 4
 when 8
   system('ncal -B 1 -A 2')
 when 9
+  system('wile nvim --list')
+when 10
   system('wile todo')
 when 11
   blue '# Rubocop:'
