@@ -14,6 +14,8 @@ With many extra non-standard features.
 ```console
 $ gem install markita
 ```
+* Required Ruby version: `>= 3.4`
+
 ## HELP
 ```console
 $ markita --help
