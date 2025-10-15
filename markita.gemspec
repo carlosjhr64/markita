@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/carlosjhr64/markita'
   s.author   = 'CarlosJHR64'
   s.email    = 'carlosjhr64@gmail.com'
-  s.date     = '2025-03-28'
+  s.date     = '2025-10-15'
   s.licenses = ['MIT']
   ## DESCRIPTION ##
   s.summary  = <<~SUMMARY
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   ## FILES ##
   s.require_paths = ['lib']
   s.files = %w[
+    CREDITS.md
     README.md
     bin/markita
     data/emojis.tsv
@@ -65,8 +66,8 @@ Gem::Specification.new do |s|
   ## REQUIREMENTS ##
   s.add_runtime_dependency 'colorize', '~> 1.1', '>= 1.1.0'
   s.add_runtime_dependency 'help_parser', '~> 9.0', '>= 9.0.240926'
-  s.add_runtime_dependency 'rouge', '~> 4.5', '>= 4.5.1'
-  s.add_runtime_dependency 'sinatra', '~> 4.1', '>= 4.1.1'
+  s.add_runtime_dependency 'rouge', '~> 4.6', '>= 4.6.0'
+  s.add_runtime_dependency 'sinatra', '~> 4.2', '>= 4.2.1'
   s.add_runtime_dependency 'webrick', '~> 1.9', '>= 1.9.1'
   s.required_ruby_version = '>= 3.4'
 end
