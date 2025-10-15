@@ -20,7 +20,7 @@ module Markita
             section = String.new
           else
             line.delete_prefix!("#{ROOT}/")
-            file, line = line.split(/[:\-]/, 2)
+            file, line = line.split(/[:-]/, 2)
             file.sub!(/\.md$/, '')
             section << line unless line.strip.empty?
           end

@@ -83,7 +83,7 @@ module Markita
       # Puts contexts
       contexts.each do |context, tasks|
         text << "### #{context}\n"
-        tag = /[@]#{context}\b/
+        tag = /@#{context}\b/
         tasks.each do |task|
           text << "* #{TodoTxt.decorate(task, tag)}\n"
         end
