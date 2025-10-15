@@ -7,7 +7,7 @@ module Markita
   class Markdown
     # Module to isolate from Markdown
     module Code
-      RGX = /^[`]{3}\s*(\w+)?$/
+      RGX = /^`{3}\s*(\w+)?$/
 
       def self.code(file, lang, code = String.new)
         # Note that we can ignore the final shifted

@@ -96,6 +96,8 @@ Naming/MethodParameterName:
   Enabled: false
 Naming/MemoizedInstanceVariableName:
   Enabled: false
+Naming/PredicateMethod:
+  Enabled: false
 Security/MarshalLoad:
   Enabled: false
 Security/Open:

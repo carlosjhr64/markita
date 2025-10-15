@@ -7,7 +7,7 @@ module Markita
   class Markdown
     # Module to isolate from Markdown
     module Attributes
-      RGX = /^\{:( [^\{\}]+)\}/
+      RGX = /^\{:( [^{}]+)\}/
     end
 
     @@parsers << :attributes
