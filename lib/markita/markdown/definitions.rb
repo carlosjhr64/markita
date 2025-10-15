@@ -7,7 +7,7 @@ module Markita
   class Markdown
     # Module to isolate from Markdown
     module Definitions
-      RGX = /^[+] (\S.+)$/
+      RGX = /^[+]\s+(\S.+)$/
       def self.phrase(line)
         mdt = RGX.match(line)
         mdt[1] if mdt
