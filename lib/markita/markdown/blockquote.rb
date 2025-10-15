@@ -20,6 +20,7 @@ module Markita
     # category: method
     # :reek:DuplicateMethodCall :reek:TooManyStatements
     # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Lint/UselessAssignment
     def blockquote
       return false unless (level, quote = Blockquote.level_quote(@line))
 
@@ -27,6 +28,7 @@ module Markita
       current = level
       while current.eql?(level)
         @html << "#{inline(quote)}\n"
+        # `quote` is being used... Code is just gnarly.
         current, quote = Blockquote.level_quote(line_gets)
         next unless current&.>(level)
 
@@ -36,6 +38,7 @@ module Markita
       @html << "</blockquote>\n"
       true
     end
+    # rubocop:enable Lint/UselessAssignment
     # rubocop:enable Metrics/MethodLength
   end
 end
