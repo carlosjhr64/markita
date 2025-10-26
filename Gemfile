@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '3.4.2'
+ruby '3.4.7'
 ## runtime ##
 gem 'colorize'
 gem 'help_parser'
