@@ -14,7 +14,7 @@ module Markita
 
     # :reek:TooManyStatements :reek:DuplicateMethodCall
     def script
-      return false unless Script::RGX.match(@line)
+      return false unless Script::RGX.match?(@line)
 
       @html << @line
       while line_gets

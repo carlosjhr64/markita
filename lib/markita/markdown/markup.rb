@@ -13,7 +13,8 @@ module Markita
     @@parsers << :html_markup
 
     def html_markup
-      return false unless Markup::RGX.match(@line)
+      return false unless Markup::RGX.match?(@line)
+      return false if @line.start_with?('<script') # handled separately
 
       @html << @line
       line_gets
